@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/css/FirstPage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - DanceStudioManager</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <div class="logo-box">
+            </div>
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="About">About</a></li>
+                <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="text-box">
+            <h1 class="primary-heading">
+                <span class="heading-main">
+                    Dance Studio Manager
+                </span>
+                <a class="ghost-button" href="/Home/RegisterLogin">Log in / Register</a>
+            </h1>
+        </div>
+    </header>
+
+</body>
+</html>
