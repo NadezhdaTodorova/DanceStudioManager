@@ -32,10 +32,9 @@ namespace DanceStudioManager
                 {
                     User user = new User();
 
-                    user.ID = Convert.ToInt32(rdr["Id"]);
                     user.Username = rdr["Username"].ToString();
                     user.Password = rdr["Password"].ToString();
-                    user.StudioId = rdr["StudioId"].ToString();
+                    user.StudioName = rdr["StudioId"].ToString();
                     user.Email = rdr["Email"].ToString();
 
                     lstUsers.Add(user);
@@ -44,5 +43,26 @@ namespace DanceStudioManager
             }
             return lstUsers;
         }
+
+        public void AddNewUser(User user, int studioId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("AddUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Name", user.Username);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Email", user.Email);
+                cmd.Parameters.AddWithValue("@StudioId", studioId);
+                cmd.Parameters.AddWithValue("@ConfirmAccount", user.ConfirmAccount);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+
     }
 }

@@ -34,6 +34,7 @@ namespace DanceStudioManager
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<UserDataAccess>();
+            services.AddTransient<StudioDataAccess>();
             services.AddTransient<ApplicationContext>();
             services.AddSingleton(Configuration);
         }

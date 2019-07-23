@@ -108,18 +108,22 @@ nav ul {
     animation: moveRight 1s ease-in;
 }
 
-@media screen and (min-width: 901px) {
-    .primary-heading {
-        margin-left: 40rem;
-    }
 
+@media screen and (min-width: 901px) {
+    .text-box{
+        margin-left:23%;
+    }
     .ghost-button {
-        margin-left: 32rem
+        margin-left: 32%;
     }
 }
 
 @media screen and (max-width: 900px) {
-    .primary-heading {
-        margin-left: 5rem;
+    .text-box {
+        margin-left: 5%;
+    }
+
+    .ghost-button {
+        margin-left: 9%;
     }
 }

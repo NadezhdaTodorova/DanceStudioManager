@@ -8,14 +8,17 @@ namespace DanceStudioManager
 {
     public class User
     {
-        public int ID { get; set; }
         [Required]
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
         [Required]
+        public string ConfirmPassword { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
-        public string StudioId { get; set; }
+        public string StudioName { get; set; }
+        public bool ConfirmAccount  { get; set; }
     }
 }

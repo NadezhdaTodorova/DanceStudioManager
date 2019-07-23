@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DanceStudioManager.Models;
 
-namespace DanceStudioManager.Controllers
+namespace DanceStudioManager
 {
     public class HomeController : Controller
     {
