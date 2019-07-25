@@ -8,6 +8,7 @@ namespace DanceStudioManager
 {
     public class User
     {
+        public int Id { get; set; }
         [Required]
         public string Username { get; set; }
         [Required]
@@ -19,6 +20,7 @@ namespace DanceStudioManager
         public string Email { get; set; }
         [Required]
         public string StudioName { get; set; }
-        public bool ConfirmAccount  { get; set; }
+        public int ConfirmAccount  { get; set; }
+        public byte[] Salt { get; set; }
     }
 }

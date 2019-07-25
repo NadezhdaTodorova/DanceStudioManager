@@ -32,6 +32,7 @@ namespace DanceStudioManager
 
         public IActionResult RegisterLogin()
         {
+            ViewBag.register = true;
             return View();
         }
 
