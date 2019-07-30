@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $('.login-info-box').fadeIn();
     $('.register-show').addClass('show-log-panel');
+    $('.login-info-box').addClass("checked");
 
     $('.login-reg-panel input[type="radio"]').on('change', function() {
 

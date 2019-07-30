@@ -36,6 +36,7 @@ namespace DanceStudioManager
             services.AddTransient<UserDataAccess>();
             services.AddTransient<StudioDataAccess>();
             services.AddTransient<ApplicationContext>();
+            services.AddTransient<HashPassword>();
             services.AddSingleton(Configuration);
         }
 

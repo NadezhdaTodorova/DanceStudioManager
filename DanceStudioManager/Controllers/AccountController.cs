@@ -14,12 +14,14 @@ namespace DanceStudioManager
     {
         private readonly UserDataAccess _userDataAccess;
         private readonly StudioDataAccess _studioDataAccess;
+        private readonly HashPassword _hashPassword;
         private byte[] salt;
 
-        public AccountController(UserDataAccess userDataAccess, StudioDataAccess studioDataAccess)
+        public AccountController(UserDataAccess userDataAccess, StudioDataAccess studioDataAccess, HashPassword hashPassword)
         {
             _userDataAccess = userDataAccess;
             _studioDataAccess = studioDataAccess;
+            _hashPassword = hashPassword;
         }
 
         public IActionResult Index()
@@ -30,15 +32,17 @@ namespace DanceStudioManager
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Register(User user)
         {
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 ViewBag.register = true;
                 Studio newStudio = new Studio();
+                SendEmail email = new SendEmail();
 
                 int saltLength = 10;
-                byte[] saltBytes = GenerateRandomCryptographicBytes(saltLength);
+                byte[] saltBytes = _hashPassword.GenerateRandomCryptographicBytes(saltLength);
                 salt = saltBytes;
-                user.Password = HashWithSalt(user.Password, saltLength, SHA256.Create(), saltBytes);
+                user.Password = _hashPassword.HashWithSalt(user.Password, saltLength, SHA256.Create(), saltBytes);
                 user.Salt = salt;
 
                 newStudio.Name = user.StudioName;
@@ -62,7 +66,7 @@ namespace DanceStudioManager
                     ModelState.AddModelError(string.Empty, "This studio name already exists");
                 }
 
-                else
+                else if(ModelState.IsValid)
                 {
                     _studioDataAccess.AddNewStudio(newStudio);
 
@@ -72,7 +76,10 @@ namespace DanceStudioManager
 
                     int userId = _userDataAccess.GetUserId(user);
 
-                    SendEmail("nadezhdatodorova55@gmail.com", user);
+                    var path = Url.Action("Login", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
+                    string message = "Please confirm your account by clicking <a href=\"" + path + "\">here</a>";
+
+                    email.Send(user.Email, user, message);
 
                     return View("Views/Home/ConfirmEmail.cshtml");
                 }
@@ -84,24 +91,26 @@ namespace DanceStudioManager
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Login(User user)
         {
+            ModelState.Clear();
             ViewBag.login = true;
             var allUsers = _userDataAccess.GetAllUsers();
+            var userId = _userDataAccess.GetUserId(user);
+            user.Id = userId;
+            var userInfo = _userDataAccess.GetUserById(user.Id);
 
             if (!allUsers.Any(x => x.Email == user.Email))
             {
                 ModelState.AddModelError(string.Empty, "User with this email doesn't exists!");
             }
-            else
+            else if(!userInfo.ConfirmAccount)
             {
-                var userId = _userDataAccess.GetUserId(user);
-                user.Id = userId;
-                var userInfo = _userDataAccess.GetUserById(user.Id);
-                var userSalt = userInfo.Salt;
-                var userPass = userInfo.Password;
+                ModelState.AddModelError(string.Empty, "We have send an email to your email account, please confirm it!");
+            }
+            else if(ModelState.IsValid)
+            {
+                var userEnteredPass = _hashPassword.HashWithSalt(user.Password, 10, SHA256.Create(), userInfo.Salt);
 
-                var userEnteredPass = HashWithSalt(user.Password, 10, SHA256.Create(), userSalt);
-
-                if (userPass != userEnteredPass)
+                if (userInfo.Password != userEnteredPass)
                 {
                     ModelState.AddModelError("WrongPassword", "Wrong password, please try again!");
                 }
@@ -111,53 +120,6 @@ namespace DanceStudioManager
                 }
             }
             return View("Views/Home/RegisterLogin.cshtml");
-        }
-
-
-        public byte[] GenerateRandomCryptographicBytes(int keyLength)
-        {
-            RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider();
-            byte[] randomBytes = new byte[keyLength];
-            rngCryptoServiceProvider.GetBytes(randomBytes);
-            return randomBytes;
-        }
-
-        public string HashWithSalt(string password, int saltLength, HashAlgorithm hashAlgo, byte[] saltBytes)
-        {
-            byte[] passwordAsBytes = Encoding.UTF8.GetBytes(password);
-            List<byte> passwordWithSaltBytes = new List<byte>();
-            passwordWithSaltBytes.AddRange(passwordAsBytes);
-            passwordWithSaltBytes.AddRange(saltBytes);
-            byte[] digestBytes = hashAlgo.ComputeHash(passwordWithSaltBytes.ToArray());
-            return new string(Convert.ToBase64String(saltBytes) + Convert.ToBase64String(digestBytes));
-        }
-
-        public void SendEmail(string emailTo, User user)
-        {
-            MailMessage mail = new MailMessage();
-            string mailFrom = "nadezhdatodorova55@gmail.com";
-            mail.From = new MailAddress("nadezhdatodorova55@gmail.com");
-
-            // The important part -- configuring the SMTP client
-            SmtpClient smtp = new SmtpClient();
-            smtp.Port = 587;   // [1] You can try with 465 also, I always used 587 and got success
-            smtp.EnableSsl = true;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network; // [2] Added this
-            smtp.UseDefaultCredentials = false; // [3] Changed this
-            smtp.Credentials = new NetworkCredential(mailFrom, "kosara15");  // [4] Added this. Note, first parameter is NOT string.
-            smtp.Host = "smtp.gmail.com";
-
-            //recipient address
-            mail.To.Add(new MailAddress(emailTo));
-
-            //Formatted mail body
-            mail.IsBodyHtml = true;
-            string st = $"You just confirmed your account in DanceStudioManager. Please log in to access it!" + Url.Action("Login", "Account", null); ;
-
-            mail.Body = st;
-            smtp.Send(mail);
-            user.ConfirmAccount = 1;
-            _userDataAccess.UpdateUser(user);
         }
     }
 }

@@ -4,15 +4,17 @@
 }
 @model User
 
-<link href="~/css/RegisterLogin.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 @if (ViewBag.register == true)
 {
     <script src="~/js/Register.js"></script>
+    <link href="~/css/Register.css" rel="stylesheet" />
 }
 else if (ViewBag.login == true)
 {
     <script src="~/js/Login.js"></script>
+    <link href="~/css/Login.css" rel="stylesheet" />
 }
 
 
@@ -20,13 +22,13 @@ else if (ViewBag.login == true)
     <div class="login-info-box">
         <h2 id="loginText">Have an account?</h2>
         <label id="label-register" for="log-reg-show">Login</label>
-        <input type="radio" name="active-log-panel" id="log-reg-show" >
+        <input type="radio" name="active-log-panel" id="log-reg-show">
     </div>
 
     <div class="register-info-box">
         <h2 id="d">Don't have an account?</h2>
         <label id="label-login" for="log-login-show">Register</label>
-        <input type="radio" name="active-log-panel" id="log-login-show" checked="checked">
+        <input type="radio" name="active-log-panel" id="log-login-show">
     </div>
     <div class="white-panel">
         <form method="post">
@@ -54,10 +56,8 @@ else if (ViewBag.login == true)
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <h2>LOGIN</h2>
                 <input asp-for="Email" type="text" id="loginEmail" placeholder="Email">
-                <span asp-validation-for="Email" class="text-danger"></span>
 
                 <input asp-for="Password" id="loginPass" type="password" placeholder="Password">
-                <span asp-validation-for="Password" class="text-danger"></span>
 
                 <input asp-controller="Account" asp-action="Login" type="submit" value="Login">
                 <a href="">Forgot password?</a>
