@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -132,6 +136,44 @@ namespace DanceStudioManager
                 con.Close();
                 return user;
             }
+        }
+        public async void SignIn(HttpContext httpContext,int userId, bool isPersistent = false)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                User user = new User();
+                SqlCommand cmd = new SqlCommand("GetUserById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    user.Username = rdr["Username"].ToString();
+                    user.Password = rdr["Password"].ToString();
+                    user.Email = rdr["Email"].ToString();
+                }
+                con.Close();
+
+                ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            }
+        }
+
+
+        private IEnumerable<Claim> GetUserClaims(User user)
+        {
+
+            var claims = new List<Claim>
+            {
+                new Claim("Name", user.Username),
+                new Claim("Email", user.Email)
+            };
+            return claims;
         }
 
 

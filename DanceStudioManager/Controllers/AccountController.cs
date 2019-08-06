@@ -66,7 +66,7 @@ namespace DanceStudioManager
                     ModelState.AddModelError(string.Empty, "This studio name already exists");
                 }
 
-                else if(ModelState.IsValid)
+                else if (ModelState.IsValid)
                 {
                     _studioDataAccess.AddNewStudio(newStudio);
 
@@ -76,7 +76,7 @@ namespace DanceStudioManager
 
                     int userId = _userDataAccess.GetUserId(user);
 
-                    var path = Url.Action("Login", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
+                    var path = Url.Action("AuthenticateLogin", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
                     string message = "Please confirm your account by clicking <a href=\"" + path + "\">here</a>";
 
                     email.Send(user.Email, user, message);
@@ -102,11 +102,11 @@ namespace DanceStudioManager
             {
                 ModelState.AddModelError(string.Empty, "User with this email doesn't exists!");
             }
-            else if(!userInfo.ConfirmAccount)
+            else if (!userInfo.ConfirmAccount)
             {
                 ModelState.AddModelError(string.Empty, "We have send an email to your email account, please confirm it!");
             }
-            else if(ModelState.IsValid)
+            else if (ModelState.IsValid)
             {
                 var userEnteredPass = _hashPassword.HashWithSalt(user.Password, 10, SHA256.Create(), userInfo.Salt);
 
@@ -116,7 +116,16 @@ namespace DanceStudioManager
                 }
                 else
                 {
-                    return View("Views/Studio/Dashboard.cshtml");
+                    try
+                    {
+                        _userDataAccess.SignIn(HttpContext, user.Id);
+                        return RedirectToAction("Dashboard", "Studio");
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("summary", ex.Message);
+                        return View("Views/Home/RegisterLogin.cshtml");
+                    }
                 }
             }
             return View("Views/Home/RegisterLogin.cshtml");

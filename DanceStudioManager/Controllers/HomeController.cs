@@ -42,12 +42,20 @@ namespace DanceStudioManager
         }
 
         
-        public IActionResult Login(int userId)
+        public IActionResult AuthenticateLogin(int userId)
         {
+            ModelState.Clear();
             ViewBag.login = true;
-            User user = _userDataAccess.GetUserById(userId);
-            user.ConfirmAccount = true;
-            _userDataAccess.UpdateUser(user);
+            if (userId != 0)
+            {
+                User user = _userDataAccess.GetUserById(userId);
+                user.ConfirmAccount = true;
+                _userDataAccess.UpdateUser(user);
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Please enter your email and password!");
+            }
             return View("Views/Home/RegisterLogin.cshtml");
         }
 

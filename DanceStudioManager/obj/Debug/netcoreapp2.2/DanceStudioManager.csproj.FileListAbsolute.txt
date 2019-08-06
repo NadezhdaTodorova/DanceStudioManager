@@ -66,3 +66,4 @@ C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinal
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.csproj.CopyComplete
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\ConfirmEmail.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Dashboard.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\ForgotPassword.g.cshtml.cs
