@@ -30,8 +30,8 @@ $(document).ready(function () {
         var len = data.length;
         var $result = $("#passRes");
 
-        if (len < 4) {
-            $result.text("Password must be at least 4 characters!");
+        if (len < 8) {
+            $result.text("Password must be at least 8 characters!");
             $result.css("color", "red");
             $result.show();
             // Prevent form submission

@@ -15,13 +15,15 @@ namespace DanceStudioManager
         private readonly UserDataAccess _userDataAccess;
         private readonly StudioDataAccess _studioDataAccess;
         private readonly HashPassword _hashPassword;
+        private readonly SendEmail _email;
         private byte[] salt;
 
-        public AccountController(UserDataAccess userDataAccess, StudioDataAccess studioDataAccess, HashPassword hashPassword)
+        public AccountController(UserDataAccess userDataAccess, StudioDataAccess studioDataAccess, HashPassword hashPassword, SendEmail email)
         {
             _userDataAccess = userDataAccess;
             _studioDataAccess = studioDataAccess;
             _hashPassword = hashPassword;
+            _email = email;
         }
 
         public IActionResult Index()
@@ -37,7 +39,6 @@ namespace DanceStudioManager
             {
                 ViewBag.register = true;
                 Studio newStudio = new Studio();
-                SendEmail email = new SendEmail();
 
                 int saltLength = 10;
                 byte[] saltBytes = _hashPassword.GenerateRandomCryptographicBytes(saltLength);
@@ -46,7 +47,6 @@ namespace DanceStudioManager
                 user.Salt = salt;
 
                 newStudio.Name = user.StudioName;
-                newStudio.Password = user.Password;
 
                 var allUsers = _userDataAccess.GetAllUsers();
                 var allStudios = _studioDataAccess.GetAllStudios();
@@ -79,7 +79,7 @@ namespace DanceStudioManager
                     var path = Url.Action("AuthenticateLogin", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
                     string message = "Please confirm your account by clicking <a href=\"" + path + "\">here</a>";
 
-                    email.Send(user.Email, user, message);
+                    _email.Send(user.Email, user, message);
 
                     return View("Views/Home/ConfirmEmail.cshtml");
                 }
@@ -129,6 +129,72 @@ namespace DanceStudioManager
                 }
             }
             return View("Views/Home/RegisterLogin.cshtml");
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View("Views/Home/ForgotPassword.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(string email)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = new User();
+                user.Email = email;
+                var userId = _userDataAccess.GetUserId(user);
+                var userInfo = _userDataAccess.GetUserById(userId);
+
+                var path = Url.Action("ResetPassword", "Account", null, protocol: HttpContext.Request.Scheme);
+                string message = "Please confirm your email by clicking <a href=\"" + path + "\">here</a>";
+
+                userInfo.ConfirmAccount = false;
+                _userDataAccess.UpdateUser(userInfo);
+                _email.Send(user.Email, user, message);
+
+                return View("Views/Home/ConfirmEmail.cshtml");
+            }
+            else return RedirectToAction("ForgotPassword", "Account");
+        }
+
+        public IActionResult ResetPassword()
+        {
+            return View("Views/Home/ResetPassword.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(User user)
+        {
+            ViewBag.login = true;
+            ModelState.Clear();
+            var allUsers = _userDataAccess.GetAllUsers();
+            if (ModelState.IsValid)
+            {
+                if (!allUsers.Any(x => x.Email == user.Email))
+                {
+                    ModelState.AddModelError(string.Empty, "User with this email doesn't exists!");
+                    return View("Views/Home/ResetPassword.cshtml");
+                }
+                else
+                {
+                    int saltLength = 10;
+                    byte[] saltBytes = _hashPassword.GenerateRandomCryptographicBytes(saltLength);
+                    salt = saltBytes;
+                    var userId = _userDataAccess.GetUserId(user);
+                    var userWithNewPass = _userDataAccess.GetUserById(userId);
+                    userWithNewPass.Password = _hashPassword.HashWithSalt(user.Password, saltLength, SHA256.Create(), saltBytes);
+                    userWithNewPass.Salt = salt;
+                    userWithNewPass.ConfirmAccount = true;
+                    _userDataAccess.UpdateUser(userWithNewPass);
+
+                    ModelState.AddModelError(string.Empty, "You have successfuly changed your password, please log in!");
+                    return View("Views/Home/RegisterLogin.cshtml");
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Please provide the necessary data!");
+            return View("Views/Home/ResetPassword.cshtml");
         }
     }
 }

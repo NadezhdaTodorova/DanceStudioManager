@@ -4,8 +4,6 @@
 }
 @model User
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 @if (ViewBag.register == true)
 {
     <script src="~/js/Register.js"></script>
@@ -60,7 +58,7 @@ else if (ViewBag.login == true)
                 <input asp-for="Password" id="loginPass" type="password" placeholder="Password">
 
                 <input asp-controller="Account" asp-action="Login" type="submit" value="Login">
-                <a href="">Forgot password?</a>
+                <a asp-controller="Account" asp-action="ForgotPassword">Forgot password?</a>
             </div>
         </form>
     </div>

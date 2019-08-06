@@ -104,6 +104,9 @@ namespace DanceStudioManager
                 cmd.Parameters.AddWithValue("@Password", user.Password);
                 cmd.Parameters.AddWithValue("@Username", user.Username);
                 cmd.Parameters.AddWithValue("@Email", user.Email);
+                cmd.Parameters.AddWithValue("@Salt", user.Salt);
+                cmd.Parameters.AddWithValue("@ModifiedBy", user.Id);
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
 
                 con.Open();
                 cmd.ExecuteNonQuery();

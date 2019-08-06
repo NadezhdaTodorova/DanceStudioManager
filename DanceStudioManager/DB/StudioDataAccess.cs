@@ -50,7 +50,6 @@ namespace DanceStudioManager
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Name", studio.Name);
-                cmd.Parameters.AddWithValue("@Password", studio.Password);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -69,7 +68,6 @@ namespace DanceStudioManager
                 con.Open();
 
                 cmd.Parameters.AddWithValue("@Name", studio.Name);
-                cmd.Parameters.AddWithValue("@Password", studio.Password);
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())

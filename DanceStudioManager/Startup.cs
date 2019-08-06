@@ -54,6 +54,7 @@ namespace DanceStudioManager
             services.AddTransient<StudioDataAccess>();
             services.AddTransient<ApplicationContext>();
             services.AddTransient<HashPassword>();
+            services.AddTransient<SendEmail>();
             services.AddSingleton(Configuration);
         }
 
