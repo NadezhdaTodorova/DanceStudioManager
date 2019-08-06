@@ -51,7 +51,6 @@ C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinal
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\Contact.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
-C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\RegisterLogin.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -64,7 +63,8 @@ C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinal
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.dll
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.pdb
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.csproj.CopyComplete
-C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\ConfirmEmail.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Dashboard.g.cshtml.cs
-C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\ResetPassword.g.cshtml.cs
-C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Home\ForgotPassword.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\ConfirmEmail.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\ForgotPassword.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\RegisterLogin.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\ResetPassword.g.cshtml.cs

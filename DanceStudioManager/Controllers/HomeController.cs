@@ -38,7 +38,7 @@ namespace DanceStudioManager
         public IActionResult RegisterLogin()
         {
             ViewBag.register = true;
-            return View();
+            return View("Views/Account/RegisterLogin.cshtml");
         }
 
         
@@ -56,7 +56,7 @@ namespace DanceStudioManager
             {
                 ModelState.AddModelError(string.Empty, "Please enter your email and password!");
             }
-            return View("Views/Home/RegisterLogin.cshtml");
+            return View("Views/Account/RegisterLogin.cshtml");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

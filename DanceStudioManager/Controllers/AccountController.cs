@@ -85,7 +85,7 @@ namespace DanceStudioManager
                 }
             }
 
-            return View("Views/Home/RegisterLogin.cshtml");
+            return View("Views/Account/RegisterLogin.cshtml");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -124,16 +124,16 @@ namespace DanceStudioManager
                     catch (Exception ex)
                     {
                         ModelState.AddModelError("summary", ex.Message);
-                        return View("Views/Home/RegisterLogin.cshtml");
+                        return View("Views/Account/RegisterLogin.cshtml");
                     }
                 }
             }
-            return View("Views/Home/RegisterLogin.cshtml");
+            return View("Views/Account/RegisterLogin.cshtml");
         }
 
         public IActionResult ForgotPassword()
         {
-            return View("Views/Home/ForgotPassword.cshtml");
+            return View();
         }
 
         [HttpPost]
@@ -153,14 +153,14 @@ namespace DanceStudioManager
                 _userDataAccess.UpdateUser(userInfo);
                 _email.Send(user.Email, user, message);
 
-                return View("Views/Home/ConfirmEmail.cshtml");
+                return View("Views/Account/ConfirmEmail.cshtml");
             }
             else return RedirectToAction("ForgotPassword", "Account");
         }
 
         public IActionResult ResetPassword()
         {
-            return View("Views/Home/ResetPassword.cshtml");
+            return View();
         }
 
         [HttpPost]
@@ -174,7 +174,7 @@ namespace DanceStudioManager
                 if (!allUsers.Any(x => x.Email == user.Email))
                 {
                     ModelState.AddModelError(string.Empty, "User with this email doesn't exists!");
-                    return View("Views/Home/ResetPassword.cshtml");
+                    return View();
                 }
                 else
                 {
@@ -189,12 +189,12 @@ namespace DanceStudioManager
                     _userDataAccess.UpdateUser(userWithNewPass);
 
                     ModelState.AddModelError(string.Empty, "You have successfuly changed your password, please log in!");
-                    return View("Views/Home/RegisterLogin.cshtml");
+                    return View("Views/Account/RegisterLogin.cshtml");
                 }
             }
 
             ModelState.AddModelError(string.Empty, "Please provide the necessary data!");
-            return View("Views/Home/ResetPassword.cshtml");
+            return View();
         }
     }
 }
