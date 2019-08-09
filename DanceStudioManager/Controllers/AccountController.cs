@@ -81,7 +81,7 @@ namespace DanceStudioManager
 
                     _email.Send(user.Email, user, message);
 
-                    return View("Views/Home/ConfirmEmail.cshtml");
+                    return View("Views/Account/ConfirmEmail.cshtml");
                 }
             }
 

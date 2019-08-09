@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Students";
+    Layout = "_LayoutStudio";
+}
+
+@model List<Student>;
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/jquery.jqgrid.min.js"></script>
+<script src="~/js/grid.Locale-bg.js"></script>
+<script src="~/js/Students.js"></script>
+<link rel="stylesheet" href="~/jquery-ui.css">
+<script src="~/jquery-ui.min.js"></script>
+
+<table id="grid-table"></table>
+<div id="grid-pager"></div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

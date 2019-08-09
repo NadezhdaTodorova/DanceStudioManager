@@ -68,3 +68,11 @@ C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinal
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\ForgotPassword.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\RegisterLogin.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Account\ResetPassword.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Students.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Teachers.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Classes.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Events.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\User.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Calendar.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Reports.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LayoutStudio.g.cshtml.cs

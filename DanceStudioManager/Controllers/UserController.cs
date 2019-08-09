@@ -18,7 +18,7 @@ namespace DanceStudioManager
         public IActionResult Index()
         {
             var a = _userDataAccess.GetAllUsers();
-            return View();
+            return View("Views/Studio/User.cshtml");
         }
     }
 }
