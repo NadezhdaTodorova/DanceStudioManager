@@ -25,9 +25,11 @@ namespace DanceStudioManager
             return View();
         }
 
-        public List<Student> GetStudents()
+        public IActionResult GetStudents()
         {
-            return _studentDataAccess.GetAllStudents();
+            var students = _studentDataAccess.GetAllStudents();
+
+            return Json(students);
         }
 
         public IActionResult Teachers()

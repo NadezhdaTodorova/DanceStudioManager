@@ -69,8 +69,6 @@
     <None Include="wwwroot\assets\scss\now-ui-dashboard\_tables.scss" />
     <None Include="wwwroot\assets\scss\now-ui-dashboard\_typography.scss" />
     <None Include="wwwroot\assets\scss\now-ui-dashboard\_variables.scss" />
-    <None Include="wwwroot\AUTHORS.txt" />
-    <None Include="wwwroot\external\jquery\jquery.js" />
     <None Include="wwwroot\images\ui-bg_diagonals-medium_20_d34d17_40x40.png" />
     <None Include="wwwroot\images\ui-bg_gloss-wave_45_817865_500x100.png" />
     <None Include="wwwroot\images\ui-bg_gloss-wave_60_fece2f_500x100.png" />
@@ -85,16 +83,6 @@
     <None Include="wwwroot\images\ui-icons_ed9f26_256x240.png" />
     <None Include="wwwroot\images\ui-icons_fadc7a_256x240.png" />
     <None Include="wwwroot\images\ui-icons_ffe180_256x240.png" />
-    <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\jquery-ui.css" />
-    <None Include="wwwroot\jquery-ui.js" />
-    <None Include="wwwroot\jquery-ui.min.css" />
-    <None Include="wwwroot\jquery-ui.min.js" />
-    <None Include="wwwroot\jquery-ui.structure.css" />
-    <None Include="wwwroot\jquery-ui.structure.min.css" />
-    <None Include="wwwroot\jquery-ui.theme.css" />
-    <None Include="wwwroot\jquery-ui.theme.min.css" />
-    <None Include="wwwroot\LICENSE.txt" />
   </ItemGroup>
 
 
