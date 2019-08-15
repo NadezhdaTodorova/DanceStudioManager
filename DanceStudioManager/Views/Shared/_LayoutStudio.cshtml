@@ -26,16 +26,13 @@
                 Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
             -->
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                    CT
-                </a>
                 <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-                    My dance studio
+                    @ViewBag.StudioName
                 </a>
             </div>
             <div class="sidebar-wrapper" id="sidebar-wrapper">
                 <ul class="nav">
-                    <li class="active ">
+                    <li>
                         <a asp-controller="Studio" asp-action="Dashboard">
                             <i class="now-ui-icons design_app"></i>
                             <p>Dashboard</p>
@@ -48,9 +45,9 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Studio" asp-action="Teachers">
+                        <a asp-controller="Studio" asp-action="Instructor">
                             <i class="now-ui-icons education_atom"></i>
-                            <p>Teachers</p>
+                            <p>Instructors</p>
                         </a>
                     </li>
                     <li>
@@ -99,7 +96,38 @@
                                 <span class="navbar-toggler-bar bar3"></span>
                             </button>
                         </div>
-                        <a class="navbar-brand" href="#pablo">Dashboard</a>
+                        @if (ViewBag.text == "Students")
+                        {
+                            <a class="navbar-brand">Students</a>
+                        }
+                        @if (ViewBag.text == "Instructors")
+                        {
+                            <a class="navbar-brand">Instructors</a>
+                        }
+                        @if (ViewBag.text == "Classes")
+                        {
+                            <a class="navbar-brand">Classes</a>
+                        }
+                        @if (ViewBag.text == "Events")
+                        {
+                            <a class="navbar-brand">Events</a>
+                        }
+                        @if (ViewBag.text == "Dashboard")
+                        {
+                            <a class="navbar-brand">Dashboard</a>
+                        }
+                        @if (ViewBag.text == "User profile")
+                        {
+                            <a class="navbar-brand">User profile</a>
+                        }
+                        @if (ViewBag.text == "Reports")
+                        {
+                            <a class="navbar-brand">Reports</a>
+                        }
+                        @if (ViewBag.text == "Calendar")
+                        {
+                            <a class="navbar-brand">Calendar</a>
+                        }
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -154,38 +182,35 @@
             <!-- End Navbar -->
             <div class="panel-header panel-header-sm">
             </div>
-            <div class="container">
-                <partial name="_CookieConsentPartial" />
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
-            </div>
-            <!--   Core JS Files   -->
-            @*<script src="~/assets/js/core/jquery.min.js"></script>*@
-            <script src="~/assets/js/core/popper.min.js"></script>
-            <script src="~/assets/js/core/bootstrap.min.js"></script>
-            <script src="~/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-            @*<script src="~/js/grid.Locale-bg.js"></script>*@
-            <!--  Google Maps Plugin    -->
-            @*<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>*@
-            <!-- Chart JS -->
-            <script src="~/assets/js/plugins/chartjs.min.js"></script>
-            <!--  Notifications Plugin    -->
-            <script src="~/assets/js/plugins/bootstrap-notify.js"></script>
-            <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-            <script src="../assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script>
-            <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-            <script src="~/assets/demo/demo.js"></script>
-            <script>
-                $(document).ready(function () {
-                    // Javascript method's body can be found in assets/js/demos.js
-                    demo.initDashboardPageCharts();
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="~/assets/js/core/jquery.min.js"></script>
+    <script src="~/assets/js/core/popper.min.js"></script>
+    <script src="~/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <!-- Chart JS -->
+    <script src="~/assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script>
+    <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+    <script src="~/assets/demo/demo.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
 
-                });
-            </script>
+        });
+    </script>
 
-            @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
 

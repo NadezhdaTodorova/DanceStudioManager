@@ -10,6 +10,7 @@ namespace DanceStudioManager
     {
         public IActionResult Index()
         {
+            ViewBag.text = "Calendar";
             return View("Views/Studio/Calendar.cshtml");
         }
     }

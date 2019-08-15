@@ -21,6 +21,7 @@ namespace DanceStudioManager
         public string Email { get; set; }
         [Required]
         public string StudioName { get; set; }
+        public int StudioId { get; set; }
         public bool ConfirmAccount  { get; set; }
         public byte[] Salt { get; set; }
     }

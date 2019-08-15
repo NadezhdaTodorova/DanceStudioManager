@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DanceStudioManager
 {
-    public class Student
+    public class Instructor
     {
         public int Id { get; set; }
         [Required]
@@ -16,7 +16,7 @@ namespace DanceStudioManager
         [Required]
         public string CellPhone { get; set; }
         [Required]
-        public string Email{ get; set; }
+        public string Email { get; set; }
         public bool SendEmail { get; set; }
         public string Gender { get; set; }
         public int StudioId { get; set; }

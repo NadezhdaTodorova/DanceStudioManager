@@ -22,11 +22,17 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 
 Copyright (c) 2015 Daniel Eden
 */
+
+./*sidebar {
+    background: linear-gradient(to right bottom, rgba(124, 28, 12, 0.2), rgba(120, 3, 2, 0.6)) !important;
+}*/
+
 .animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both; }
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
 
 .animated.infinite {
   -webkit-animation-iteration-count: infinite;
@@ -2785,7 +2791,7 @@ Created using IcoMoon - icomoon.io
     }
     .sidebar[data-color="orange"] .nav li.active > a:not([data-toggle="collapse"]),
     .off-canvas-sidebar[data-color="orange"] .nav li.active > a:not([data-toggle="collapse"]) {
-        background: linear-gradient(to right bottom, rgba(21, 28, 12, 0.2), rgba(150, 3, 2, 0.6));
+        background: linear-gradient(to right bottom, rgba(210, 28, 12, 0.2), rgba(150, 3, 2, 0.6));
     }
        
 .visible-on-sidebar-regular {

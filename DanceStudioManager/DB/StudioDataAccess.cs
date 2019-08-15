@@ -79,5 +79,30 @@ namespace DanceStudioManager
             }
             return studioId;
         }
+
+        public Studio GetStudioInfo(int studioId)
+        {
+
+            Studio studio = new Studio();
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetStudioInfo", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Id", studioId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    studio.Id = (int)rdr["ID"];
+                    studio.Name = rdr["Name"].ToString();
+                    studio.Photo_url = rdr["Photo_url"].ToString();
+
+                }
+                con.Close();
+            }
+            return studio;
+        }
     }
 }

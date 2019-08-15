@@ -134,6 +134,7 @@ namespace DanceStudioManager
                     user.Password = rdr["Password"].ToString();
                     user.Email= rdr["Email"].ToString();
                     user.ConfirmAccount = (bool)rdr["ConfirmAccount"];
+                    user.StudioId = (int)rdr["StudioId"];
 
                 }
                 con.Close();

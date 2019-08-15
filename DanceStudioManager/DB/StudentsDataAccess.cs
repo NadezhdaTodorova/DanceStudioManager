@@ -36,12 +36,66 @@ namespace DanceStudioManager
                     student.CellPhone = rdr["CellPhone"].ToString();
                     student.Email = rdr["Email"].ToString();
                     student.SendEmail = (bool)rdr["SendEmail"];
+                    student.Gender = rdr["Gender"].ToString();
 
                     lstStudents.Add(student);
                 }
                 con.Close();
             }
             return lstStudents;
+        }
+
+        public List<Student> SearchStudents(Student student)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                List<Student> students = new List<Student>();
+                SqlCommand cmd = new SqlCommand("SearchStudents", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Firstname", student.Firstname);
+                cmd.Parameters.AddWithValue("@Lastname", student.Lastname);
+                cmd.Parameters.AddWithValue("@Email", student.Email);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Student s = new Student();
+
+                    s.Id = (int)rdr["Id"];
+                    s.Firstname = rdr["Firstname"].ToString();
+                    s.Lastname = rdr["Lastname"].ToString();
+                    s.Email = rdr["Email"].ToString();
+                    s.Gender = rdr["Gender"].ToString();
+
+                    students.Add(s);
+                }
+                con.Close();
+                return students;
+            }
+        }
+
+        public void AddNewStudent(Student student, int studioId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("AddStudent", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Firstname", student.Firstname);
+                cmd.Parameters.AddWithValue("@Lastname", student.Lastname);
+                cmd.Parameters.AddWithValue("@Email", student.Email);
+                cmd.Parameters.AddWithValue("@DateOfBirth", student.DateOfBirth);
+                cmd.Parameters.AddWithValue("@CellPhone", student.CellPhone);
+                cmd.Parameters.AddWithValue("@SendEmail", student.SendEmail);
+                cmd.Parameters.AddWithValue("@Gender", student.Gender);
+                cmd.Parameters.AddWithValue("@StudioId", studioId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
     }
 }

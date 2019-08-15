@@ -10,6 +10,7 @@ namespace DanceStudioManager
     {
         public IActionResult Index()
         {
+            ViewBag.text = "Reports";
             return View("Views/Studio/Reports.cshtml");
         }
     }
