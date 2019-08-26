@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace DanceStudioManager
 {
@@ -11,25 +14,32 @@ namespace DanceStudioManager
         private readonly StudioDataAccess _studioDataAccess;
         private readonly InstructorDataAccess _instructorDataAccess;
         private readonly ClassDataAccess _classDataAccess;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserDataAccess _userDataAccess;
 
         public StudioController(StudentsDataAccess studentDataAccess, StudioDataAccess studioDataAccess, InstructorDataAccess instructorDataAccess,
-            ClassDataAccess classDataAccess)
+            ClassDataAccess classDataAccess, IHttpContextAccessor httpContextAccessor, UserDataAccess userDataAccess)
         {
             _studentDataAccess = studentDataAccess;
             _studioDataAccess = studioDataAccess;
             _instructorDataAccess = instructorDataAccess;
             _classDataAccess = classDataAccess;
+            _httpContextAccessor = httpContextAccessor;
+            _userDataAccess = userDataAccess;
         }
         public IActionResult Dashboard(int studioId)
         {
             ViewBag.text = "Dashboard";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(studioId).Name;
             return View();
         }
         public IActionResult Students()
         {
             ViewBag.text = "Students";
+            var userId = _userDataAccess.GetUserId(User);
             return View();
         }
+
         public IActionResult GetStudents(Student student)
         {
             List<Student> studentList = new List<Student>();

@@ -13,12 +13,13 @@ namespace DanceStudioManager
         [Required]
         public string Level { get; set; }
         [Required]
-        public float PricePerHour { get; set; }
+        public double PricePerHour { get; set; }
         [Required]
         public int SheduleId { get; set; }
         [Required]
         public int ClassTypeId { get; set; }
         public string Shedule{ get; set; }
         public string  ClassType  { get; set; }
+        public int  NumberOfStudents  { get; set; }
     }
 }

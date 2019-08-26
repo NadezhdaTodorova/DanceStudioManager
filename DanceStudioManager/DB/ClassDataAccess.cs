@@ -31,11 +31,12 @@ namespace DanceStudioManager
                 {
                     Class _class = new Class();
 
-                    _class.Genre = rdr["Gender"].ToString();
+                    _class.Genre = rdr["Genre"].ToString();
                     _class.Level = rdr["Level"].ToString();
-                    _class.PricePerHour = (float)rdr["PricePerHour"];
-                    _class.SheduleId = (int)rdr["SheduleId"];
-                    _class.ClassTypeId = (int)rdr["ClassTypeId"];
+                    _class.PricePerHour = (double)rdr["PricePerHour"];
+                    _class.Shedule = rdr["Shedule"].ToString();
+                    _class.ClassType = rdr["ClassType"].ToString();
+                    _class.NumberOfStudents = (int)rdr["NumberOfStudents"];
 
                     lstClasses.Add(_class);
                 }

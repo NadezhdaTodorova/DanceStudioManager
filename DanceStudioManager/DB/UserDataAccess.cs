@@ -175,9 +175,17 @@ namespace DanceStudioManager
             var claims = new List<Claim>
             {
                 new Claim("Name", user.Username),
-                new Claim("Email", user.Email)
+                new Claim("Email", user.Email),
             };
             return claims;
+        }
+
+        public string GetUserId(ClaimsPrincipal principal)
+        {
+            if (principal == null)
+                throw new ArgumentNullException(nameof(principal));
+
+            return principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
 
 

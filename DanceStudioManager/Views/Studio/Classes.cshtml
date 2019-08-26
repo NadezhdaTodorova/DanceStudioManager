@@ -9,6 +9,33 @@
 <link href="~/css/ThemeJQueryGrid/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/css/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/css/Students.css" rel="stylesheet" />
+
+
+<form id="formClasses" method="post" class="mediumForm">
+    <div class="card-body">
+        <div class="form-row mb-2">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Genre">Genre: </label>
+                    <input asp-for="Genre" type="text" class="form-control form-control-plaintext w-75" id="Genre" placeholder="Genre">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Level">Level: </label>
+                    <input asp-for="Level" type="text" class="form-control form-control-plaintext w-75" id="Lastname" placeholder="Level">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="ClassType">ClassType: </label>
+                    <input asp-for="ClassType" type="text" class="form-control form-control-plaintext w-75" placeholder="ClassType">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 <div class="card-body">
     <div class="form-row mb-3">
         <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#classesModal">Add New</button>
@@ -17,40 +44,51 @@
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
 </div>
-    <!-- Modal -->
-    <form method="post">
-        <div class="modal fade" id="classesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title ml-5 mt-4" id="exampleModalLabel">Add new class</h5>
-                        <img src="~/Pictures/danceClass.jpg" alt="danceClass" class="ml-4" width="70" height="70" />
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input asp-for="Genre" type="text" class="modal-input " id="Firstname" placeholder="Genre">
-                        <input asp-for="Level" type="text" class="modal-input " id="Lastname" placeholder="Level">
-                        <input asp-for="PricePerHour" type="text" class="modal-input " id="Email" placeholder="PricePerHour">
-                        <input asp-for="Shedule" type="text" class="modal-input " id="DateOfBirth" placeholder="Shedule">
-                        <input asp-for="ClassType" type="text" class="modal-input " id="CellPhone" placeholder="ClassType">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button asp-controller="Studio" asp-action="AddNewClass" type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+<!-- Modal -->
+<form method="post">
+    <div class="modal fade" id="classesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title ml-5 mt-4" id="exampleModalLabel">Add new class</h5>
+                    <img src="~/Pictures/danceClass.jpg" alt="danceClass" class="ml-4" width="70" height="70" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Genre" type="text" class="modal-input " id="Genre" placeholder="Genre">
+                    <select class="browser-default custom-select modal-input">
+                        <option selected>Level</option>
+                        <option value="1">beginners</option>
+                        <option value="2">intermidiate</option>
+                        <option value="3">veterans</option>
+                        <option value="3">professionals</option>
+                    </select>
+                    <input asp-for="PricePerHour" type="text" class="modal-input " id="PricePerHour" placeholder="PricePerHour">
+                    <select class="browser-default custom-select modal-input">
+                        <option selected>Class type</option>
+                        <option value="1">private</option>
+                        <option value="2">group</option>
+                    </select>
+                    <input asp-for="Shedule" type="text" class="modal-input " id="Shedule" placeholder="Shedule">
+                    <label id="labelForEmail">Please write the shedule in the corresponding format " Mon-Wen-17:30-18:30 "</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-controller="Studio" asp-action="AddNewClass" type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-        <script src="~/js/jqGrid/grid.locale-en.js"></script>
-        <script src="~/js/jqGrid/jquery.jqGrid.js"></script>
-        <script src="~/js/Class.js"></script>
-    }
+    <script src="~/js/jqGrid/grid.locale-en.js"></script>
+    <script src="~/js/jqGrid/jquery.jqGrid.js"></script>
+    <script src="~/js/Class.js"></script>
+}
