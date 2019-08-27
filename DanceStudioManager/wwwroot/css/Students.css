@@ -6,8 +6,11 @@
 
 
 #Firstname,
-#Lastname, 
-#Email
+#Lastname,
+#Email,
+#Genre,
+#Level,
+#ClassType 
 {
     background-color: white;
 }

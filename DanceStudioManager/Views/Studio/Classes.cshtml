@@ -4,12 +4,11 @@
     Layout = "_LayoutStudio";
 }
 
-@model Class
+@model ClassStudentVM
 
 <link href="~/css/ThemeJQueryGrid/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/css/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/css/Students.css" rel="stylesheet" />
-
 
 <form id="formClasses" method="post" class="mediumForm">
     <div class="card-body">
@@ -23,29 +22,28 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="Level">Level: </label>
-                    <input asp-for="Level" type="text" class="form-control form-control-plaintext w-75" id="Lastname" placeholder="Level">
+                    <input asp-for="Level" type="text" class="form-control form-control-plaintext w-75" id="Level" placeholder="Level">
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="ClassType">ClassType: </label>
-                    <input asp-for="ClassType" type="text" class="form-control form-control-plaintext w-75" placeholder="ClassType">
+                    <input asp-for="ClassType" type="text" class="form-control form-control-plaintext w-75" id="ClassType" placeholder="ClassType">
                 </div>
             </div>
         </div>
+        <div class="form-row mb-3">
+            <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#classesModal">Add New</button>
+            <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="Submit" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
     </div>
 </form>
 
-<div class="card-body">
-    <div class="form-row mb-3">
-        <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#classesModal">Add New</button>
-        <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="Submit" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
-    </div>
-    <table id="jqGrid"></table>
-    <div id="jqGridPager"></div>
-</div>
+
 <!-- Modal -->
-<form method="post">
+<form method="post" asp-controller="Studio" asp-action="GetStudentsForDropdown">
     <div class="modal fade" id="classesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -72,8 +70,13 @@
                         <option value="1">private</option>
                         <option value="2">group</option>
                     </select>
-                    <input asp-for="Shedule" type="text" class="modal-input " id="Shedule" placeholder="Shedule">
+                    <input asp-for="Shedule" type="text" class="modal-input" id="Shedule" placeholder="Shedule">
                     <label id="labelForEmail">Please write the shedule in the corresponding format " Mon-Wen-17:30-18:30 "</label>
+
+                    <select asp-for="StudentsIds" asp-items="@Model.Students" class="modal-input h-auto" multiple="multiple" name="StudentsIds[]">
+                        <option selected>Please select students</option>
+                    </select>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -91,4 +94,18 @@
     <script src="~/js/jqGrid/grid.locale-en.js"></script>
     <script src="~/js/jqGrid/jquery.jqGrid.js"></script>
     <script src="~/js/Class.js"></script>
+    <script>
+        $("select").mousedown(function (e) {
+            e.preventDefault();
+
+            var select = this;
+            var scroll = select.scrollTop;
+
+            e.target.selected = !e.target.selected;
+
+            setTimeout(function () { select.scrollTop = scroll; }, 0);
+
+            $(select).focus();
+        }).mousemove(function (e) { e.preventDefault() });
+    </script>
 }

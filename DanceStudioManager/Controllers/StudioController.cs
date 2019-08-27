@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -90,12 +91,26 @@ namespace DanceStudioManager
         public IActionResult Classes()
         {
             ViewBag.text = "Classes";
-            return View();
+            var _class = new ClassStudentVM();
+            var studentsList = _studentDataAccess.GetAllStudents();
+            
+            foreach(var s in studentsList)
+            {
+                var sL = new SelectListItem()
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Firstname
+                };
+
+                _class.Students.Add(sL);
+            }
+
+            return View(_class);
         }
 
         public IActionResult GetClasses()
         {
-            List<Class> classesList= new List<Class>();
+            List<Class> classesList = new List<Class>();
 
             classesList = _classDataAccess.GetAllClasses();
 
@@ -106,6 +121,15 @@ namespace DanceStudioManager
         {
             //_instructorDataAccess.AddNewInstructor(instructor, 62);
             return RedirectToAction("Classes");
+        }
+
+
+        [HttpPost]
+        public IActionResult GetStudentsForDropdown(Student model)
+        {
+            //  check model.EmployeeId 
+            //  to do : Save and redirect
+            return View();
         }
 
         public IActionResult Events()
