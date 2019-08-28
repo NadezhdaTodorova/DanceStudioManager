@@ -43,8 +43,8 @@
 
 
 <!-- Modal -->
-<form method="post" asp-controller="Studio" asp-action="GetStudentsForDropdown">
-    <div class="modal fade" id="classesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form method="post" asp-controller="Studio" asp-action="AddNewClass">
+    <div class="modal fade " id="classesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -57,30 +57,31 @@
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="Genre" type="text" class="modal-input " id="Genre" placeholder="Genre">
-                    <select class="browser-default custom-select modal-input">
-                        <option selected>Level</option>
-                        <option value="1">beginners</option>
-                        <option value="2">intermidiate</option>
-                        <option value="3">veterans</option>
-                        <option value="3">professionals</option>
+                    <select class="browser-default custom-select modal-input" name="Level">
+                        <option>Level</option>
+                        <option value="beginners">beginners</option>
+                        <option value="intermidiate">intermidiate</option>
+                        <option value="veterans">veterans</option>
+                        <option value="professionals">professionals</option>
                     </select>
-                    <input asp-for="PricePerHour" type="text" class="modal-input " id="PricePerHour" placeholder="PricePerHour">
-                    <select class="browser-default custom-select modal-input">
-                        <option selected>Class type</option>
-                        <option value="1">private</option>
-                        <option value="2">group</option>
+                    <input asp-for="PricePerHour" type="number" class="modal-input " id="PricePerHour" placeholder="PricePerHour" value="">
+                    <select class="browser-default custom-select modal-input" name="ClassType">
+                        <option>Class type</option>
+                        <option value="private">private</option>
+                        <option value="group">group</option>
                     </select>
-                    <input asp-for="Shedule" type="text" class="modal-input" id="Shedule" placeholder="Shedule">
-                    <label id="labelForEmail">Please write the shedule in the corresponding format " Mon-Wen-17:30-18:30 "</label>
+                    <input asp-for="Shedule" type="text" class="modal-input" id="Shedule" placeholder="Shedule" data-toggle="tooltip" data-placement="top" title="Please write the shedule in the corresponding format Mon-Wen-17:30-18:30">
 
-                    <select asp-for="StudentsIds" asp-items="@Model.Students" class="modal-input h-auto" multiple="multiple" name="StudentsIds[]">
-                        <option selected>Please select students</option>
-                    </select>
+                    <h6 class="label label-default">Select students </h6>
+                    <select asp-for="Students" asp-items="@Model.Students" class="modal-input h-auto" multiple="multiple" name="StudentsIds[]"></select>
+
+                    <h6 class="label label-default">Select instructor/s</h6>
+                    <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto" multiple="multiple" name="InstructorsIds[]"></select>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button asp-controller="Studio" asp-action="AddNewClass" type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -95,7 +96,7 @@
     <script src="~/js/jqGrid/jquery.jqGrid.js"></script>
     <script src="~/js/Class.js"></script>
     <script>
-        $("select").mousedown(function (e) {
+        $("#Students").mousedown(function (e) {
             e.preventDefault();
 
             var select = this;
@@ -105,7 +106,24 @@
 
             setTimeout(function () { select.scrollTop = scroll; }, 0);
 
-            $(select).focus();
+            $("#Students").focus();
         }).mousemove(function (e) { e.preventDefault() });
+
+        $("#Instructors").mousedown(function (e) {
+            e.preventDefault();
+
+            var select = this;
+            var scroll = select.scrollTop;
+
+            e.target.selected = !e.target.selected;
+
+            setTimeout(function () { select.scrollTop = scroll; }, 0);
+
+            $("#Instructors").focus();
+        }).mousemove(function (e) { e.preventDefault() });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 }

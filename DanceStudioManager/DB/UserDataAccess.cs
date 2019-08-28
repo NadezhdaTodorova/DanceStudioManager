@@ -180,14 +180,5 @@ namespace DanceStudioManager
             return claims;
         }
 
-        public string GetUserId(ClaimsPrincipal principal)
-        {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
-
-            return principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        }
-
-
     }
 }

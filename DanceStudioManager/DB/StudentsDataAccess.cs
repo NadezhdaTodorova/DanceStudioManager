@@ -37,6 +37,7 @@ namespace DanceStudioManager
                     student.Email = rdr["Email"].ToString();
                     student.SendEmail = (bool)rdr["SendEmail"];
                     student.Gender = rdr["Gender"].ToString();
+                    student.Id = (int)rdr["Id"];
 
                     lstStudents.Add(student);
                 }

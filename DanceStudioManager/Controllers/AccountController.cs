@@ -119,7 +119,7 @@ namespace DanceStudioManager
                     try
                     {
                         _userDataAccess.SignIn(HttpContext, user.Id);
-                        return RedirectToAction("Dashboard", "Studio", new { studioId = userInfo.StudioId });
+                        return RedirectToAction("Dashboard", "Studio");
                     }
                     catch (Exception ex)
                     {

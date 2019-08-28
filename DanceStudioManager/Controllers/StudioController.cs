@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -28,16 +29,14 @@ namespace DanceStudioManager
             _httpContextAccessor = httpContextAccessor;
             _userDataAccess = userDataAccess;
         }
-        public IActionResult Dashboard(int studioId)
+        public IActionResult Dashboard()
         {
             ViewBag.text = "Dashboard";
-            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(studioId).Name;
             return View();
         }
         public IActionResult Students()
         {
             ViewBag.text = "Students";
-            var userId = _userDataAccess.GetUserId(User);
             return View();
         }
 
@@ -58,7 +57,9 @@ namespace DanceStudioManager
 
         public IActionResult AddNewStudent(Student student)
         {
-            _studentDataAccess.AddNewStudent(student, 62);
+            int studioId = GetCurrentStudioId();
+
+            _studentDataAccess.AddNewStudent(student, studioId);
             return RedirectToAction("Students");
         }
         public IActionResult Instructor()
@@ -84,7 +85,9 @@ namespace DanceStudioManager
 
         public IActionResult AddNewInstructor(Instructor instructor)
         {
-            _instructorDataAccess.AddNewInstructor(instructor, 62);
+
+            int studioId = GetCurrentStudioId();
+            _instructorDataAccess.AddNewInstructor(instructor, studioId);
             return RedirectToAction("Instructor");
         }
 
@@ -93,16 +96,29 @@ namespace DanceStudioManager
             ViewBag.text = "Classes";
             var _class = new ClassStudentVM();
             var studentsList = _studentDataAccess.GetAllStudents();
+            var instructorList = _instructorDataAccess.GetAllInstructors();
             
             foreach(var s in studentsList)
             {
                 var sL = new SelectListItem()
                 {
                     Value = s.Id.ToString(),
-                    Text = s.Firstname
+                    Text = $"{s.Firstname} {s.Lastname}"
                 };
 
+
                 _class.Students.Add(sL);
+            }
+
+            foreach(var i in instructorList)
+            {
+                var iL = new SelectListItem()
+                {
+                    Value = i.Id.ToString(),
+                    Text = $"{i.Firstname} {i.Lastname}"
+                };
+
+                _class.Instructors.Add(iL);
             }
 
             return View(_class);
@@ -117,25 +133,40 @@ namespace DanceStudioManager
             return Json(classesList);
         }
 
-        public IActionResult AddNewClass(Class _class)
+        [HttpPost]
+        public IActionResult AddNewClass(ClassStudentVM _class)
         {
-            //_instructorDataAccess.AddNewInstructor(instructor, 62);
+            var newclass = new Class();
+            newclass.Genre = _class.Genre;
+            newclass.Level = _class.Level;
+            newclass.PricePerHour = _class.PricePerHour;
+
+            int studioId = GetCurrentStudioId();
+
+            _classDataAccess.AddNewClass(newclass, studioId);
+            //_classDataAccess.AddNewShedule(,studioId,newclass.Shedule)
             return RedirectToAction("Classes");
         }
 
-
-        [HttpPost]
-        public IActionResult GetStudentsForDropdown(Student model)
-        {
-            //  check model.EmployeeId 
-            //  to do : Save and redirect
-            return View();
-        }
 
         public IActionResult Events()
         {
             ViewBag.text = "Events";
             return View();
+        }
+
+        private int GetCurrentStudioId()
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+            var studioId = _userDataAccess.GetUserById(userId).StudioId;
+
+            return studioId;
         }
     }
 }

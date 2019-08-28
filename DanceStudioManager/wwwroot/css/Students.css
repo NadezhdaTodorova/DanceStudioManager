@@ -4,14 +4,18 @@
     margin-top: 30px;
 }
 
+#labelForStudents {
+    color: black;
+    font-weight: 600;
+    float:left;
+}
 
 #Firstname,
 #Lastname,
 #Email,
 #Genre,
 #Level,
-#ClassType 
-{
+#ClassType {
     background-color: white;
 }
 
@@ -28,14 +32,14 @@
 
 .modal-content {
     width: 400px;
-    height: 700px;
+    height: 800px;
     background-color: white;
     text-align: center;
 }
 
 .modal-input {
     width: 300px;
-    height: 10%;
+    height: 8%;
     display: block;
     margin: 15px auto;
     border: 1px solid;
@@ -47,8 +51,9 @@
     padding-left: 5px;
 }
 
-#labelForEmail{
-    color:grey;
+#labelForEmail {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: small;
 }
 
 .btn-primary {
