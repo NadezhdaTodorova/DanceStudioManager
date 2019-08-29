@@ -55,6 +55,8 @@ namespace DanceStudioManager
                 cmd.Parameters.AddWithValue("@Genre", _class.Genre);
                 cmd.Parameters.AddWithValue("@Level", _class.Level);
                 cmd.Parameters.AddWithValue("@PricePerHour", _class.PricePerHour);
+                cmd.Parameters.AddWithValue("@Shedule", _class.Shedule);
+                cmd.Parameters.AddWithValue("@ClassType", _class.ClassType);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -95,27 +97,61 @@ namespace DanceStudioManager
             }
         }
 
-        //public int GetClassId(Class _class)
-        //{
-        //    int userId = 0;
+        public int GetClassId(Class _class)
+        {
+            int classId = 0;
 
-        //    using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
-        //    {
-        //        SqlCommand cmd = new SqlCommand("GetUserId", con);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        con.Open();
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetClassId", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
 
-        //        cmd.Parameters.AddWithValue("@Email", _class.);
+                cmd.Parameters.AddWithValue("@Shedule", _class.Shedule);
+                cmd.Parameters.AddWithValue("@Genre", _class.Genre);
 
-        //        SqlDataReader rdr = cmd.ExecuteReader();
-        //        while (rdr.Read())
-        //        {
-        //            user.Id = (int)rdr["ID"];
-        //            userId = user.Id;
-        //        }
-        //        con.Close();
-        //    }
-        //    return userId;
-        //}
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    _class.Id = (int)rdr["ID"];
+                    classId = _class.Id;
+                }
+                con.Close();
+            }
+
+            return classId;
+        }
+
+        public void AddStudentToClass(int studentId, int classId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("AddStudentToClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@StudentId", studentId);
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void AddInstructorToClass(int instructorId, int classId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("AddInstructorToClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@InstructorId", instructorId);
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace DanceStudioManager
     {
         [Required]
         public string Genre { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Level { get; set; }
         [Required]
@@ -22,6 +23,7 @@ namespace DanceStudioManager
         public string Shedule{ get; set; }
         public string  ClassType  { get; set; }
         public int  NumberOfStudents  { get; set; }
+        public string[]  Instructors  { get; set; }
 
     }
 }

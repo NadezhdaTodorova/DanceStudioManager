@@ -91,7 +91,7 @@ namespace DanceStudioManager
             return RedirectToAction("Instructor");
         }
 
-        public IActionResult Classes()
+        public IActionResult Classes(string classError)
         {
             ViewBag.text = "Classes";
             var _class = new ClassStudentVM();
@@ -121,14 +121,16 @@ namespace DanceStudioManager
                 _class.Instructors.Add(iL);
             }
 
+            if (classError != null) ViewBag.classError = classError;
+
             return View(_class);
         }
 
         public IActionResult GetClasses()
         {
-            List<Class> classesList = new List<Class>();
+            //List<Class> classesList = new List<Class>();
 
-            classesList = _classDataAccess.GetAllClasses();
+            var classesList = _classDataAccess.GetAllClasses();
 
             return Json(classesList);
         }
@@ -140,20 +142,32 @@ namespace DanceStudioManager
             newclass.Genre = _class.Genre;
             newclass.Level = _class.Level;
             newclass.PricePerHour = _class.PricePerHour;
+            newclass.Shedule = _class.Shedule;
+            newclass.ClassType = _class.ClassType;
 
             int studioId = GetCurrentStudioId();
 
+            var classes = _classDataAccess.GetAllClasses();
+
+            foreach(var c in classes)
+            {
+                if ((c.Genre == newclass.Genre) && (c.Shedule == newclass.Shedule))
+                {
+                    string classError = "If you want to add new class, it should be with different genre or shedule from the existing ones!";
+                    return RedirectToAction("Classes", new { classError});
+                }
+            }
+
             _classDataAccess.AddNewClass(newclass, studioId);
-            //_classDataAccess.AddNewShedule(,studioId,newclass.Shedule)
+            int classId = _classDataAccess.GetClassId(newclass);
+
+            foreach (var studentId in _class.StudentsIds)
+            {
+                _classDataAccess.AddStudentToClass(studentId, classId);
+            }
             return RedirectToAction("Classes");
         }
 
-
-        public IActionResult Events()
-        {
-            ViewBag.text = "Events";
-            return View();
-        }
 
         private int GetCurrentStudioId()
         {

@@ -10,6 +10,11 @@
     float:left;
 }
 
+#classError{
+    color:red;
+    height:10px;
+}
+
 #Firstname,
 #Lastname,
 #Email,

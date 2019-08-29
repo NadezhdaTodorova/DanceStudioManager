@@ -32,6 +32,7 @@
                 </div>
             </div>
         </div>
+        <label id="classError">@ViewBag.classError</label>
         <div class="form-row mb-3">
             <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#classesModal">Add New</button>
             <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="Submit" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
@@ -55,7 +56,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input asp-for="Genre" type="text" class="modal-input " id="Genre" placeholder="Genre">
                     <select class="browser-default custom-select modal-input" name="Level">
                         <option>Level</option>
