@@ -37,6 +37,7 @@ namespace DanceStudioManager
                     _class.Shedule = rdr["Shedule"].ToString();
                     _class.ClassType = rdr["ClassType"].ToString();
                     _class.NumberOfStudents = (int)rdr["NumberOfStudents"];
+                    _class.Id = (int)rdr["Id"];
 
                     lstClasses.Add(_class);
                 }
@@ -152,6 +153,29 @@ namespace DanceStudioManager
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
+        }
+
+        public List<int> GetInstructorsConnectedToClass(int classId)
+        {
+            List<int> instructorsIds = new List<int>();
+
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetInstructorsConnectedToClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Classid", classId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    int id = (int)rdr["InstructorId"];
+                    instructorsIds.Add(id);
+                }
+                con.Close();
+            }
+            return instructorsIds;
         }
     }
 }

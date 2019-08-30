@@ -131,6 +131,15 @@ namespace DanceStudioManager
             //List<Class> classesList = new List<Class>();
 
             var classesList = _classDataAccess.GetAllClasses();
+            foreach(var c in classesList)
+            {
+                var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id);
+                foreach(var id in instructorsIds)
+                {
+                    var instructor = _instructorDataAccess.GetInstructorById(id);
+                    c.Instructors.Add($" {instructor.Firstname} ");
+                }
+            }
 
             return Json(classesList);
         }
@@ -164,6 +173,11 @@ namespace DanceStudioManager
             foreach (var studentId in _class.StudentsIds)
             {
                 _classDataAccess.AddStudentToClass(studentId, classId);
+            }
+
+            foreach(var instructorId in _class.InstructorsIds)
+            {
+                _classDataAccess.AddInstructorToClass(instructorId, classId);
             }
             return RedirectToAction("Classes");
         }
