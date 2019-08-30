@@ -73,5 +73,5 @@ C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinal
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.dll
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.pdb
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.csproj.CopyComplete
-C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.csprojAssemblyReference.cache
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LayoutStudio.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.csprojAssemblyReference.cache
