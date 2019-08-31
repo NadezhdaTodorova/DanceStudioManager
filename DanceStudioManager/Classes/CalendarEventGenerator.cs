@@ -19,8 +19,12 @@ namespace DanceStudioManager
         public List<XElement> GetEventElements()
         {
             List<XElement> elements = new List<XElement>();
-
-            
+            var calendarData = new CalendarData();
+            calendarData.Name = "Salsa";
+            calendarData.Hour = "17:30";
+            elements.Add(new XElement("p",
+                        new XAttribute("class", "d-lg-none"),
+                        "Salsa"));
 
             return elements;
         }

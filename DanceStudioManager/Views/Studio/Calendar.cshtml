@@ -7,6 +7,8 @@
 
 @model CalendarSearchVM
 
+<link href="~/css/Calendar.css" rel="stylesheet" />
+
 <form method="post" id="frmReportCalendar" class="mediumForm">
     <div class="card border m-3 w-auto">
         <div class="card-body">
@@ -14,15 +16,13 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label  for="Year">Година:</label>
-                        @*<select class="form-control" asp-for="Year" asp-items="@Model.AllYears"></select>*@
-                        <select class="form-control"></select>
+                        <select class="form-control" asp-for="Year" asp-items="@Model.AllYears"></select>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="Month">Месец:</label>
-                        @*<select class="form-control" asp-for="Month" value="@DateTime.Now.Month">*@
-                        <select class="form-control" value="@DateTime.Now.Month">
+                        <select class="form-control" asp-for="Month" value="@DateTime.Now.Month">
                             <option value="1">Януари</option>
                             <option value="2">Февруари</option>
                             <option value="3">Март</option>
@@ -40,8 +40,7 @@
                 </div>
             </div>
         </div>
-        @*<calendar month="@Model.Month" year="@Model.Year" show-current-week="false" events="@Model" />*@
-        <calendar month="5" year="2019" show-current-week="false" />
+        <calendar month="@Model.Month" year="@Model.Year" show-current-week="false" events="@Model" />
     </div>
 </form>
 <script src="~/js/Calendar.js"></script>

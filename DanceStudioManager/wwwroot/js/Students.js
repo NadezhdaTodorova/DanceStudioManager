@@ -11,9 +11,9 @@ $(document).ready(function () {
         height: 450,
         colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender'],
         colModel: [
-            { name: 'firstname', index: 'Firstname', width: 250, sortable: true},
-            { name: 'lastname', index: 'Lastname', width: 250 },
-            { name: 'email', index: 'Email', width: 250 },
+            { name: 'firstname', index: 'Firstname', width: 200, sortable: true},
+            { name: 'lastname', index: 'Lastname', width: 200 },
+            { name: 'email', index: 'Email', width: 200 },
             { name: 'cellPhone', index: 'CellPhone', width: 250 },
             { name: 'gender', index: 'Gender', width: 250 }
         ],

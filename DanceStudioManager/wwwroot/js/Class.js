@@ -10,12 +10,12 @@ $(document).ready(function () {
         height: 450,
         colNames: ['Genre', 'Level', 'PricePerHour', 'Shedule', 'ClassType', 'NumberOfStudents', 'Instructors'],
         colModel: [
-            { name: 'genre', index: 'Genre', width: 250, sortable: true },
-            { name: 'level', index: 'Level', width: 250 },
-            { name: 'pricePerHour', index: 'PricePerHour', width: 150 },
+            { name: 'genre', index: 'Genre', width: 200, sortable: true },
+            { name: 'level', index: 'Level', width: 200 },
+            { name: 'pricePerHour', index: 'PricePerHour', width: 100 },
             { name: 'shedule', index: 'Shedule', width: 250 },
             { name: 'classType', index: 'ClassType', width: 100 },
-            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 150 },
+            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 105 },
             { name: 'instructors', index: 'Instructors', width: 150 }
         ],
         loadonce: true,
