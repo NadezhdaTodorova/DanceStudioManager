@@ -50,7 +50,7 @@ namespace DanceStudioManager.Classes
                                     new XAttribute("class", "col"),
                                 new XElement("h4",
                                     new XAttribute("class", "col display-4 mb-2 pb-1 text-center capitalize"),
-                                    monthStart.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("bg-BG"))
+                                    monthStart.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("en-EN"))
                                     )
                                 ),
 

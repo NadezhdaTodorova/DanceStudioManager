@@ -21,7 +21,10 @@ namespace DanceStudioManager
             List<XElement> elements = new List<XElement>();
             foreach (var calData in _calendarData.CalendarData.OrderBy(x => x.Name))
             {
-                elements = GetEventForDay(calData).AddEventElement();
+                if (_day.Date == calData.DateFrom.Date)
+                {
+                    elements = GetEventForDay(calData).AddEventElement();
+                }
             }
 
             return elements;
