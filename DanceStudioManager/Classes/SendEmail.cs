@@ -16,7 +16,7 @@ namespace DanceStudioManager
 
             // The important part -- configuring the SMTP client
             SmtpClient smtp = new SmtpClient();
-            smtp.Port = 587;   // [1] You can try with 465 also, I always used 587 and got success
+            smtp.Port = 465;   // [1] You can try with 465 also, I always used 587 and got success
             smtp.EnableSsl = true;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network; // [2] Added this
             smtp.UseDefaultCredentials = false; // [3] Changed this
