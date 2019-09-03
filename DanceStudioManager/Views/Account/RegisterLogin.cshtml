@@ -4,14 +4,16 @@
 }
 @model User
 
+<script src="~/assets/js/core/jquery.min.js"></script>
+
 @if (ViewBag.register == true)
 {
-    <script src="~/js/Register.js"></script>
+    <script integrity="" src="~/js/Register.js"></script>
     <link href="~/css/Register.css" rel="stylesheet" />
 }
 else if (ViewBag.login == true)
 {
-    <script src="~/js/Login.js"></script>
+    <script integrity="" src="~/js/Login.js"></script>
     <link href="~/css/Login.css" rel="stylesheet" />
 }
 
