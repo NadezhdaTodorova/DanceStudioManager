@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
-using System.Text;
-using System.Net;
-using System.Net.Mail;
+using System.Threading;
+using System.Transactions;
 
 namespace DanceStudioManager
 {
@@ -66,22 +63,38 @@ namespace DanceStudioManager
                     ModelState.AddModelError(string.Empty, "This studio name already exists");
                 }
 
+
                 else if (ModelState.IsValid)
                 {
-                    _studioDataAccess.AddNewStudio(newStudio);
+                    try
+                    {
+                        using (TransactionScope scope = new TransactionScope())
+                        {
+                            _studioDataAccess.AddNewStudio(newStudio);
 
-                    int studioId = _studioDataAccess.GetStudioId(newStudio);
+                            int studioId = _studioDataAccess.GetStudioId(newStudio);
 
-                    _userDataAccess.AddNewUser(user, studioId);
+                            _userDataAccess.AddNewUser(user, studioId);
 
-                    int userId = _userDataAccess.GetUserId(user);
+                            int userId = _userDataAccess.GetUserId(user);
 
-                    var path = Url.Action("AuthenticateLogin", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
-                    string message = "Please confirm your account by clicking <a href=\"" + path + "\">here</a>";
+                            var path = Url.Action("AuthenticateLogin", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
+                            string message = "Please confirm your account by clicking <a href=\"" + path + "\">here</a>";
 
-                    _email.Send(user.Email, user, message);
+                            _email.Send(user.Email, user, message);
 
-                    return View("Views/Account/ConfirmEmail.cshtml");
+                            scope.Complete();
+
+                            return View("Views/Account/ConfirmEmail.cshtml");
+                            
+                        }
+                    }
+                    catch (ThreadAbortException ex)
+                    {
+                        ModelState.AddModelError(ex.Message, "");
+                    }
+
+                    
                 }
             }
 
