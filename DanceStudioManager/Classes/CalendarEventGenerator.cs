@@ -19,14 +19,18 @@ namespace DanceStudioManager
         public List<XElement> GetEventElements()
         {
             List<XElement> elements = new List<XElement>();
-            var calendarData = new CalendarData();
-            calendarData.Name = "Salsa";
-            calendarData.Hour = "17:30";
-            elements.Add(new XElement("p",
-                        new XAttribute("class", "d-lg-none"),
-                        "Salsa"));
+            foreach (var calData in _calendarData.CalendarData.OrderBy(x => x.Name))
+            {
+                elements = GetEventForDay(calData).AddEventElement();
+            }
 
             return elements;
         }
+
+        public EventState GetEventForDay (CalendarData data)
+        {
+            return new EventState(data);
+        }
+
     }
 }
