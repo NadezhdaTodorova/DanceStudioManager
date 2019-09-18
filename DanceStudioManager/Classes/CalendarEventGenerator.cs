@@ -19,11 +19,12 @@ namespace DanceStudioManager
         public List<XElement> GetEventElements()
         {
             List<XElement> elements = new List<XElement>();
-            foreach (var calData in _calendarData.CalendarData.OrderBy(x => x.Name))
+            foreach (var calData in _calendarData.CalendarData.OrderBy(x => x.Hour))
             {
-                if (_day.Date == calData.DateFrom.Date)
+                if (calData.SheduleDays.Any(x => x.Day.Date == _day.Date))
                 {
-                    elements = GetEventForDay(calData).AddEventElement();
+                    var title = GetEventForDay(calData).GetPoupHtmlDescription();
+                    elements = GetEventForDay(calData).AddEventElement(title);
                 }
             }
 

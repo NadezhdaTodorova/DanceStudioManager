@@ -48,8 +48,8 @@ namespace DanceStudioManager.Classes
 
                                 new XElement("div",
                                     new XAttribute("class", "col"),
-                                new XElement("h4",
-                                    new XAttribute("class", "col display-4 mb-2 pb-1 text-center capitalize"),
+                                new XElement("h5",
+                                    new XAttribute("class", "col display-4 mb-5 text-center capitalize"),
                                     monthStart.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("en-EN"))
                                     )
                                 ),
@@ -65,8 +65,8 @@ namespace DanceStudioManager.Classes
                                 )
                             ),
                             new XElement("div",
-                                new XAttribute("class", "row d-none d-lg-flex p-1 week text-white"),
-                                (new string[] { "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота", "Неделя" }).Select(d =>
+                                new XAttribute("class", "row d-none d-lg-flex p-1 week text-black"),
+                                (new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }).Select(d =>
                                        new XElement("h5",
                                            new XAttribute("class", "col-lg p-1 text-center"),
                                            d.ToString()
@@ -107,7 +107,7 @@ namespace DanceStudioManager.Classes
                         var currentDay = "currentDay";
 
                     yield return new XElement("div",
-                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)} {(Events.Days.ContainsKey(d) && Events.Days[d].IsHoliday ? holidayClasses : null)} {(Events.Days.ContainsKey(d) && Events.Days[d].Day == DateTime.Now.Date ? currentDay : null)}"),
+                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)} {(Events.Days.ContainsKey(d) && Events.Days[d].WorkDay ? holidayClasses : null)} {(Events.Days.ContainsKey(d) && Events.Days[d].Day == DateTime.Now.Date ? currentDay : null)}"),
                             //new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate"),
                             new XElement("h5",
                                 new XAttribute("class", "row align-items-center"),

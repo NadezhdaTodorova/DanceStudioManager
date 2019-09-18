@@ -53,11 +53,25 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("AddClass", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@Genre", _class.Genre);
-                cmd.Parameters.AddWithValue("@Level", _class.Level);
-                cmd.Parameters.AddWithValue("@PricePerHour", _class.PricePerHour);
-                cmd.Parameters.AddWithValue("@Shedule", _class.Shedule);
-                cmd.Parameters.AddWithValue("@ClassType", _class.ClassType);
+                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                if (_class.Genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
+                else cmd.Parameters["@Genre"].Value = _class.Genre;
+
+                cmd.Parameters.Add("@Level", SqlDbType.VarChar);
+                if (_class.Level == null) cmd.Parameters["@Level"].Value = DBNull.Value;
+                else cmd.Parameters["@Level"].Value = _class.Level;
+
+                cmd.Parameters.Add("@PricePerHour", SqlDbType.Float);
+                if (_class.PricePerHour == 0) cmd.Parameters["@PricePerHour"].Value = DBNull.Value;
+                else cmd.Parameters["@PricePerHour"].Value = _class.PricePerHour;
+
+                cmd.Parameters.Add("@Shedule", SqlDbType.VarChar);
+                if (_class.Shedule == null) cmd.Parameters["@Shedule"].Value = DBNull.Value;
+                else cmd.Parameters["@Shedule"].Value = _class.Shedule;
+
+                cmd.Parameters.Add("@ClassType", SqlDbType.VarChar);
+                if (_class.ClassType == null) cmd.Parameters["@ClassType"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassType"].Value = _class.ClassType;
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -108,8 +122,13 @@ namespace DanceStudioManager
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
 
-                cmd.Parameters.AddWithValue("@Shedule", _class.Shedule);
-                cmd.Parameters.AddWithValue("@Genre", _class.Genre);
+                cmd.Parameters.Add("@Level", SqlDbType.VarChar);
+                if (_class.Level == null) cmd.Parameters["@Level"].Value = DBNull.Value;
+                else cmd.Parameters["@Level"].Value = _class.Level;
+
+                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                if (_class.Genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
+                else cmd.Parameters["@Genre"].Value = _class.Genre;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -176,6 +195,63 @@ namespace DanceStudioManager
                 con.Close();
             }
             return instructorsIds;
+        }
+
+        public void AddDayToShedule(string day, int classId, string hour, int studioId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("AddDayToShedule", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@Day", SqlDbType.VarChar);
+                if (day == null) cmd.Parameters["@Day"].Value = DBNull.Value;
+                else cmd.Parameters["@Day"].Value = day;
+
+                cmd.Parameters.Add("@ClassId", SqlDbType.Int);
+                if (classId == 0) cmd.Parameters["@ClassId"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassId"].Value = classId;
+
+                cmd.Parameters.Add("@Hour", SqlDbType.VarChar);
+                if (hour == null) cmd.Parameters["@Hour"].Value = DBNull.Value;
+                else cmd.Parameters["@Hour"].Value = hour;
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public List<Shedule> GetClassShedule(int classId)
+        {
+            List<Shedule> shedules = new List<Shedule>();
+            var shedule = new Shedule();
+
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetClassShedule", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Classid", classId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    shedule.Id = (int)rdr["ID"];
+                    shedule.ClassId = (int)rdr["ClassId"];
+                    shedule.Day = (string)rdr["Day"];
+                    shedule.Hour = (string)rdr["Hour"];
+                    shedules.Add(shedule);
+                }
+                con.Close();
+            }
+
+            return shedules;
         }
     }
 }

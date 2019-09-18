@@ -98,5 +98,34 @@ namespace DanceStudioManager
                 con.Close();
             }
         }
+        public Instructor GetStudentById(int id)
+        {
+            Instructor i = new Instructor();
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+
+                SqlCommand cmd = new SqlCommand("GetInstructorById", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+
+
+                    i.Id = (int)rdr["Id"];
+                    i.Firstname = rdr["Firstname"].ToString();
+                    i.Lastname = rdr["Lastname"].ToString();
+                    i.Email = rdr["Email"].ToString();
+                    i.Gender = rdr["Gender"].ToString();
+
+                }
+                con.Close();
+            }
+
+            return i;
+        }
     }
 }

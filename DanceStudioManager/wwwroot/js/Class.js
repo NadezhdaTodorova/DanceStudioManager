@@ -26,5 +26,36 @@ $(document).ready(function () {
         multiselect: true,
         multiboxonly: true
     });
+
+    $("#Students").mousedown(function (e) {
+        e.preventDefault();
+
+        var select = this;
+        var scroll = select.scrollTop;
+
+        e.target.selected = !e.target.selected;
+
+        setTimeout(function () { select.scrollTop = scroll; }, 0);
+
+        $("#Students").focus();
+    }).mousemove(function (e) { e.preventDefault() });
+
+    $("#Instructors").mousedown(function (e) {
+        e.preventDefault();
+
+        var select = this;
+        var scroll = select.scrollTop;
+
+        e.target.selected = !e.target.selected;
+
+        setTimeout(function () { select.scrollTop = scroll; }, 0);
+
+        $("#Instructors").focus();
+    }).mousemove(function (e) { e.preventDefault() });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
 });
 

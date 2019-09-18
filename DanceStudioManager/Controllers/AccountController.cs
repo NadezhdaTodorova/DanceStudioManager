@@ -125,7 +125,7 @@ namespace DanceStudioManager
 
                 if (userInfo.Password != userEnteredPass)
                 {
-                    ModelState.AddModelError("WrongPassword", "Wrong password, please try again!");
+                    ModelState.AddModelError("WrongPassword", "Please try again!");
                 }
                 else
                 {

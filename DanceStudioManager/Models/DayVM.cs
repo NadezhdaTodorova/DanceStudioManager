@@ -6,7 +6,6 @@ namespace DanceStudioManager
     {
         public DateTime Day { get; set; }
         public bool WorkDay { get; set; }
-        public bool IsWeekend { get; set; }
 
         public bool IsHoliday
         {

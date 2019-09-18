@@ -40,7 +40,24 @@ namespace DanceStudioManager
             return View();
         }
 
-        public IActionResult GetStudents(Student student)
+        public IActionResult GetStudents()
+        {
+            List<Student> studentList = new List<Student>();
+            
+            studentList = _studentDataAccess.GetAllStudents();
+
+            return Json(studentList);
+        }
+
+        public IActionResult AddNewStudent(Student student)
+        {
+            int studioId = GetCurrentStudioId();
+
+            _studentDataAccess.AddNewStudent(student, studioId);
+            return RedirectToAction("Students");
+        }
+
+        public IActionResult SearchStudent(Student student)
         {
             List<Student> studentList = new List<Student>();
             if (student.Firstname == null || student.Lastname == null || student.Email == null)
@@ -55,13 +72,6 @@ namespace DanceStudioManager
             return Json(studentList);
         }
 
-        public IActionResult AddNewStudent(Student student)
-        {
-            int studioId = GetCurrentStudioId();
-
-            _studentDataAccess.AddNewStudent(student, studioId);
-            return RedirectToAction("Students");
-        }
         public IActionResult Instructor()
         {
             ViewBag.text = "Instructors";
@@ -128,8 +138,6 @@ namespace DanceStudioManager
 
         public IActionResult GetClasses()
         {
-            //List<Class> classesList = new List<Class>();
-
             var classesList = _classDataAccess.GetAllClasses();
             foreach(var c in classesList)
             {
@@ -151,7 +159,6 @@ namespace DanceStudioManager
             newclass.Genre = _class.Genre;
             newclass.Level = _class.Level;
             newclass.PricePerHour = _class.PricePerHour;
-            newclass.Shedule = _class.Shedule;
             newclass.ClassType = _class.ClassType;
 
             int studioId = GetCurrentStudioId();
@@ -169,6 +176,19 @@ namespace DanceStudioManager
 
             _classDataAccess.AddNewClass(newclass, studioId);
             int classId = _classDataAccess.GetClassId(newclass);
+
+            _class.SheduleDays.Add("Monday");
+            _class.SheduleDays.Add("Wednesday");
+            _class.Hour = "17:30-18:30";
+
+            foreach(var day in _class.SheduleDays)
+            {
+                _classDataAccess.AddDayToShedule(day, classId, _class.Hour, studioId);
+            }
+
+            //ToDo
+            //getSheduleId
+            //updateClass with sheduleId
 
             foreach (var studentId in _class.StudentsIds)
             {
