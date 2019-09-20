@@ -18,15 +18,13 @@ namespace DanceStudioManager
         public int SheduleId { get; set; }
         [Required]
         public int ClassTypeId { get; set; }
-        public string Shedule { get; set; }
         public string ClassType { get; set; }
         public int NumberOfStudents { get; set; }
         public int[] StudentsIds { get; set; }
         public int[] InstructorsIds { get; set; }
+        public string[] SheduleDays { get; set; }
         public List<SelectListItem> Students { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Instructors { get; set; } = new List<SelectListItem>();
-        //public List<SelectListItem> SheduleDays { get; set; } = new List<SelectListItem>();
-        public List<string> SheduleDays { get; set; } = new List<string>();
         public string Hour { get; set; }
     }
 }

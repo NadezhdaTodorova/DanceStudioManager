@@ -20,7 +20,7 @@ namespace DanceStudioManager
         public int SheduleId { get; set; }
         [Required]
         public int ClassTypeId { get; set; }
-        public string Shedule{ get; set; }
+        public List<string> Shedule { get; set; } = new List<string>();
         public string  ClassType  { get; set; }
         public int  NumberOfStudents  { get; set; }
         public List<string> Instructors { get; set; } = new List<string>();

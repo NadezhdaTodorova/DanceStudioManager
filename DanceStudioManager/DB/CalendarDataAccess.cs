@@ -21,25 +21,12 @@ namespace DanceStudioManager
 
         public void AddDaysToCalendar(List<DayVM> days)
         {
-            int? userId = 0;
             foreach (var day in days)
             {
                 using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
                 {
                     SqlCommand cmd = new SqlCommand("InsertCalendar", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.Add("@CreatedBy", SqlDbType.Int);
-                    if (userId == 0) cmd.Parameters["@CreatedBy"].Value = DBNull.Value;
-                    else cmd.Parameters["@CreatedBy"].Value = userId;
-
-                    cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
-                    if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
-                    else cmd.Parameters["@ModifiedBy"].Value = userId;
-
-                    cmd.Parameters.Add("@ModifiedOn", SqlDbType.DateTime);
-                    if (userId == 0) cmd.Parameters["@ModifiedOn"].Value = DBNull.Value;
-                    else cmd.Parameters["@ModifiedOn"].Value = userId;
 
                     cmd.Parameters.Add("@Day", SqlDbType.DateTime);
                     if (day.Day == null) cmd.Parameters["@Day"].Value = DBNull.Value;
@@ -57,12 +44,8 @@ namespace DanceStudioManager
         public List<CalendarData> GetAllClassesShedule(CalendarSearchVM calendarSearch)
         {
             var calData = new List<CalendarData>();
-            List<DayVM> classesDays = new List<DayVM>();
-            List<DayVM> days = GetDays();
+           
             List<Class> classes = classDataAccess.GetAllClasses();
-            
-
-
 
             foreach (var _class in classes)
             {
@@ -77,7 +60,8 @@ namespace DanceStudioManager
 
                 foreach (var s in shedules)
                 {
-                    foreach (var day in days)
+                    List<DayVM> classesDays = new List<DayVM>();
+                    foreach (var day in calendarSearch.Days)
                     {
                         if (day.Day.DayOfWeek.ToString() == s.Day)
                         {
@@ -88,8 +72,6 @@ namespace DanceStudioManager
                     calData.Add(new CalendarData { Hour = s.Hour, Level = _class.Level, Name = _class.Genre, SheduleDays = classesDays, Instructors = instructors, NumberOfStudents = _class.NumberOfStudents });
                 }
             }
-
-
 
             return calData;
         }

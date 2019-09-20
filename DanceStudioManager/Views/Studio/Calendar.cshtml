@@ -15,26 +15,26 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label  for="Year">Година:</label>
+                        <label for="Year">Year:</label>
                         <select class="form-control" asp-for="Year" asp-items="@Model.AllYears"></select>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="Month">Месец:</label>
+                        <label for="Month">Month:</label>
                         <select class="form-control" asp-for="Month" value="@DateTime.Now.Month">
-                            <option value="1">Януари</option>
-                            <option value="2">Февруари</option>
-                            <option value="3">Март</option>
-                            <option value="4">Април</option>
-                            <option value="5">Май</option>
-                            <option value="6">Юни</option>
-                            <option value="7">Юли</option>
-                            <option value="8">Август</option>
-                            <option value="9">Септември</option>
-                            <option value="10">Октомври</option>
-                            <option value="11">Ноември</option>
-                            <option value="12">Декември</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
                         </select>
                     </div>
                 </div>
@@ -43,5 +43,6 @@
         <calendar month="@Model.Month" year="@Model.Year" show-current-week="false" events="@Model" />
     </div>
 </form>
+
 <script src="~/assets/js/core/jquery.min.js"></script>
 <script src="~/js/Calendar.js"></script>

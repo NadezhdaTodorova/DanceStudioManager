@@ -36,8 +36,10 @@
             <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#studentsModal">Add New</button>
             <button type="submit" id="SubmitStudents" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
         </div>
-        <table id="jqGrid"></table>
-        <div id="jqGridPager"></div>
+        <div id="studentsGrid">
+            <table id="jqGrid"></table>
+            <div id="jqGridPager"></div>
+        </div>
     </div>
 </form>
 
@@ -60,7 +62,7 @@
                     <input asp-for="Lastname" type="text" class="modal-input " id="Lastname" placeholder="Lastname">
                     <input asp-for="Email" type="text" class="modal-input " id="Email2" placeholder="Email">
                     <p id='result'></p>
-                    <input asp-for="DateOfBirth" type="datetime-local" class="datepicker modal-input" id="DateOfBirth" placeholder="DateOfBirth">
+                    <input asp-for="DateOfBirth" type="datetime-local" class="datepicker modal-input" id="DateOfBirth" placeholder="Date Of Birth">
                     <input asp-for="CellPhone" type="text" class="modal-input " id="CellPhone" placeholder="CellPhone">
                     <select class="browser-default custom-select modal-input" name="Gender">
                         <option>Gender</option>

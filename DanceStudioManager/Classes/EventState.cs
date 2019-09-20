@@ -15,20 +15,17 @@ namespace DanceStudioManager
             data = _data;
         }
 
-        public List<XElement> AddEventElement(XAttribute title)
+        public XElement AddEventElement(XAttribute title)
         {
-            List<XElement> elements = new List<XElement>();
-            var element =  new XElement("a",
+            var element = new XElement("a",
                         new XElement("mark",
                         new XAttribute("data-placement", "top"),
-                        new XAttribute("class", $" event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate font-italic"), title, 
+                        new XAttribute("class", $" event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate font-italic name"), title,
                         new XAttribute("data-html", "true"),
                         new XAttribute("data-toggle", "tooltip"),
                             $"{data.Name} {data.Hour}"));
+            return element;
 
-            elements.Add(element);
-
-            return elements;
         }
 
         public XAttribute GetPoupHtmlDescription()

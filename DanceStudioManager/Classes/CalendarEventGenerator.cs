@@ -24,7 +24,8 @@ namespace DanceStudioManager
                 if (calData.SheduleDays.Any(x => x.Day.Date == _day.Date))
                 {
                     var title = GetEventForDay(calData).GetPoupHtmlDescription();
-                    elements = GetEventForDay(calData).AddEventElement(title);
+                    var element = GetEventForDay(calData).AddEventElement(title);
+                    elements.Add(element);
                 }
             }
 

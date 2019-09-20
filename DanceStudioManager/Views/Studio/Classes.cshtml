@@ -8,7 +8,7 @@
 
 <link href="~/css/ThemeJQueryGrid/jquery-ui.min.css" rel="stylesheet" />
 <link href="~/css/ui.jqgrid.css" rel="stylesheet" />
-<link href="~/css/Students.css" rel="stylesheet" />
+<link href="~/css/Class.css" rel="stylesheet" />
 
 <form id="formClasses" method="post" class="mediumForm">
     <div class="card-body">
@@ -70,7 +70,18 @@
                         <option value="private">private</option>
                         <option value="group">group</option>
                     </select>
-                    <input asp-for="Shedule" type="text" class="modal-input" id="Shedule" placeholder="Shedule" data-toggle="tooltip" data-placement="top" title="Please write the shedule in the corresponding format Mon-Wen-17:30-18:30">
+                    <h6 class="label label-default">Select shedule Days</h6>
+                    <select asp-for="SheduleDays" class="modal-input h-auto" multiple="multiple" name="SheduleDays[]">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+
+                    <input asp-for="Hour" type="text" class="modal-input " id="Hour" placeholder="Hour" value="">
 
                     <h6 class="label label-default">Select students </h6>
                     <select asp-for="Students" asp-items="@Model.Students" class="modal-input h-auto" multiple="multiple" name="StudentsIds[]"></select>

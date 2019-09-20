@@ -107,8 +107,7 @@ namespace DanceStudioManager.Classes
                         var currentDay = "currentDay";
 
                     yield return new XElement("div",
-                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)} {(Events.Days.ContainsKey(d) && Events.Days[d].WorkDay ? holidayClasses : null)} {(Events.Days.ContainsKey(d) && Events.Days[d].Day == DateTime.Now.Date ? currentDay : null)}"),
-                            //new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate"),
+                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)} {(Events.Days[d.DayOfYear-1].WorkDay ? null : holidayClasses)} {(Events.Days[d.DayOfYear-1].Day == DateTime.Now.Date ? currentDay : null)}"),
                             new XElement("h5",
                                 new XAttribute("class", "row align-items-center"),
                                 new XElement("span",

@@ -7,12 +7,12 @@
 #labelForStudents {
     color: black;
     font-weight: 600;
-    float:left;
+    float: left;
 }
 
-#classError{
-    color:red;
-    height:10px;
+#classError {
+    color: red;
+    height: 10px;
 }
 
 #Firstname,
@@ -24,8 +24,8 @@
     background-color: white;
 }
 
-.bg-modal{
-    width:100%;
+.bg-modal {
+    width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     position: relative;
@@ -37,7 +37,7 @@
 
 .modal-content {
     width: 400px;
-    height: 850px;
+    height: 950px;
     background-color: white;
     text-align: center;
 }

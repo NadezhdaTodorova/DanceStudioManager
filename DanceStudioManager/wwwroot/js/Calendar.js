@@ -44,7 +44,8 @@ $(document).ready(function () {
 
 
 });
+
 function redirectToLocation() {
-    document.location = document.location.origin + "/Calendar/Calendar/" + $("#Year").val() + "/" + $('#Month').val();
+    document.location = document.location.origin + "/Calendar/Index?year=" + $("#Year").val() + "&month=" + $('#Month').val();
 }
 

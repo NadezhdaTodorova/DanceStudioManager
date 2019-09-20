@@ -34,7 +34,6 @@ namespace DanceStudioManager
                     _class.Genre = rdr["Genre"].ToString();
                     _class.Level = rdr["Level"].ToString();
                     _class.PricePerHour = (double)rdr["PricePerHour"];
-                    _class.Shedule = rdr["Shedule"].ToString();
                     _class.ClassType = rdr["ClassType"].ToString();
                     _class.NumberOfStudents = (int)rdr["NumberOfStudents"];
                     _class.Id = (int)rdr["Id"];
@@ -64,10 +63,6 @@ namespace DanceStudioManager
                 cmd.Parameters.Add("@PricePerHour", SqlDbType.Float);
                 if (_class.PricePerHour == 0) cmd.Parameters["@PricePerHour"].Value = DBNull.Value;
                 else cmd.Parameters["@PricePerHour"].Value = _class.PricePerHour;
-
-                cmd.Parameters.Add("@Shedule", SqlDbType.VarChar);
-                if (_class.Shedule == null) cmd.Parameters["@Shedule"].Value = DBNull.Value;
-                else cmd.Parameters["@Shedule"].Value = _class.Shedule;
 
                 cmd.Parameters.Add("@ClassType", SqlDbType.VarChar);
                 if (_class.ClassType == null) cmd.Parameters["@ClassType"].Value = DBNull.Value;
@@ -229,7 +224,7 @@ namespace DanceStudioManager
         public List<Shedule> GetClassShedule(int classId)
         {
             List<Shedule> shedules = new List<Shedule>();
-            var shedule = new Shedule();
+            
 
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
             {
@@ -242,6 +237,7 @@ namespace DanceStudioManager
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
+                    var shedule = new Shedule();
                     shedule.Id = (int)rdr["ID"];
                     shedule.ClassId = (int)rdr["ClassId"];
                     shedule.Day = (string)rdr["Day"];

@@ -18,7 +18,7 @@ namespace DanceStudioManager
         public int Year { get; set; }
         public int Month { get; set; }
         public List<CalendarData> CalendarData { get; set; } = new List<CalendarData>();
-        public Dictionary<DateTime, DayVM> Days { get; set; } = new Dictionary<DateTime, DayVM>();
+        public List<DayVM> Days { get; set; } = new List<DayVM>();
 
         public List<SelectListItem> AllYears
         {

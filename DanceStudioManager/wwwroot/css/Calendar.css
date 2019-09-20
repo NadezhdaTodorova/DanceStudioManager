@@ -8,3 +8,21 @@
 .next{
     margin-right:15px;
 }
+
+.holidayClasses {
+    background: rgb(245, 238, 238);
+}
+
+
+.currentDay {
+    background: rgb(210, 207, 207);
+}
+.name {
+    background: rgba(232, 130, 130, 0.56);
+}
+
+.even {
+    background: rgb(243, 204, 204);
+}
+
+

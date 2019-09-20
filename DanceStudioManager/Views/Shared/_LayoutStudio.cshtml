@@ -63,11 +63,15 @@
                             <p>Calendar</p>
                         </a>
                     </li>
-                    <li>
-                        <a asp-controller="Reports" asp-action="index">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="reportsDropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
                             <i class="now-ui-icons text_caps-small"></i>
-                            <p>Reports</p>
+                            Reports
                         </a>
+                        <div class="dropdown-menu ml-2" aria-labelledby="reportsDropdownMenuLink">
+                            <a class="dropdown-item" asp-controller="Reports" asp-action="ClassStudents">Check class-students report</a>
+                            <a class="dropdown-item" asp-controller="Reports" asp-action="Profit">Check profit reports</a>
+                        </div>
                     </li>
                     <li>
                         <a asp-controller="User" asp-action="index">

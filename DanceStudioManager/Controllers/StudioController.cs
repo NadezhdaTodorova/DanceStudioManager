@@ -57,7 +57,7 @@ namespace DanceStudioManager
             return RedirectToAction("Students");
         }
 
-        public IActionResult SearchStudent(Student student)
+        public IActionResult SearchStudent([FromBody]Student student)
         {
             List<Student> studentList = new List<Student>();
             if (student.Firstname == null || student.Lastname == null || student.Email == null)
@@ -147,6 +147,12 @@ namespace DanceStudioManager
                     var instructor = _instructorDataAccess.GetInstructorById(id);
                     c.Instructors.Add($" {instructor.Firstname} ");
                 }
+
+                var shedule = _classDataAccess.GetClassShedule(c.Id);
+                foreach (var s in shedule)
+                {
+                    c.Shedule.Add($" {s.Day} - {s.Hour} ");
+                }
             }
 
             return Json(classesList);
@@ -165,23 +171,19 @@ namespace DanceStudioManager
 
             var classes = _classDataAccess.GetAllClasses();
 
-            foreach(var c in classes)
+            foreach (var c in classes)
             {
-                if ((c.Genre == newclass.Genre) && (c.Shedule == newclass.Shedule))
+                if ((c.Genre == newclass.Genre) && (c.Level == newclass.Level))
                 {
-                    string classError = "If you want to add new class, it should be with different genre or shedule from the existing ones!";
-                    return RedirectToAction("Classes", new { classError});
+                    string classError = "There is already a class with the same genre and level!";
+                    return RedirectToAction("Classes", new { classError });
                 }
             }
 
             _classDataAccess.AddNewClass(newclass, studioId);
             int classId = _classDataAccess.GetClassId(newclass);
 
-            _class.SheduleDays.Add("Monday");
-            _class.SheduleDays.Add("Wednesday");
-            _class.Hour = "17:30-18:30";
-
-            foreach(var day in _class.SheduleDays)
+            foreach (var day in _class.SheduleDays)
             {
                 _classDataAccess.AddDayToShedule(day, classId, _class.Hour, studioId);
             }
