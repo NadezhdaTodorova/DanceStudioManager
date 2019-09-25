@@ -29,10 +29,69 @@ namespace DanceStudioManager
             _httpContextAccessor = httpContextAccessor;
             _userDataAccess = userDataAccess;
         }
-        public IActionResult Dashboard()
+        public IActionResult Dashboard(int id)
         {
             ViewBag.text = "Dashboard";
-            return View();
+            DashboardNeeds dashboardNeeds = new DashboardNeeds();
+            var allClasses = _classDataAccess.GetAllClasses();
+            var allStudents = _studentDataAccess.GetAllStudents();
+            var allInstructors = _instructorDataAccess.GetAllInstructors();
+
+            foreach (var _class in allClasses)
+            {
+                var classShedule = _classDataAccess.GetClassShedule(_class.Id);
+                foreach (var s in classShedule)
+                {
+                    if (s.Day == DateTime.Now.DayOfWeek.ToString())
+                    {
+                        _class.Hour = s.Hour;
+                        dashboardNeeds.classesForToday.Add(_class);
+
+
+                        var instructorList = _classDataAccess.GetInstructorsConnectedToClass(_class.Id);
+                        var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(_class.Id);
+
+                        foreach (var idsIns in instructorList)
+                        {
+                            var instructor = _instructorDataAccess.GetInstructorById(idsIns);
+                            dashboardNeeds.Instructors.Add(instructor);
+                        }
+
+                        foreach (var idsStu in studentsIdList)
+                        {
+                            var student = _studentDataAccess.GetStudentById(idsStu);
+                            dashboardNeeds.Students.Add(student);
+                        }
+
+                        dashboardNeeds.PricePerHour = _class.PricePerHour;
+                    }
+                }
+            }
+
+            foreach (var st in allStudents)
+            {
+                var sL = new SelectListItem()
+                {
+                    Value = st.Id.ToString(),
+                    Text = $"{st.Firstname} {st.Lastname}"
+                };
+
+                dashboardNeeds.AllStudents.Add(sL);
+            }
+
+            foreach (var ins in allInstructors)
+            {
+                var iL = new SelectListItem()
+                {
+                    Value = ins.Id.ToString(),
+                    Text = $"{ins.Firstname} {ins.Lastname}"
+                };
+
+                dashboardNeeds.AllInstructors.Add(iL);
+            }
+
+
+            return View(dashboardNeeds);
         }
         public IActionResult Students()
         {
@@ -43,7 +102,7 @@ namespace DanceStudioManager
         public IActionResult GetStudents()
         {
             List<Student> studentList = new List<Student>();
-            
+
             studentList = _studentDataAccess.GetAllStudents();
 
             return Json(studentList);
@@ -107,8 +166,8 @@ namespace DanceStudioManager
             var _class = new ClassStudentVM();
             var studentsList = _studentDataAccess.GetAllStudents();
             var instructorList = _instructorDataAccess.GetAllInstructors();
-            
-            foreach(var s in studentsList)
+
+            foreach (var s in studentsList)
             {
                 var sL = new SelectListItem()
                 {
@@ -120,7 +179,7 @@ namespace DanceStudioManager
                 _class.Students.Add(sL);
             }
 
-            foreach(var i in instructorList)
+            foreach (var i in instructorList)
             {
                 var iL = new SelectListItem()
                 {
@@ -139,10 +198,10 @@ namespace DanceStudioManager
         public IActionResult GetClasses()
         {
             var classesList = _classDataAccess.GetAllClasses();
-            foreach(var c in classesList)
+            foreach (var c in classesList)
             {
                 var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id);
-                foreach(var id in instructorsIds)
+                foreach (var id in instructorsIds)
                 {
                     var instructor = _instructorDataAccess.GetInstructorById(id);
                     c.Instructors.Add($" {instructor.Firstname} ");
@@ -197,13 +256,24 @@ namespace DanceStudioManager
                 _classDataAccess.AddStudentToClass(studentId, classId);
             }
 
-            foreach(var instructorId in _class.InstructorsIds)
+            foreach (var instructorId in _class.InstructorsIds)
             {
                 _classDataAccess.AddInstructorToClass(instructorId, classId);
             }
             return RedirectToAction("Classes");
         }
+        [HttpPost]
+        public IActionResult UpdateClass(int id)
+        {
+            return Json(id);
+        }
 
+        [HttpPost]
+        public IActionResult RemoveClass(DashboardNeeds dashboardNeeds)
+        {
+            _classDataAccess.RemoveClass(dashboardNeeds.ClassId);
+            return RedirectToAction("Dashboard");
+        }
 
         private int GetCurrentStudioId()
         {

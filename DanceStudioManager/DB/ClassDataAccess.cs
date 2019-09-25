@@ -192,6 +192,30 @@ namespace DanceStudioManager
             return instructorsIds;
         }
 
+        public List<int> GetStudentsConnectedToClass(int classId)
+        {
+            List<int> studentsIds = new List<int>();
+
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetStudentsConnectedToClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Classid", classId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    int id = (int)rdr["StudentId"];
+                    studentsIds.Add(id);
+                }
+                con.Close();
+            }
+            return studentsIds;
+        }
+
+
         public void AddDayToShedule(string day, int classId, string hour, int studioId)
         {
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
@@ -248,6 +272,21 @@ namespace DanceStudioManager
             }
 
             return shedules;
+        }
+
+        public void RemoveClass(int classId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("RemoveClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
     }
 }

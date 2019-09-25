@@ -98,13 +98,13 @@ namespace DanceStudioManager
                 con.Close();
             }
         }
-        public Instructor GetStudentById(int id)
+        public Student GetStudentById(int id)
         {
-            Instructor i = new Instructor();
+            Student i = new Student();
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
             {
 
-                SqlCommand cmd = new SqlCommand("GetInstructorById", con);
+                SqlCommand cmd = new SqlCommand("GetStudentById", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
 

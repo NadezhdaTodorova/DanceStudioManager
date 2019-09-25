@@ -1,8 +1,7 @@
 ﻿
 $(document).ready(function () {
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+
+    $('[data-toggle="tooltip"]').tooltip();
     $('#prevBtn,#nextBtn').on('click', function () {
 
         var Month = parseInt($('#Month').val());
