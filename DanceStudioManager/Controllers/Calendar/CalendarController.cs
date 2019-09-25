@@ -18,7 +18,7 @@ namespace DanceStudioManager
         public IActionResult Index(int? year, int? month)
         {
             ViewBag.text = "Calendar";
-
+            //calendarHelp.AddDaysToCalendar();
             List<DayVM> days = calendarDataAccess.GetDays();
 
             var model = new CalendarSearchVM();

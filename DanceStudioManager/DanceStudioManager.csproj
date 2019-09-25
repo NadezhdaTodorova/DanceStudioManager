@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="WebApi\**" />
+    <Content Remove="WebApi\**" />
+    <EmbeddedResource Remove="WebApi\**" />
+    <None Remove="WebApi\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\css\ui.jqgrid-bootstrap-ui.css" />
     <Content Remove="wwwroot\css\ui.jqgrid-bootstrap.css" />
     <Content Remove="wwwroot\Pictures\student.png" />
@@ -97,11 +104,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="3.2.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="WebApi\" />
   </ItemGroup>
 
 </Project>
