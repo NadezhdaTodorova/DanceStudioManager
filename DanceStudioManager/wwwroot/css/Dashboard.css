@@ -9,10 +9,6 @@
     height: 10px;
 }
 
-/*a {
-    float:left;
-    margin-left:35px;
-}*/
 
 #Firstname,
 #Lastname,
@@ -36,7 +32,7 @@
 
 .modal-content {
     width: 400px;
-    height: 950px;
+    height: 100%;
     background-color: white;
     text-align: center;
 }
@@ -63,4 +59,15 @@
 
 .btn-primary {
     background-color: rgb(219,112,147) !important;
+}
+
+#StudentsTable tr, #InstructorTable tr {
+    min-height: 10px;
+    line-height: 10px;
+    height: 10px;
+}
+div.table-wrapper-scroll-y {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100px;
 }

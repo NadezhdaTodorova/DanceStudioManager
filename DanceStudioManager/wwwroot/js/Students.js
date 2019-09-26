@@ -7,36 +7,36 @@ $(document).ready(function () {
 
     $grid_selector = $("#jqGrid");
 
-    //jQuery(grid_selector).jqGrid({
-    //    url: '/Studio/GetStudents',
-    //    datatype: "json",
-    //    height: 450,
-    //    mtype: 'Get',
-    //    colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender'],
-    //    colModel: [
-    //        { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc"},
-    //        { name: 'lastname', index: 'Lastname', width: 200 },
-    //        { name: 'email', index: 'Email', width: 200 },
-    //        { name: 'cellPhone', index: 'CellPhone', width: 250 },
-    //        { name: 'gender', index: 'Gender', width: 250 }
-    //    ],
-    //    loadonce: true,
-    //    rowNum: 10,
-    //    rowList: [10, 20, 30],
-    //    pager: pager_selector,
-    //    altRows: true,
-    //    multiselect: true,
-    //    loadonce: true
-    //}).navGrid('#jqGridPager', { add: false, edit: true, del: true, search: false, refresh: true });
+    jQuery(grid_selector).jqGrid({
+        url: '/Studio/GetStudents',
+        datatype: "json",
+        height: 450,
+        mtype: 'Get',
+        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender'],
+        colModel: [
+            { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc"},
+            { name: 'lastname', index: 'Lastname', width: 200 },
+            { name: 'email', index: 'Email', width: 200 },
+            { name: 'cellPhone', index: 'CellPhone', width: 250 },
+            { name: 'gender', index: 'Gender', width: 250 }
+        ],
+        loadonce: true,
+        rowNum: 10,
+        rowList: [10, 20, 30],
+        pager: pager_selector,
+        altRows: true,
+        multiselect: true,
+        loadonce: true
+    }).navGrid('#jqGridPager', { add: false, edit: true, del: true, search: false, refresh: true });
 
 
-    createGrid($grid_selector, "studentsGrid", [
-        { name: 'firstname', index: 'Firstname', width: 100, firstsortorder: "desc" },
-        { name: 'lastname', index: 'Lastname', width: 100 },
-        { name: 'email', index: 'Email', width: 100 },
-        { name: 'cellPhone', index: 'CellPhone', width: 150 },
-        { name: 'gender', index: 'Gender', width: 150 }
-    ]);
+    //createGrid($grid_selector, "studentsGrid", [
+    //    { name: 'firstname', index: 'Firstname', width: 100, firstsortorder: "desc" },
+    //    { name: 'lastname', index: 'Lastname', width: 100 },
+    //    { name: 'email', index: 'Email', width: 100 },
+    //    { name: 'cellPhone', index: 'CellPhone', width: 150 },
+    //    { name: 'gender', index: 'Gender', width: 150 }
+    //]);
 
 
     $("#DateOfBirth").datepicker({ autoclose: true, todayBtn: 'linked' })

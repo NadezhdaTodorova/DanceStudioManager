@@ -274,11 +274,52 @@ namespace DanceStudioManager
             return shedules;
         }
 
+        public Class SearchClass(int classId)
+        {
+            Class _class = new Class();
+
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("SearchClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.AddWithValue("@Classid", classId);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    _class.Id = (int)rdr["ID"];
+                    _class.Genre = (string)rdr["Genre"];
+                    _class.Level = (string)rdr["Level"];
+                    _class.PricePerHour = (double)rdr["PricePerHour"];
+                }
+                con.Close();
+            }
+
+            return _class;
+        }
+
         public void RemoveClass(int classId)
         {
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand("RemoveClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void MarkClassAsStarted(int classId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("MarkClassAsStarted", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@ClassId", classId);

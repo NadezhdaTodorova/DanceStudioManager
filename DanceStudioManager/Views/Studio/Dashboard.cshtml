@@ -16,10 +16,10 @@
         <div class="col-md-6">
             <div class="card  card-tasks">
                 <div class="card-header ">
-                    <h4 class="card-title">Classes and events for today</h4>
+                    <h4 class="card-title">Classes for today</h4>
                 </div>
                 <div class="card-body ">
-                    <div class="table-full-width table-responsive table-wrapper-scroll-y">
+                    <div class="table-full-width table-responsive">
                         <form method="post" asp-controller="Studio" asp-action="RemoveClass">
                             <table class="table">
                                 <thead class=" text-primary">
@@ -38,14 +38,14 @@
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input id="@_class.Id" class="form-check-input" type="checkbox">
-                                                        <span class="form-check-sign" data-toggle="tooltip" data-placement="right" title="Once a class is marked as started, you can not change it!"></span>
+                                                        <span class="form-check-sign" data-toggle="tooltip" data-placement="bottom" title="Once a class is marked as started, you can not change it!"></span>
                                                     </label>
                                                 </div>
                                             </td>
                                             <td class="text-left">@_class.Genre @_class.Hour</td>
                                             <td class="td-actions text-right">
                                                 <button type="button" data-toggle="modal" data-target="#EditClassModal" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                                                    <i class="now-ui-icons ui-2_settings-90"></i>
+                                                    <i class="now-ui-icons ui-2_settings-90"></i> 
                                                 </button>
                                                 <input asp-for="@Model.ClassId" type="hidden" value="@_class.Id" />
                                                 <button type="submit" data-toggle="tooltip" data-placement="left" title="Remove class/event" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
@@ -66,84 +66,84 @@
         <div class="col-md-6">
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="card card-chart">
-                <div class="card-header">
-                    <h5 class="card-category">Global Sales</h5>
-                    <h4 class="card-title">Shipped Products</h4>
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                            <i class="now-ui-icons loader_gear"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <a class="dropdown-item text-danger" href="#">Remove Data</a>
+    @*<div class="row">
+            <div class="col-lg-4">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Global Sales</h5>
+                        <h4 class="card-title">Shipped Products</h4>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
+                                <i class="now-ui-icons loader_gear"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="lineChartExample"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="lineChartExample"></canvas>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card card-chart">
-                <div class="card-header">
-                    <h5 class="card-category">2018 Sales</h5>
-                    <h4 class="card-title">All products</h4>
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                            <i class="now-ui-icons loader_gear"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <a class="dropdown-item text-danger" href="#">Remove Data</a>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">2018 Sales</h5>
+                        <h4 class="card-title">All products</h4>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
+                                <i class="now-ui-icons loader_gear"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Email Statistics</h5>
+                        <h4 class="card-title">24 Hours Performance</h4>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="barChartSimpleGradientsNumbers"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card card-chart">
-                <div class="card-header">
-                    <h5 class="card-category">Email Statistics</h5>
-                    <h4 class="card-title">24 Hours Performance</h4>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="barChartSimpleGradientsNumbers"></canvas>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        </div>*@
 
 </div>
 <footer class="footer"></footer>
@@ -153,7 +153,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title ml-5 mt-4" id="exampleModalLabel">Edit class / event </h5>
+                    <h5 class="modal-title ml-5 mt-4" id="exampleModalLabel">Edit class </h5>
                     <img src="~/Pictures/danceClass.jpg" alt="danceClass" class="ml-4" width="70" height="70" />
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -161,39 +161,44 @@
                 </div>
                 <h5 class="modal-title mt-4" id="exampleModalLabel">Class info</h5>
                 <div class="modal-body">
-                    @*<a>Students</a>
-                        <table class="table table-bordered w-75" id="StudentsTable">
-                            <tbody>
-                                @foreach (var s in Model.Students)
-                                {
-                                    <tr><td>@s.Firstname @s.Lastname</td></tr>
-                                }
-                            </tbody>
-                        </table>
-                        <a>Price per hour @Model.PricePerHour</a>
+                        <h6>Students</h6>
+                        <div class="table-wrapper-scroll-y border-top border-bottom">
+                            <table class="table table-responsive-sm table-borderless" id="StudentsTable"></table>
+                        </div>
+                        <h6 class="m-3">Instructor/s</h6>
+                        <div class="table-wrapper-scroll-y border-top border-bottom">
+                            <table class="table table-responsive-sm table-borderless" id="InstructorTable"></table>
+                        </div>
+                        <div class="m-2 border-bottom">
+                            <h6>Price per hour - <a id="price"></a></h6>
+                            <h6>Level - <a id="level"></a></h6>
+                        </div>
+                        <div class="m-3">
+                            <a> Change price per hour</a>
+                            <input asp-for="PricePerHour" type="number" class="modal-input " id="PricePerHour" value="@Model.PricePerHour">
 
-                        <a>Instructor/s</a>
-                        @foreach (var i in Model.Instructors)
-                        {
-                            <p>@i.Firstname @i.Lastname</p>
-                        }
+                            <a> Change level</a>
+                            <select class="browser-default custom-select modal-input" name="Level">
+                                <option>Level</option>
+                                <option value="beginners">beginners</option>
+                                <option value="intermidiate">intermidiate</option>
+                                <option value="veterans">veterans</option>
+                                <option value="professionals">professionals</option>
+                            </select>
 
-                        <a> Change price per hour</a>
-                        <input asp-for="PricePerHour" type="number" class="modal-input " id="PricePerHour" value="@Model.PricePerHour">
+                            <a>Add students </a>
+                            <select asp-for="AllStudents" asp-items="@Model.AllStudents" class="modal-input h-auto" multiple="multiple" name="AllStudentsIds[]"></select>
 
-                        <a>Add students </a>
-                        <select asp-for="AllStudents" asp-items="@Model.AllStudents" class="modal-input h-auto" multiple="multiple" name="AllStudentsIds[]"></select>
-
-                        <a>Add instructor/s</a>
-                        <select asp-for="AllInstructors" asp-items="@Model.AllInstructors" class="modal-input h-auto" multiple="multiple" name="AllInstructorsIds[]"></select>*@
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                            <a>Add instructor/s</a>
+                            <select asp-for="AllInstructors" asp-items="@Model.AllInstructors" class="modal-input h-auto" multiple="multiple" name="AllInstructorsIds[]"></select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
 </form>
 
 @section Scripts {

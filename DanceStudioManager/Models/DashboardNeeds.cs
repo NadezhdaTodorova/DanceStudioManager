@@ -17,5 +17,6 @@ namespace DanceStudioManager
         public int[] AllStudentsIds { get; set; }
         public int[] AllInstructorsIds { get; set; }
         public double PricePerHour { get; set; }
+        public string Level { get; set; }
     }
 }
