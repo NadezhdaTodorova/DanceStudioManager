@@ -18,9 +18,10 @@ namespace DanceStudioManager
         private readonly ClassDataAccess _classDataAccess;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserDataAccess _userDataAccess;
+        private readonly AttendanceDataAccess _attendanceDataAccess;
 
         public StudioController(StudentsDataAccess studentDataAccess, StudioDataAccess studioDataAccess, InstructorDataAccess instructorDataAccess,
-            ClassDataAccess classDataAccess, IHttpContextAccessor httpContextAccessor, UserDataAccess userDataAccess)
+            ClassDataAccess classDataAccess, IHttpContextAccessor httpContextAccessor, UserDataAccess userDataAccess, AttendanceDataAccess attendanceDataAccess)
         {
             _studentDataAccess = studentDataAccess;
             _studioDataAccess = studioDataAccess;
@@ -28,6 +29,7 @@ namespace DanceStudioManager
             _classDataAccess = classDataAccess;
             _httpContextAccessor = httpContextAccessor;
             _userDataAccess = userDataAccess;
+            _attendanceDataAccess = attendanceDataAccess;
         }
         public IActionResult Dashboard()
         {
@@ -272,7 +274,53 @@ namespace DanceStudioManager
         [HttpPost]
         public IActionResult StartClass(int id)
         {
+            var studioId = GetCurrentStudioId();
+            var todayDate = DateTime.Now.Date;
+            var instructorList = _classDataAccess.GetInstructorsConnectedToClass(id);
+            var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(id);
+
+            //ToDo
+            //before adding attendance I have to check if this class is not added already!!!
+
+            _attendanceDataAccess.AddAttendance(id, studioId, todayDate);
+            var attendanceId = _attendanceDataAccess.GetAttendanceId(id);
+
+            foreach (var idIns in instructorList)
+            {
+                _attendanceDataAccess.AddInstructorAttendance(idIns, attendanceId);
+            }
+
+            foreach (var idStu in studentsIdList)
+            {
+                _attendanceDataAccess.AddStudentAttendance(idStu, attendanceId, id);
+            }
+
             return Json(id);
+        }
+
+        public IActionResult DashboardChart()
+        {
+            int[] data = new int[13];
+            int[] months = new int[12] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
+            List<Attendance> attendances = _attendanceDataAccess.GetAllAttendances();
+            foreach (var month in months)
+            {
+                int studentsCount = 0;
+                foreach (var a in attendances)
+                {
+                    if (month == a.Date.Month)
+                    {
+                        foreach (var s in _classDataAccess.GetStudentsConnectedToClass(a.ClassId))
+                        {
+                            studentsCount++;
+                        }
+                    }
+                }
+                data[month] = studentsCount;
+            }
+
+            return Json(data);
         }
 
         [HttpPost]

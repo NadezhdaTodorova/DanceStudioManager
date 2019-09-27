@@ -314,20 +314,5 @@ namespace DanceStudioManager
                 con.Close();
             }
         }
-
-        public void MarkClassAsStarted(int classId)
-        {
-            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
-            {
-                SqlCommand cmd = new SqlCommand("MarkClassAsStarted", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@ClassId", classId);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-        }
     }
 }

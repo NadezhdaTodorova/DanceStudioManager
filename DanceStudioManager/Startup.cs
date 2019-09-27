@@ -62,6 +62,7 @@ namespace DanceStudioManager
             services.AddTransient<ClassDataAccess>();
             services.AddTransient<CalendarHelp>();
             services.AddTransient<CalendarDataAccess>();
+            services.AddTransient<AttendanceDataAccess>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton(Configuration);
         }
