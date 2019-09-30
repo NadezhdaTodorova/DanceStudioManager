@@ -89,7 +89,7 @@
                 data: {
                     labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
                     datasets: [{
-                        label: "People",
+                        label: "Attendance",
                         borderColor: chartColor,
                         pointBorderColor: chartColor,
                         pointBackgroundColor: "#1e3d60",
@@ -175,7 +175,7 @@
             });
         },
         error: function (xhr, thrownError) {
-            if (xhr.status == 404) {
+            if (xhr.status === 404) {
                 alert(thrownError);
             }
         }

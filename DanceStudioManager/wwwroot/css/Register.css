@@ -178,8 +178,13 @@ a {
 @media screen and (min-width: 994px) {
     .login-reg-panel {
         width: 85%;
-        height: 500px;
+        height: 400px;
     }
+
+    .white-panel {
+        height: 3520px;
+    }
+
     .login-info-box {
         margin-left: 70%;
     } 
