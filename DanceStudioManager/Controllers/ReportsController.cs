@@ -8,10 +8,28 @@ namespace DanceStudioManager
 {
     public class ReportsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult ClassStudent()
         {
-            ViewBag.text = "Reports";
-            return View("Views/Studio/Reports.cshtml");
+            ViewBag.text = "Class-Student report";
+            return View("Views/Studio/ClassStudentReport.cshtml");
+        }
+
+        public IActionResult SearchStudent(string genre, string level, string type)
+        {
+            ClassStudentVM student = new ClassStudentVM();
+            student.Firstname = "nadi";
+            student.Lastname= "nadi";
+            student.Email = "nadi";
+            student.Gender = "nadi";
+            student.CellPhone = "08985728147";
+            student.Genre = genre;
+            return Json(student);
+        }
+
+        public IActionResult Profit()
+        {
+            ViewBag.text = "Profit report";
+            return View("Views/Studio/ProfitReport.cshtml");
         }
     }
 }

@@ -26,5 +26,13 @@ namespace DanceStudioManager
         public List<SelectListItem> Students { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Instructors { get; set; } = new List<SelectListItem>();
         public string Hour { get; set; }
+        public string Firstname{ get; set; }
+        public string Lastname{ get; set; }
+        public string Email{ get; set; }
+        public string CellPhone{ get; set; }
+        public string Gender{ get; set; }
+
+
+
     }
 }

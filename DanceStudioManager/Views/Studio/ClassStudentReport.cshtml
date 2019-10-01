@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "ClassStudentReport";
+    Layout = "_LayoutStudio";
+}
+
+@model Class
+
+<link href="~/css/Reports.css" rel="stylesheet" />
+<link href="~/css/ThemeJQueryGrid/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/css/ui.jqgrid.css" rel="stylesheet" />
+
+<form id="formClassStudentReport" method="post" class="mediumForm">
+    <div class="card-body">
+        <div class="form-row mb-2">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Genre">Genre: </label>
+                    <input asp-for="Genre" type="text" class="form-control form-control-plaintext w-75" id="Genre" placeholder="Genre">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Level">Level: </label>
+                    <input asp-for="Level" type="text" class="form-control form-control-plaintext w-75" id="Level" placeholder="Level">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="ClassType">ClassType: </label>
+                    <input asp-for="ClassType" type="text" class="form-control form-control-plaintext w-75" id="ClassType" placeholder="ClassType">
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <button asp-controller="Reports" asp-action="SearchStudents" type="submit" id="SearchStudents" class="btn btn-secondary w-25 h-25 mt-4">Search students</button>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/jqGrid/grid.locale-en.js"></script>
+    <script src="~/js/jqGrid/jquery.jqGrid.js"></script>
+    <script src="~/js/ClassStudentReport.js"></script>
+}

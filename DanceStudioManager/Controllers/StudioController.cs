@@ -108,11 +108,22 @@ namespace DanceStudioManager
             return View();
         }
 
-        public IActionResult GetStudents()
+        public IActionResult GetStudents(string firstname, string lastname, string email)
         {
             List<Student> studentList = new List<Student>();
+            Student student = new Student();
 
-            studentList = _studentDataAccess.GetAllStudents();
+            if (firstname == null && lastname == null && email == null)
+            {
+                studentList = _studentDataAccess.GetAllStudents();
+            }
+            else
+            {
+                student.Firstname = firstname;
+                student.Lastname = lastname;
+                student.Email = email;
+                studentList = _studentDataAccess.SearchStudents(student);
+            }
 
             return Json(studentList);
         }
@@ -125,20 +136,20 @@ namespace DanceStudioManager
             return RedirectToAction("Students");
         }
 
-        public IActionResult SearchStudent([FromBody]Student student)
-        {
-            List<Student> studentList = new List<Student>();
-            if (student.Firstname == null || student.Lastname == null || student.Email == null)
-            {
-                studentList = _studentDataAccess.GetAllStudents();
-            }
-            else
-            {
-                studentList = _studentDataAccess.SearchStudents(student);
-            }
+        //public IActionResult SearchStudent([FromBody]Student student)
+        //{
+        //    List<Student> studentList = new List<Student>();
+        //    if (student.Firstname == null || student.Lastname == null || student.Email == null)
+        //    {
+        //        studentList = _studentDataAccess.GetAllStudents();
+        //    }
+        //    else
+        //    {
+        //        studentList = _studentDataAccess.SearchStudents(student);
+        //    }
 
-            return Json(studentList);
-        }
+        //    return Json(studentList);
+        //}
 
         public IActionResult Instructor()
         {
@@ -146,15 +157,20 @@ namespace DanceStudioManager
             return View();
         }
 
-        public IActionResult GetInstructors(Instructor instructor)
+        public IActionResult GetInstructor(string firstname, string lastname, string email)
         {
             List<Instructor> instructorList = new List<Instructor>();
-            if (instructor.Firstname == null || instructor.Lastname == null || instructor.Email == null)
+            Instructor instructor = new Instructor();
+
+            if (firstname == null && lastname == null && email == null)
             {
                 instructorList = _instructorDataAccess.GetAllInstructors();
             }
             else
             {
+                instructor.Firstname = firstname;
+                instructor.Lastname = lastname;
+                instructor.Email = email;
                 instructorList = _instructorDataAccess.SearchInstructors(instructor);
             }
 
@@ -204,24 +220,49 @@ namespace DanceStudioManager
             return View(_class);
         }
 
-        public IActionResult GetClasses()
+        public IActionResult GetClasses(string genre, string level, string type)
         {
-            var classesList = _classDataAccess.GetAllClasses();
-            foreach (var c in classesList)
+            List<Class> classesList = new List<Class>();
+
+            if (genre == null && level == null && type == null)
             {
-                var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id);
+                classesList = _classDataAccess.GetAllClasses();
+                foreach (var c in classesList)
+                {
+                    var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id);
+                    foreach (var id in instructorsIds)
+                    {
+                        var instructor = _instructorDataAccess.GetInstructorById(id);
+                        c.Instructors.Add($" {instructor.Firstname} ");
+                    }
+
+                    var shedule = _classDataAccess.GetClassShedule(c.Id);
+                    foreach (var s in shedule)
+                    {
+                        c.Shedule.Add($" {s.Day} - {s.Hour} ");
+                    }
+                }
+            }else
+            {
+                Class _class = new Class();
+                _class = _classDataAccess.SearchClass(genre, level, type);
+                var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(_class.Id);
                 foreach (var id in instructorsIds)
                 {
                     var instructor = _instructorDataAccess.GetInstructorById(id);
-                    c.Instructors.Add($" {instructor.Firstname} ");
+                    _class.Instructors.Add($" {instructor.Firstname} ");
                 }
 
-                var shedule = _classDataAccess.GetClassShedule(c.Id);
+                var shedule = _classDataAccess.GetClassShedule(_class.Id);
                 foreach (var s in shedule)
                 {
-                    c.Shedule.Add($" {s.Day} - {s.Hour} ");
+                    _class.Shedule.Add($" {s.Day} - {s.Hour} ");
                 }
+
+                classesList.Add(_class);
             }
+
+            
 
             return Json(classesList);
         }

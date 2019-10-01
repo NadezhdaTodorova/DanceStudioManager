@@ -69,6 +69,7 @@ namespace DanceStudioManager
                     s.Lastname = rdr["Lastname"].ToString();
                     s.Email = rdr["Email"].ToString();
                     s.Gender = rdr["Gender"].ToString();
+                    s.CellPhone = rdr["CellPhone"].ToString();
 
                     students.Add(s);
                 }

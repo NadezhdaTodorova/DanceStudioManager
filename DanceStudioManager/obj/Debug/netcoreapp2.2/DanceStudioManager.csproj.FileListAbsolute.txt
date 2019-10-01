@@ -62,7 +62,6 @@ C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinal
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Classes.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Dashboard.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Instructor.g.cshtml.cs
-C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Reports.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\Students.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\User.g.cshtml.cs
 C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
@@ -119,3 +118,5 @@ C:\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceS
 C:\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.dll
 C:\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.pdb
 C:\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\DanceStudioManager.csproj.CopyComplete
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\ClassStudentReport.g.cshtml.cs
+C:\Users\ntodorova\DanceStudioManager\DanceStudioManager\DanceStudioManagerFinalWork\DanceStudioManager\obj\Debug\netcoreapp2.2\Razor\Views\Studio\ProfitReport.g.cshtml.cs

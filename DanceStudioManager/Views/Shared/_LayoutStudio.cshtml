@@ -69,7 +69,7 @@
                             Reports
                         </a>
                         <div class="dropdown-menu ml-2" aria-labelledby="reportsDropdownMenuLink">
-                            <a class="dropdown-item" asp-controller="Reports" asp-action="ClassStudents">Check class-students report</a>
+                            <a class="dropdown-item" asp-controller="Reports" asp-action="ClassStudent">Check class-students report</a>
                             <a class="dropdown-item" asp-controller="Reports" asp-action="Profit">Check profit reports</a>
                         </div>
                     </li>
@@ -126,6 +126,14 @@
                         @if (ViewBag.text == "Calendar")
                         {
                             <a class="navbar-brand">Calendar</a>
+                        }
+                        @if (ViewBag.text == "Class-Student report")
+                        {
+                            <a class="navbar-brand">Class-Student report</a>
+                        }
+                        @if (ViewBag.text == "Profit report")
+                        {
+                            <a class="navbar-brand">Profit report</a>
                         }
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
