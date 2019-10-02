@@ -244,22 +244,26 @@ namespace DanceStudioManager
                 }
             }else
             {
-                Class _class = new Class();
-                _class = _classDataAccess.SearchClass(genre, level, type);
-                var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(_class.Id);
-                foreach (var id in instructorsIds)
-                {
-                    var instructor = _instructorDataAccess.GetInstructorById(id);
-                    _class.Instructors.Add($" {instructor.Firstname} ");
-                }
+               List<Class> _classes = new List<Class> ();
 
-                var shedule = _classDataAccess.GetClassShedule(_class.Id);
-                foreach (var s in shedule)
+                _classes = _classDataAccess.SearchClass(genre, level, type);
+                foreach (var _class in _classes)
                 {
-                    _class.Shedule.Add($" {s.Day} - {s.Hour} ");
-                }
+                    var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(_class.Id);
+                    foreach (var id in instructorsIds)
+                    {
+                        var instructor = _instructorDataAccess.GetInstructorById(id);
+                        _class.Instructors.Add($" {instructor.Firstname} ");
+                    }
 
-                classesList.Add(_class);
+                    var shedule = _classDataAccess.GetClassShedule(_class.Id);
+                    foreach (var s in shedule)
+                    {
+                        _class.Shedule.Add($" {s.Day} - {s.Hour} ");
+                    }
+
+                    classesList.Add(_class);
+                }
             }
 
             

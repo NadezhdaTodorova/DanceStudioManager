@@ -106,12 +106,11 @@ function createGrid(genre, level, type) {
             { name: 'numberOfStudents', index: 'NumberOfStudents', width: 105 },
             { name: 'instructors', index: 'Instructors', width: 150 }
         ],
-        loadonce: true,
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: pager_selector,
         altRows: true,
         multiselect: true,
-        multiboxonly: true
     });
 };
+

@@ -277,6 +277,9 @@ namespace DanceStudioManager
         public Class SearchClass(int classId)
         {
             Class _class = new Class();
+            string genre = null; 
+            string type = null;
+            string level = null;
 
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
             {
@@ -287,30 +290,6 @@ namespace DanceStudioManager
                 cmd.Parameters.Add("@ClassId", SqlDbType.Int);
                 if (classId == 0) cmd.Parameters["@ClassId"].Value = DBNull.Value;
                 else cmd.Parameters["@ClassId"].Value = classId;
-
-                SqlDataReader rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    _class.Id = (int)rdr["ID"];
-                    _class.Genre = (string)rdr["Genre"];
-                    _class.Level = (string)rdr["Level"];
-                    _class.PricePerHour = (double)rdr["PricePerHour"];
-                }
-                con.Close();
-            }
-
-            return _class;
-        }
-
-         public Class SearchClass(string genre, string level, string type)
-        {
-            Class _class = new Class();
-
-            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
-            {
-                SqlCommand cmd = new SqlCommand("SearchClass", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
 
                 cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
                 if (genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
@@ -336,6 +315,52 @@ namespace DanceStudioManager
             }
 
             return _class;
+        }
+
+         public List<Class> SearchClass(string genre, string level, string type)
+        {
+            List<Class> _classes = new List<Class> ();
+            int classId = 0;
+
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("SearchClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.Add("@ClassId", SqlDbType.Int);
+                if (classId == 0) cmd.Parameters["@ClassId"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassId"].Value = classId;
+
+                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                if (genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
+                else cmd.Parameters["@Genre"].Value = genre;
+
+                cmd.Parameters.Add("@Level", SqlDbType.VarChar);
+                if (level == null) cmd.Parameters["@Level"].Value = DBNull.Value;
+                else cmd.Parameters["@Level"].Value = level;
+
+                cmd.Parameters.Add("@Type", SqlDbType.VarChar);
+                if (type == null) cmd.Parameters["@Type"].Value = DBNull.Value;
+                else cmd.Parameters["@Type"].Value = type;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var _class = new Class();
+                    _class.Id = (int)rdr["ID"];
+                    _class.Genre = (string)rdr["Genre"];
+                    _class.Level = (string)rdr["Level"];
+                    _class.PricePerHour = (double)rdr["PricePerHour"];
+                    _class.ClassType = (string)rdr["ClassType"];
+                    _class.NumberOfStudents = (int)rdr["NumberOfStudents"];
+
+                    _classes.Add(_class);
+                }
+                con.Close();
+            }
+
+            return _classes;
         }
 
         public void RemoveClass(int classId)
