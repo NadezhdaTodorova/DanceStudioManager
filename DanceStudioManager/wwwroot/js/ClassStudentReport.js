@@ -49,18 +49,17 @@ function getMyAppsDataFromScreen() {
 
 function createGrid(genre, level, type) {
     jQuery(grid_selector).jqGrid({
-        url: '/Reports/SearchStudent?genre=' + genre + '&level=' + level + '&type=' + type,
+        //url: '/Reports/SearchStudent?genre=' + genre + '&level=' + level + '&type=' + type,
         datatype: "json",
         height: 450,
         type: "POST",
-        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender', 'Class name'],
+        colNames: ['Firstname', 'Lastname', 'Email', 'Genre', 'Level'],
         colModel: [
             { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc" },
             { name: 'lastname', index: 'Lastname', width: 200 },
             { name: 'email', index: 'Email', width: 200 },
-            { name: 'cellPhone', index: 'CellPhone', width: 250 },
-            { name: 'gender', index: 'Gender', width: 250 },
-            { name: 'genre', index: 'Genre', width: 250 }
+            { name: 'genre', index: 'Genre', width: 250 },
+            { name: 'level', index: 'Level', width: 250 }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],

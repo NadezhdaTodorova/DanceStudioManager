@@ -4,12 +4,11 @@
     Layout = "_LayoutStudio";
 }
 
-@*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
-<!------ Include the above in your HEAD tag ---------->
+
+@model User
 
 <link href="~/css/User.css" rel="stylesheet" />
+
 
 <div class="container emp-profile">
     <form method="post">
@@ -17,7 +16,7 @@
             <div class="col-md-4">
                 <div class="profile-img">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
-                    <div class="file btn btn-lg btn-primary">
+                    <div class="file btn btn-lg">
                         Change Photo
                         <input type="file" name="file" />
                     </div>
@@ -26,60 +25,31 @@
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        Nadezhda Todorova
+                        @Model.Username
                     </h5>
-                    @*<h6>
-                    Web Developer and Designer
-                </h6>
-                <p class="proile-rating">RANKINGS : <span>8/10</span></p>*@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                         </li>
-                        @*<li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                    </li>*@
                     </ul>
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
-                <input type="submit" class="profile-edit-btn mt-3" name="btnAddMore" value="Log out" />
-                <input type="submit" class="profile-edit-btn mt-3" name="btnAddMore" value="Delete profile and data" />
+                <input type="button" data-toggle="modal" data-target="#EditModal" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />
+                <input type="submit" asp-controller="Account" asp-action="LogOut" class="profile-edit-btn mt-3" name="btnAddMore" value="Log out" />
+                <input type="submit" asp-controller="User" asp-action="Delete" class="profile-edit-btn mt-3 w-75" name="btnAddMore" value="Delete profile" />
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work">
-                    @*<p>WORK LINK</p>
-                    <a href="">Website Link</a><br />
-                    <a href="">Bootsnipp Profile</a><br />
-                    <a href="">Bootply Profile</a>
-                    <p>SKILLS</p>
-                    <a href="">Web Designer</a><br />
-                    <a href="">Web Developer</a><br />
-                    <a href="">WordPress</a><br />
-                    <a href="">WooCommerce</a><br />
-                    <a href="">PHP, .Net</a><br />*@
-                </div>
-            </div>
+        <div id="infoUser" class="row">
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>First name</label>
+                                <label>Username</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Nadezhda</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Last name</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Todorova</p>
+                                <p>@Model.Username</p>
                             </div>
                         </div>
                         <div class="row">
@@ -87,15 +57,7 @@
                                 <label>Email</label>
                             </div>
                             <div class="col-md-6">
-                                <p>nadi@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Phone</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>123 456 7890</p>
+                                <p>@Model.Email</p>
                             </div>
                         </div>
                         <div class="row">
@@ -103,61 +65,73 @@
                                 <label>Studio name</label>
                             </div>
                             <div class="col-md-6">
-                                <p>The Dance Studio</p>
+                                <p>@Model.StudioName</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Number of students</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.NumberOfStudents</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Number of classes</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.NumberOfClasses</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Number of instructors</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.NumberOfInstructors</p>
                             </div>
                         </div>
                     </div>
-                    @*<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Experience</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Expert</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Hourly Rate</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>10$/hr</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Total Projects</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>230</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>English Level</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Expert</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Availability</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>6 months</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br />
-                                <p>Your detail description</p>
-                            </div>
-                        </div>
-                    </div>*@
                 </div>
             </div>
         </div>
     </form>
 </div>
 
+<!-- Modal -->
+<form method="post">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title ml-3 mt-3" id="exampleModalLabel">Edit profile</h5>
+                    @*<img src="~/Pictures/salsaFace.jpg" alt="instructor" class="ml-4" width="70" height="70" />*@
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <a> Change username</a>
+                    <input asp-for="Username" type="text" class="modal-input " id="Username" value="@Model.Username">
+                    <a> Change email</a>
+                    <input asp-for="Email" type="text" class="modal-input " id="Email" value="@Model.Email">
+                    <p id='result'></p>
+                    <a> Change studio name</a>
+                    <input asp-for="StudioName" type="text" class="modal-input " id="StudioName" value="@Model.StudioName">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button asp-controller="User" asp-action="Edit" type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/assets/js/core/jquery.min.js"></script>
+    <script src="~/js/User.js"></script>
+}

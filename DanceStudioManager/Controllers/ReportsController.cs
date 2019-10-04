@@ -8,6 +8,14 @@ namespace DanceStudioManager
 {
     public class ReportsController : Controller
     {
+        private readonly ClassDataAccess _classDataAccess;
+        private readonly StudentsDataAccess _studentDataAccess;
+
+        public ReportsController (ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess)
+        {
+            _classDataAccess = classDataAccess;
+            _studentDataAccess = studentDataAccess;
+        }
         public IActionResult ClassStudent()
         {
             ViewBag.text = "Class-Student report";
@@ -16,14 +24,26 @@ namespace DanceStudioManager
 
         public IActionResult SearchStudent(string genre, string level, string type)
         {
-            ClassStudentVM student = new ClassStudentVM();
-            student.Firstname = "nadi";
-            student.Lastname= "nadi";
-            student.Email = "nadi";
-            student.Gender = "nadi";
-            student.CellPhone = "08985728147";
-            student.Genre = genre;
-            return Json(student);
+            var students = new List<ClassStudentVM>();
+
+            var classes = _classDataAccess.SearchClass(genre, level, type);
+
+            foreach(var _class in classes)
+            {
+                foreach(var id in _classDataAccess.GetStudentsConnectedToClass(_class.Id))
+                {
+                    var s = _studentDataAccess.GetStudentById(id);
+                    ClassStudentVM student = new ClassStudentVM();
+
+                    student.Firstname = s.Firstname;
+                    student.Lastname = s.Lastname;
+                    student.Email = s.Email;
+                    student.Genre = _class.Genre;
+                    student.Level = _class.Level;
+                    students.Add(student);
+                }
+            }
+            return Json(students);
         }
 
         public IActionResult Profit()

@@ -27,6 +27,7 @@ namespace DanceStudioManager
         public string Hour{ get; set; }
 
         public string  Day { get; set; }
+        public DateTime  Retired { get; set; }
 
     }
 }

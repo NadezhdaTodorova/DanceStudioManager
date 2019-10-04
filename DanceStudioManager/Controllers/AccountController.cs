@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
@@ -209,5 +210,13 @@ namespace DanceStudioManager
             ModelState.AddModelError(string.Empty, "Please provide the necessary data!");
             return View();
         }
+
+        public IActionResult LogOut()
+        {
+            ViewBag.register = true;
+            _userDataAccess.SignOut(HttpContext);
+            return View("Views/Account/RegisterLogin.cshtml");
+        }
+
     }
 }

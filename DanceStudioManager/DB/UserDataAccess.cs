@@ -99,13 +99,32 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("UpdateUser", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@userId", user.Id);
+                cmd.Parameters.Add("@userId", SqlDbType.Int);
+                if (user.Id == 0) cmd.Parameters["@userId"].Value = DBNull.Value;
+                else cmd.Parameters["@userId"].Value = user.Id;
+
                 cmd.Parameters.AddWithValue("@ConfirmAccount", user.ConfirmAccount);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
-                cmd.Parameters.AddWithValue("@Username", user.Username);
-                cmd.Parameters.AddWithValue("@Email", user.Email);
-                cmd.Parameters.AddWithValue("@Salt", user.Salt);
-                cmd.Parameters.AddWithValue("@ModifiedBy", user.Id);
+
+                cmd.Parameters.Add("@Password", SqlDbType.VarChar);
+                if (user.Password == null) cmd.Parameters["@Password"].Value = DBNull.Value;
+                else cmd.Parameters["@Password"].Value = user.Password;
+
+                cmd.Parameters.Add("@Username", SqlDbType.VarChar);
+                if (user.Username == null) cmd.Parameters["@Username"].Value = DBNull.Value;
+                else cmd.Parameters["@Username"].Value = user.Username;
+
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+                if (user.Email == null) cmd.Parameters["@Email"].Value = DBNull.Value;
+                else cmd.Parameters["@Email"].Value = user.Email;
+
+                cmd.Parameters.Add("@Salt", SqlDbType.VarBinary);
+                if (user.Salt == null) cmd.Parameters["@Salt"].Value = DBNull.Value;
+                else cmd.Parameters["@Salt"].Value = user.Salt;
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (user.Id == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = user.Id;
+
                 cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
 
                 con.Open();
@@ -135,7 +154,6 @@ namespace DanceStudioManager
                     user.Email= rdr["Email"].ToString();
                     user.ConfirmAccount = (bool)rdr["ConfirmAccount"];
                     user.StudioId = (int)rdr["StudioId"];
-
                 }
                 con.Close();
                 return user;
@@ -168,6 +186,10 @@ namespace DanceStudioManager
             }
         }
 
+        public async void SignOut(HttpContext httpContext)
+        {
+            await httpContext.SignOutAsync();
+        }
 
         private IEnumerable<Claim> GetUserClaims(User user)
         {

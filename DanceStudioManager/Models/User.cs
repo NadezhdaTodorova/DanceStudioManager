@@ -24,5 +24,10 @@ namespace DanceStudioManager
         public int StudioId { get; set; }
         public bool ConfirmAccount  { get; set; }
         public byte[] Salt { get; set; }
+        public string CellPhone { get; set; }
+        public string PhotoUrl { get; set; }
+        public int NumberOfStudents { get; set; }
+        public int NumberOfClasses { get; set; }
+        public int NumberOfInstructors { get; set; }
     }
 }
