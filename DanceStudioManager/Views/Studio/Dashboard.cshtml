@@ -12,8 +12,8 @@
     <canvas id="bigDashboardChart"></canvas>
 </div>
 <div class="content">
-    <div class="row mt-4 ml-2">
-        <div class="col-md-6">
+    <div class="row mt-4 ml-auto">
+        <div class="col-md-6 col-sm-3">
             <div class="card  card-tasks">
                 <div class="card-header ">
                     <h4 class="card-title">Classes for today</h4>
@@ -38,14 +38,14 @@
                                                 <div class="form-check">
                                                     <label class="form-check-label">
                                                         <input id="@_class.Id" class="form-check-input" type="checkbox">
-                                                        <span class="form-check-sign" @*data-toggle="tooltip" data-placement="top"*@ title="Once a class is marked as started, you can not change it!"></span>
+                                                        <span class="form-check-sign" @*data-toggle="tooltip" data-placement="top" *@ title="Once a class is marked as started, you can not change it!"></span>
                                                     </label>
                                                 </div>
                                             </td>
                                             <td class="text-left">@_class.Genre @_class.Hour</td>
                                             <td class="td-actions text-right">
                                                 <button type="button" data-toggle="modal" data-target="#EditClassModal" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                                                    <i class="now-ui-icons ui-2_settings-90"></i> 
+                                                    <i class="now-ui-icons ui-2_settings-90"></i>
                                                 </button>
                                                 <input asp-for="@Model.ClassId" type="hidden" value="@_class.Id" />
                                                 <button type="submit" data-toggle="tooltip" data-placement="left" title="Remove class/event" class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove">
@@ -63,88 +63,60 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-4 col-md-6 col-sm-5 ml-3">
+            <div class="card card-chart">
+                <div class="card-header">
+                    @*<h5 class="card-category">Profit Statistics</h5>*@
+                    <h4 class="card-title">Profit Statistics</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="ProfitChart"></canvas>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    @*<div class="row">
-            <div class="col-lg-4">
-                <div class="card card-chart">
-                    <div class="card-header">
-                        <h5 class="card-category">Global Sales</h5>
-                        <h4 class="card-title">Shipped Products</h4>
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                                <i class="now-ui-icons loader_gear"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <a class="dropdown-item text-danger" href="#">Remove Data</a>
+    <div class="page-content page-container mt-5" id="page-content">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card px-3">
+                        <div class="card-body">
+                            <h4 class="card-title">To do list</h4>
+                            <div class="add-items d-flex"> <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button> </div>
+                            <div class="list-wrapper">
+                                <ul class="d-flex flex-column-reverse todo-list">
+                                    <li>
+                                        <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> For what reason would it be advisable. <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                    </li>
+                                    <li class="completed">
+                                        <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox" checked=""> For what reason would it be advisable for me to think. <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                    </li>
+                                    <li>
+                                        <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> it be advisable for me to think about business content? <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                    </li>
+                                    <li>
+                                        <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> Print Statements all <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                    </li>
+                                    <li class="completed">
+                                        <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox" checked=""> Call Rampbo <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                    </li>
+                                    <li>
+                                        <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> Print bills <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="lineChartExample"></canvas>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card card-chart">
-                    <div class="card-header">
-                        <h5 class="card-category">2018 Sales</h5>
-                        <h4 class="card-title">All products</h4>
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-round btn-outline-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown">
-                                <i class="now-ui-icons loader_gear"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card card-chart">
-                    <div class="card-header">
-                        <h5 class="card-category">Email Statistics</h5>
-                        <h4 class="card-title">24 Hours Performance</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="barChartSimpleGradientsNumbers"></canvas>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-
+        </div>
+    </div>
 </div>
 <footer class="footer"></footer>
 

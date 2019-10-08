@@ -75,9 +75,9 @@
     gradientStroke.addColorStop(0, '#80b6f4');
     gradientStroke.addColorStop(1, chartColor);
 
-    var gradientFill = ctx.createLinearGradient(0, 200, 0, 50);
-    gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
-    gradientFill.addColorStop(1, "rgba(255, 255, 255, 0.24)");
+    var b = ctx.createLinearGradient(0, 200, 0, 50);
+    b.addColorStop(0, "rgba(128, 182, 244, 0)");
+    b.addColorStop(1, "rgba(255, 255, 255, 0.24)");
 
     $.ajax({
         type: "POST",
@@ -100,7 +100,7 @@
                         pointHoverBorderWidth: 2,
                         pointRadius: 5,
                         fill: true,
-                        backgroundColor: gradientFill,
+                        backgroundColor: b,
                         borderWidth: 2,
                         data: data
                     }]
@@ -182,4 +182,133 @@
 
    
     });
+
+
+
+    var e = document.getElementById("ProfitChart").getContext("2d");
+
+    var gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+    gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+    gradientFill.addColorStop(1, hexToRGB('#2CA8FF', 0.6));
+
+    $.ajax({
+        type: "POST",
+        url: '/Studio/ProfitDashboardChart',
+        dataType: "json",
+        success: function (data) {
+            var myChart = new Chart(e, {
+                type: "bar",
+                data: {
+                    labels: data.dats,
+                    datasets: [{
+                        label: "profit",
+                        backgroundColor: gradientFill,
+                        borderColor: "#2CA8FF",
+                        pointBorderColor: "#FFF",
+                        pointBackgroundColor: "#2CA8FF",
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 4,
+                        pointHoverBorderWidth: 1,
+                        pointRadius: 4,
+                        fill: true,
+                        borderWidth: 1,
+                        data: data.dataProft
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    responsive: 1,
+                    scales: {
+                        yAxes: [{
+                            gridLines: 0,
+                            gridLines: {
+                                zeroLineColor: "transparent",
+                                drawBorder: false
+                            }
+                        }],
+                        xAxes: [{
+                            display: 0,
+                            gridLines: 0,
+                            ticks: {
+                                display: false
+                            },
+                            gridLines: {
+                                zeroLineColor: "transparent",
+                                drawTicks: false,
+                                display: false,
+                                drawBorder: false
+                            }
+                        }]
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 15,
+                            bottom: 15
+                        }
+                    }
+                }
+            });
+          },
+        error: function (xhr, thrownError) {
+            if (xhr.status === 404) {
+                alert(thrownError);
+            }
+        }
+    });
+
+    var viewsChart = new Chart(e);
+
+
+
+
+    (function ($) {
+        'use strict';
+        $(function () {
+            var todoListItem = $('.todo-list');
+            var todoListInput = $('.todo-list-input');
+            $('.todo-list-add-btn').on("click", function (event) {
+                event.preventDefault();
+
+                var item = $(this).prevAll('.todo-list-input').val();
+
+                if (item) {
+                    todoListItem.append("<li><div class='form-check'><label class='form-check-label'><input class='checkbox' type='checkbox'/>" + item + "<i class='input-helper'></i></label></div><i class='remove mdi mdi-close-circle-outline'></i></li>");
+                    todoListInput.val("");
+                }
+
+            });
+
+            todoListItem.on('change', '.checkbox', function () {
+                if ($(this).attr('checked')) {
+                    $(this).removeAttr('checked');
+                } else {
+                    $(this).attr('checked', 'checked');
+                }
+
+                $(this).closest("li").toggleClass('completed');
+
+            });
+
+            todoListItem.on('click', '.remove', function () {
+                $(this).parent().remove();
+            });
+
+        });
+    })(jQuery);
+
+
 });

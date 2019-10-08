@@ -362,10 +362,60 @@ namespace DanceStudioManager
                         }
                     }
                 }
-                data[month] = studentsCount;
+                data[month-1] = studentsCount;
             }
 
             return Json(data);
+        }
+
+        public IActionResult ProfitDashboardChart ()
+        {
+            double[] dataProfit = new double[7];
+            string[] dataDaysOfWeek = new string[7];
+            string[] dates = new string[7];
+
+            int[] days = new int[7] { 1, 2, 3, 4, 5, 6, 7 };
+            DateTime currentDay = DateTime.Now.Date.AddDays(-1);
+            DateTime before7Days = currentDay.AddDays(-6);
+            var allAtendances = _attendanceDataAccess.GetAllAttendances();
+            var numberOfStudents = 0;
+
+
+            for (int d = 0; d < 7; d++)
+            {
+                double profit = 0;
+
+
+                if (currentDay >= before7Days)
+                {
+                    foreach (var at in allAtendances)
+                    {
+                        if (at.Date == currentDay)
+                        {
+                            double instructorPay = 0;
+                            var procent = 0;
+
+                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId).Count;
+                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
+                            {
+                                var instructor = _instructorDataAccess.GetInstructorById(i);
+                                procent += instructor.procentOfProfit = 10;
+                            }
+
+                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
+                            instructorPay = (procent / profit) * 100;
+                            profit = profit - instructorPay;
+                        }
+                    }
+                    dataDaysOfWeek[d] = currentDay.DayOfWeek.ToString();
+                    dataProfit[d] = Math.Round(profit);
+                    dates[d] = currentDay.Date.ToString("dd/MM/yyyy");
+                }
+
+                currentDay = currentDay.AddDays(-1);
+            }
+
+            return Json(new { dataDays = dataDaysOfWeek, dataProft = dataProfit, dats = dates });
         }
 
         [HttpPost]
