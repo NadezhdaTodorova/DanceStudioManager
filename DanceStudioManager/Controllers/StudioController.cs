@@ -378,20 +378,20 @@ namespace DanceStudioManager
             DateTime currentDay = DateTime.Now.Date.AddDays(-1);
             DateTime before7Days = currentDay.AddDays(-6);
             var allAtendances = _attendanceDataAccess.GetAllAttendances();
-            var numberOfStudents = 0;
 
 
             for (int d = 0; d < 7; d++)
             {
-                double profit = 0;
-
+                double finalProfit = 0;
 
                 if (currentDay >= before7Days)
                 {
                     foreach (var at in allAtendances)
                     {
+                        double profit = 0;
                         if (at.Date == currentDay)
                         {
+                            var numberOfStudents = 0;
                             double instructorPay = 0;
                             var procent = 0;
 
@@ -399,16 +399,17 @@ namespace DanceStudioManager
                             foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
                             {
                                 var instructor = _instructorDataAccess.GetInstructorById(i);
-                                procent += instructor.procentOfProfit = 10;
+                                procent += instructor.procentOfProfit;
                             }
 
                             profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
-                            instructorPay = (procent / profit) * 100;
+                            instructorPay = (procent / 100) * profit;
                             profit = profit - instructorPay;
                         }
+                        finalProfit += profit;
                     }
                     dataDaysOfWeek[d] = currentDay.DayOfWeek.ToString();
-                    dataProfit[d] = Math.Round(profit);
+                    dataProfit[d] = Math.Round(finalProfit);
                     dates[d] = currentDay.Date.ToString("dd/MM/yyyy");
                 }
 

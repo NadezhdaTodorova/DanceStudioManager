@@ -110,6 +110,36 @@ namespace DanceStudioManager
             }
             return attendanceId;
         }
+
+        public List<Attendance> SearchAttendancesByClassId(int classId)
+        {
+            List<Attendance> attendances = new List<Attendance>();
+
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("GetAttendanceId", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+
+                cmd.Parameters.Add("@ClassId", SqlDbType.Int);
+                if (classId == 0) cmd.Parameters["@ClassId"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassId"].Value = classId;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Attendance attendance = new Attendance();
+                    attendance.Id = (int)rdr["ID"];
+                    attendance.ClassId = (int)rdr["ClassId"];
+                    attendance.StudioId = (int)rdr["StudioId"];
+                    attendance.Date = (DateTime)rdr["Date"];
+
+                    attendances.Add(attendance);
+                }
+                con.Close();
+            }
+            return attendances;
+        }
         public List<Attendance> GetAllAttendances()
         {
             List<Attendance> attendances = new List<Attendance>();

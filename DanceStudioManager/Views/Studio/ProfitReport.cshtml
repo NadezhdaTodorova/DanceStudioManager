@@ -5,34 +5,52 @@
 
 }
 
-@*<form id="formProfitReport" method="post" class="mediumForm">
-    <div class="card-body">
-        <div class="form-row mb-2">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="Genre">Genre: </label>
-                    <input asp-for="Genre" type="text" class="form-control form-control-plaintext w-75" id="Genre" placeholder="Genre">
+@model Profit
+
+    <link href="~/css/ThemeJQueryGrid/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/css/ui.jqgrid.css" rel="stylesheet" />
+    <link href="~/css/Profit.css" rel="stylesheet" />
+
+    <form id="formProfitReport" method="post" class="mediumForm">
+        <div class="card-body">
+            <div class="form-row mt-4">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="DateFrom">DateFrom: </label>
+                        <input asp-for="DateFrom" type="text" class="datepicker form-control " id="DateFrom" placeholder="DateFrom">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="DateTo">DateTo: </label>
+                        <input asp-for="DateTo" type="text" class="datepicker form-control" id="DateTo" placeholder="DateTo">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="ClassGenre">Class Genre: </label>
+                        <input asp-for="ClassGenre" type="text" class="form-control" id="ClassGenre" placeholder="ClassGenre">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="Level">Level: </label>
+                        <input asp-for="Level" type="text" class="form-control" id="Level" placeholder="Level">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="Level">Level: </label>
-                    <input asp-for="Level" type="text" class="form-control form-control-plaintext w-75" id="Level" placeholder="Level">
-                </div>
+            <div class="form-row mb-3">
+                <button type="submit" id="SearchProfitForClass" class="btn btn-secondary w-25 h-25 mt-4">Search profit for class</button>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="ClassType">ClassType: </label>
-                    <input asp-for="ClassType" type="text" class="form-control form-control-plaintext w-75" id="ClassType" placeholder="ClassType">
-                </div>
-            </div>
+            <table id="jqGrid"></table>
+            <div id="jqGridPager"></div>
         </div>
-        <label id="classError">@ViewBag.classError</label>
-        <div class="form-row mb-3">
-            <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#classesModal">Add New</button>
-            <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="Submit" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
-        </div>
-        <table id="jqGrid"></table>
-        <div id="jqGridPager"></div>
-    </div>
-</form>*@
+    </form>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+        <script src="~/js/jqGrid/grid.locale-en.js"></script>
+        <script src="~/js/jqGrid/jquery.jqGrid.js"></script>
+        <script src="~/js/Profit.js"></script>
+    }

@@ -77,13 +77,14 @@ function createGrid(firstname, lastname, email) {
         datatype: "json",
         height: 450,
         type: "POST",
-        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender'],
+        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender', 'Procent of profit' ],
         colModel: [
             { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc" },
             { name: 'lastname', index: 'Lastname', width: 200 },
             { name: 'email', index: 'Email', width: 200 },
             { name: 'cellPhone', index: 'CellPhone', width: 250 },
-            { name: 'gender', index: 'Gender', width: 250 }
+            { name: 'gender', index: 'Gender', width: 250 },
+            { name: 'procentOfProfit', index: 'ProcentOfProfit', width: 150 }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],

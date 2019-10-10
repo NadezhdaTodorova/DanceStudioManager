@@ -12,12 +12,17 @@ namespace DanceStudioManager
     {
         private readonly ClassDataAccess _classDataAccess;
         private readonly StudentsDataAccess _studentDataAccess;
+        private readonly AttendanceDataAccess _attendanceDataAccess;
+        private readonly InstructorDataAccess _instructorDataAccess;
 
-        public ReportsController (ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess)
+        public ReportsController (ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess, AttendanceDataAccess attendanceDataAccess,
+            InstructorDataAccess instructorDataAccess)
         {
             _classDataAccess = classDataAccess;
             _studentDataAccess = studentDataAccess;
-        }
+            _attendanceDataAccess = attendanceDataAccess;
+            _instructorDataAccess = instructorDataAccess;
+    }
         public IActionResult ClassStudent()
         {
             ViewBag.text = "Class-Student report";
@@ -52,6 +57,51 @@ namespace DanceStudioManager
         {
             ViewBag.text = "Profit report";
             return View("Views/Studio/ProfitReport.cshtml");
+        }
+
+        public IActionResult SearchProfitForPeriod(DateTime dateFrom, DateTime dateTo, string classGenre, string level)
+        {
+            Profit finalProfit = new Profit();
+            string group = "group";
+
+            finalProfit.ProfitForPeriod = 0;
+            finalProfit.NumberOfStudents = 0;
+
+            var _class = _classDataAccess.SearchClass(classGenre, level, group);
+            var attendances = _attendanceDataAccess.SearchAttendancesByClassId(_class.First().Id);
+
+            finalProfit.Level = _class.First().Level;
+            finalProfit.ClassGenre = _class.First().Genre;
+
+            for (DateTime date = dateFrom; date >= dateTo; date = date.AddDays(-1))
+            {
+                foreach (var at in attendances)
+                {
+                    double profit = 0;
+                    var numberOfStudents = 0;
+
+                    if (at.Date == date)
+                    {
+                        double instructorPay = 0;
+                        var procent = 0;
+
+                        numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId).Count;
+                        foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
+                        {
+                            var instructor = _instructorDataAccess.GetInstructorById(i);
+                            procent += instructor.procentOfProfit;
+                        }
+
+                        profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
+                        instructorPay = (procent / 100) * profit;
+                        profit = profit - instructorPay;
+                    }
+                    finalProfit.NumberOfStudents += numberOfStudents;
+                    finalProfit.ProfitForPeriod += Math.Round(profit);
+                }
+            }
+
+            return Json(finalProfit);
         }
     }
 }

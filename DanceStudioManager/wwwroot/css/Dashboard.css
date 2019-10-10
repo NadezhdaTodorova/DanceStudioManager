@@ -78,11 +78,11 @@ body {
     background-color: #f9f9fa
 }
 
-.flex {
+/*.flex {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto
-}
+}*/
 
 @media (max-width:991.98px) {
     .padding {
@@ -96,23 +96,23 @@ body {
     }
 }
 
-.padding {
+/*.padding {
     padding: 5rem
-}
+}*/
 
-.card {
+/*.card {
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     -ms-box-shadow: none
-}
+}*/
 
-.pl-3,
+/*.pl-3,
 .px-3 {
     padding-left: 1rem !important
-}
+}*/
 
-.card {
+/*.card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -161,7 +161,7 @@ body {
     border-bottom-right-radius: 0;
     width: 100%;
     background: transparent
-}
+}*/
 
 .form-control {
     border: 1px solid #f3f3f3;
@@ -169,7 +169,7 @@ body {
     font-size: 0.875rem
 }
 
-.form-control {
+/*.form-control {
     display: block;
     width: 100%;
     padding: 0.875rem 1.375rem;
@@ -181,7 +181,7 @@ body {
     border: 1px solid #ced4da;
     border-radius: 2px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
-}
+}*/
 
 .add-items .btn {
     margin-left: .5rem
@@ -234,7 +234,7 @@ body {
 .rtl .add-items .wizard > .actions a,
 .wizard > .actions .rtl .add-items a {
     margin-left: auto;
-    margin-right: .5rem
+    margin-right: .5rem 
 }
 
 .list-wrapper {
@@ -265,13 +265,13 @@ list-wrapper ul li {
     margin-bottom: .25rem
 }
 
-    .list-wrapper ul li .form-check label:hover {
+    /*.list-wrapper ul li .form-check label:hover {
         cursor: pointer
-    }
+    }*/
 
-.list-wrapper input[type="checkbox"] {
+/*.list-wrapper input[type="checkbox"] {
     margin-right: 15px
-}
+}*/
 
 .list-wrapper .remove {
     cursor: pointer;

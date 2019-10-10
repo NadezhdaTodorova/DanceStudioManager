@@ -38,6 +38,15 @@ namespace DanceStudioManager
                     instructor.SendEmail = (bool)rdr["SendEmail"];
                     instructor.Gender = rdr["Gender"].ToString();
                     instructor.Id = (int)rdr["Id"];
+                    if (!DBNull.Value.Equals(rdr["ProcenOfProfit"]))
+                    {
+                        instructor.procentOfProfit = (int)rdr["ProcenOfProfit"];
+                    }
+                    else
+                    {
+                        instructor.procentOfProfit = 0;
+                    }
+                    
 
                     lstInstructors.Add(instructor);
                 }
@@ -70,6 +79,7 @@ namespace DanceStudioManager
                     i.Email = rdr["Email"].ToString();
                     i.Gender = rdr["Gender"].ToString();
                     i.CellPhone = rdr["CellPhone"].ToString();
+                    i.procentOfProfit = (int)rdr["ProcentOfProfit"];
 
                     instructors.Add(i);
                 }
@@ -93,6 +103,7 @@ namespace DanceStudioManager
                 cmd.Parameters.AddWithValue("@SendEmail", instructor.SendEmail);
                 cmd.Parameters.AddWithValue("@Gender", instructor.Gender);
                 cmd.Parameters.AddWithValue("@StudioId", studioId);
+                cmd.Parameters.AddWithValue("@ProcentOfProfit", instructor.procentOfProfit);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -122,6 +133,7 @@ namespace DanceStudioManager
                     i.Lastname = rdr["Lastname"].ToString();
                     i.Email = rdr["Email"].ToString();
                     i.Gender = rdr["Gender"].ToString();
+                    i.procentOfProfit = (int)rdr["ProcenOfProfit"];
 
                 }
                 con.Close();
