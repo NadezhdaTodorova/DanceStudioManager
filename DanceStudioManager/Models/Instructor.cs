@@ -19,6 +19,7 @@ namespace DanceStudioManager
         public string Gender { get; set; }
         public int StudioId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string DateOfBirthToString { get; set; }
         [Required]
         public int procentOfProfit { get; set; }
     }

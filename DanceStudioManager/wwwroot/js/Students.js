@@ -77,20 +77,57 @@ function createGrid(firstname, lastname, email) {
         datatype: "json",
         height: 450,
         type: "POST",
-        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender'],
+        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender', 'Date of birth'],
         colModel: [
-            { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc" },
-            { name: 'lastname', index: 'Lastname', width: 200 },
-            { name: 'email', index: 'Email', width: 200 },
-            { name: 'cellPhone', index: 'CellPhone', width: 250 },
-            { name: 'gender', index: 'Gender', width: 250 }
+            { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc", editable: true, classes: 'pointer' },
+            { name: 'lastname', index: 'Lastname', width: 200, editable: true, classes: 'pointer' },
+            { name: 'email', index: 'Email', width: 200, editable: true, classes: 'pointer' },
+            { name: 'cellPhone', index: 'CellPhone', width: 250, editable: true, classes: 'pointer' },
+            { name: 'gender', index: 'Gender', width: 250, editable: true, classes: 'pointer' },
+            { name: 'dateOfBirthToString', index: 'DateOfBirthToString', width: 250, editable: true, classes: 'pointer' }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: pager_selector,
         altRows: true,
-        multiselect: true,
-    }).navGrid('#jqGridPager', { add: false, edit: true, del: true, search: false, refresh: true });
-};
 
-    
+    }).navGrid('#jqGridPager',
+        { add: false, edit: true, edittitle:"Edit Student",  del: true, deltitle: "Delete Student", search: false, refresh: true },
+        //Edit option
+        {
+            reloadAfterSubmit: true,
+            jqModal: false,
+            closeOnEscape: true,
+            closeAfterEdit: true,
+            url: "/Studio/EditStudent/",
+            afterSubmit: function (response, postdata) {
+                if (response.statusText = "OK") {
+                    jQuery("#success").show();
+                    jQuery("#success").html("Student successfully updated");
+                    jQuery("#success").fadeOut(6000);
+                    return [true, response.responseText]
+                }
+                else {
+                    return [false, response.responseText]
+                }
+            }
+        },
+        {},//add option Don't delete it!
+        //Delete option 
+        {
+            url: '/Studio/DeleteStudent',
+            closeAfterDelete: true,
+            afterSubmit: function (response) {
+                if (response.statusText = "OK") {
+                    jQuery("#success").show();
+                    jQuery("#success").html("Student successfully deleted");
+                    jQuery("#success").fadeOut(6000);
+                    return [true, response.responseText]
+                }
+                else {
+                    return [false, response.responseText]
+                }
+            }
+
+        });
+};

@@ -37,7 +37,9 @@ namespace DanceStudioManager
                     student.Email = rdr["Email"].ToString();
                     student.SendEmail = (bool)rdr["SendEmail"];
                     student.Gender = rdr["Gender"].ToString();
+                    student.DateOfBirth = (DateTime)rdr["DateOfBirth"];
                     student.Id = (int)rdr["Id"];
+                    student.DateOfBirthToString = student.DateOfBirth.Date.ToString("yyyy-MM-dd");
 
                     lstStudents.Add(student);
                 }
@@ -127,6 +129,80 @@ namespace DanceStudioManager
             }
 
             return i;
+        }
+
+        public void UpdateStudent(Student student, int userId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateStudent", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@StudentId", student.Id);
+
+                cmd.Parameters.Add("@Firstname", SqlDbType.VarChar);
+                if (student.Firstname == null) cmd.Parameters["@Firstname"].Value = DBNull.Value;
+                else cmd.Parameters["@Firstname"].Value = student.Firstname;
+
+                cmd.Parameters.Add("@Lastname", SqlDbType.VarChar);
+                if (student.Lastname == null) cmd.Parameters["@Lastname"].Value = DBNull.Value;
+                else cmd.Parameters["@Lastname"].Value = student.Lastname;
+
+                cmd.Parameters.Add("@CellPhone", SqlDbType.VarChar);
+                if (student.CellPhone == null) cmd.Parameters["@CellPhone"].Value = DBNull.Value;
+                else cmd.Parameters["@CellPhone"].Value = student.CellPhone;
+
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+                if (student.Email == null) cmd.Parameters["@Email"].Value = DBNull.Value;
+                else cmd.Parameters["@Email"].Value = student.Email;
+
+                cmd.Parameters.Add("@SendEmail", SqlDbType.Bit);
+                if (student.SendEmail == false) cmd.Parameters["@SendEmail"].Value = false;
+                else cmd.Parameters["@SendEmail"].Value = student.SendEmail;
+
+                cmd.Parameters.Add("@Gender", SqlDbType.VarChar);
+                if (student.Gender == null) cmd.Parameters["@Gender"].Value = DBNull.Value;
+                else cmd.Parameters["@Gender"].Value = student.Gender;
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (student.StudioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = student.StudioId;
+
+                cmd.Parameters.Add("@DateOfBirth", SqlDbType.DateTime);
+                if (student.DateOfBirthToString == null) cmd.Parameters["@DateOfBirth"].Value = DBNull.Value;
+                else cmd.Parameters["@DateOfBirth"].Value = DateTime.Parse(student.DateOfBirthToString); ;
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void DeleteStudent(Student student, int userId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteStudent", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@StudentId", student.Id);
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
     }
 }

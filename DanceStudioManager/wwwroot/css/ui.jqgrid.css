@@ -108,7 +108,7 @@
 	padding: 0 !important; 
 	position: relative; 
 	height: auto; 
-	min-height: 28px; 
+	min-height: 38px; 
 	white-space: nowrap;
 	overflow: hidden;
 	/*font-size:11px; */
@@ -137,7 +137,7 @@
 { cursor:pointer; }
 .ui-jqgrid .ui-jqgrid-pager .ui-pg-div  span.ui-icon,
 .ui-jqgrid .ui-jqgrid-toppager .ui-pg-div  span.ui-icon
-{float:left;margin: 2px; width:18px;}
+{float:left;margin: 2px; width:20px;}
 .ui-jqgrid td input, .ui-jqgrid td select, .ui-jqgrid td textarea { margin: 0; padding-top:5px;padding-bottom: 5px;}
 .ui-jqgrid td textarea {width:auto;height:auto;}
 .ui-jqgrid .ui-jqgrid-toppager {border-left: 0 none !important;border-right: 0 none !important; border-top: 0 none !important; margin: 0 !important; padding: 0 !important; position: relative;white-space: nowrap;overflow: hidden;}
@@ -262,12 +262,12 @@
 	vertical-align: middle;
 }
 .ui-jqdialog-content .form-view-data {white-space:pre}
-.fm-button { height: 18px; display: inline-block; margin:2px 4px 0 0; padding: .6em .5em .2em .5em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+.fm-button { height: 30px; display: inline-block; margin:2px 4px 0 0; padding: .6em .5em .2em .5em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
 .fm-button-icon-left { padding-left: 1.9em; }
 .fm-button-icon-right { padding-right: 1.9em; }
 .fm-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; position: absolute; top: 50%; margin-top: -8px; }
 .fm-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; position: absolute; top: 50%; margin-top: -8px;}
-#nData, #pData { float: left; margin:3px;padding: 0; width: 15px; }
+#nData, #pData { float: left; margin:5px;padding: 0; width: 15px; }
 .ViewTable {
 	border-width: 0; 
 	border-style: none; 

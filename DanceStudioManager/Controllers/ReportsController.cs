@@ -72,35 +72,40 @@ namespace DanceStudioManager
 
             finalProfit.Level = _class.First().Level;
             finalProfit.ClassGenre = _class.First().Genre;
+            finalProfit.Type = _class.First().ClassType;
 
-            for (DateTime date = dateFrom; date >= dateTo; date = date.AddDays(-1))
+
+            if (dateFrom != default(DateTime) && dateTo != default(DateTime))
             {
-                foreach (var at in attendances)
+                for (DateTime date = dateFrom; date >= dateTo; date = date.AddDays(-1))
                 {
-                    double profit = 0;
-                    var numberOfStudents = 0;
-
-                    if (at.Date == date)
+                    foreach (var at in attendances)
                     {
-                        double instructorPay = 0;
-                        var procent = 0;
+                        double profit = 0;
+                        var numberOfStudents = 0;
 
-                        numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId).Count;
-                        foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
+                        if (at.Date == date)
                         {
-                            var instructor = _instructorDataAccess.GetInstructorById(i);
-                            procent += instructor.procentOfProfit;
-                        }
+                            double instructorPay = 0;
+                            double procent = 0;
 
-                        profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
-                        instructorPay = (procent / 100) * profit;
-                        profit = profit - instructorPay;
+                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId).Count;
+                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
+                            {
+                                var instructor = _instructorDataAccess.GetInstructorById(i);
+                                procent += instructor.procentOfProfit;
+                                finalProfit.instructors.Add(instructor.Firstname);
+                            }
+
+                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
+                            instructorPay = profit * (procent / 100);
+                            profit = profit - instructorPay;
+                        }
+                        finalProfit.NumberOfStudents += numberOfStudents;
+                        finalProfit.ProfitForPeriod += Math.Round(profit);
                     }
-                    finalProfit.NumberOfStudents += numberOfStudents;
-                    finalProfit.ProfitForPeriod += Math.Round(profit);
                 }
             }
-
             return Json(finalProfit);
         }
     }

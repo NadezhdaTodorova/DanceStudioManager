@@ -6,7 +6,7 @@ $(document).ready(function () {
     var classGenre = "";
     var level = "";
 
-    createGrid();
+    createGrid(dateFrom, dateTo, classGenre, level);
 
     $("#DateFrom").datepicker({ autoclose: true, todayBtn: 'linked' })
     $("#DateTo").datepicker({ autoclose: true, todayBtn: 'linked' })
@@ -26,7 +26,7 @@ $("#SearchProfitForClass").click(function (e) {
             search: false
         }).trigger("reloadGrid");
 });
-
+    
 function getMyAppsDataFromScreen() {
     var formDataSearch = {};
 
@@ -57,11 +57,12 @@ function getMyAppsDataFromScreen() {
     return formDataSearch;
 }
 
-function createGrid() {
+function createGrid(dateFrom, dateTo, classGenre, level) {
     jQuery(grid_selector).jqGrid({
         datatype: "json",
+        //url: '/Reports/SearchProfitForPeriod?dateFrom=' + dateFrom + '&dateTo=' + dateTo + '&classGenre=' + classGenre + '&level=' + level,
         height: 450,
-        type: "Get",
+        type: "POST",
         colNames: ['Class genre', 'Level', 'Type', 'Number of students', 'Instructors', 'Profit'],
         colModel: [
             { name: 'classGenre', index: 'ClassGenre', width: 200, firstsortorder: "desc" },
@@ -69,7 +70,7 @@ function createGrid() {
             { name: 'type', index: 'Type', width: 200 },
             { name: 'numberOfStudents', index: 'NumberOfStudents', width: 250 },
             { name: 'instructors', index: 'Instructors', width: 250 },
-            { name: 'profit', index: 'Profit', width: 150 }
+            { name: 'profitForPeriod', index: 'ProfitForPeriod', width: 150 }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],

@@ -33,9 +33,10 @@
             </div>
         </div>
         <div class="form-row mb-3">
-            <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#instructorsModal">Add New</button>
             <button asp-controller="Studio" asp-action="GetInstructors" type="submit" id="SearchInstructor" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
+            <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#instructorsModal">Add New</button>
         </div>
+        <div id="success" style="color:red"></div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>

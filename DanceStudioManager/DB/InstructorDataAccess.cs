@@ -38,6 +38,9 @@ namespace DanceStudioManager
                     instructor.SendEmail = (bool)rdr["SendEmail"];
                     instructor.Gender = rdr["Gender"].ToString();
                     instructor.Id = (int)rdr["Id"];
+                    instructor.DateOfBirth = (DateTime)rdr["DateOfBirth"];
+                    instructor.DateOfBirthToString = instructor.DateOfBirth.Date.ToString("yyyy-MM-dd");
+
                     if (!DBNull.Value.Equals(rdr["ProcenOfProfit"]))
                     {
                         instructor.procentOfProfit = (int)rdr["ProcenOfProfit"];
@@ -79,7 +82,16 @@ namespace DanceStudioManager
                     i.Email = rdr["Email"].ToString();
                     i.Gender = rdr["Gender"].ToString();
                     i.CellPhone = rdr["CellPhone"].ToString();
-                    i.procentOfProfit = (int)rdr["ProcentOfProfit"];
+                    i.DateOfBirth = (DateTime)rdr["DateOfBirth"];
+                    i.DateOfBirthToString = i.DateOfBirth.Date.ToString("yyyy-MM-dd");
+                    if (!DBNull.Value.Equals(rdr["ProcenOfProfit"]))
+                    {
+                        i.procentOfProfit = (int)rdr["ProcenOfProfit"];
+                    }
+                    else
+                    {
+                        i.procentOfProfit = 0;
+                    }
 
                     instructors.Add(i);
                 }
@@ -140,6 +152,80 @@ namespace DanceStudioManager
             }
 
             return i;
+        }
+
+        public void UpdateInstructor(Instructor instructor, int userId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateInstructor", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@InstructorId", instructor.Id);
+
+                cmd.Parameters.Add("@Firstname", SqlDbType.VarChar);
+                if (instructor.Firstname == null) cmd.Parameters["@Firstname"].Value = DBNull.Value;
+                else cmd.Parameters["@Firstname"].Value = instructor.Firstname;
+
+                cmd.Parameters.Add("@Lastname", SqlDbType.VarChar);
+                if (instructor.Lastname == null) cmd.Parameters["@Lastname"].Value = DBNull.Value;
+                else cmd.Parameters["@Lastname"].Value = instructor.Lastname;
+
+                cmd.Parameters.Add("@CellPhone", SqlDbType.VarChar);
+                if (instructor.CellPhone == null) cmd.Parameters["@CellPhone"].Value = DBNull.Value;
+                else cmd.Parameters["@CellPhone"].Value = instructor.CellPhone;
+
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+                if (instructor.Email == null) cmd.Parameters["@Email"].Value = DBNull.Value;
+                else cmd.Parameters["@Email"].Value = instructor.Email;
+
+                cmd.Parameters.Add("@SendEmail", SqlDbType.Bit);
+                if (instructor.SendEmail == false) cmd.Parameters["@SendEmail"].Value = false;
+                else cmd.Parameters["@SendEmail"].Value = instructor.SendEmail;
+
+                cmd.Parameters.Add("@Gender", SqlDbType.VarChar);
+                if (instructor.Gender == null) cmd.Parameters["@Gender"].Value = DBNull.Value;
+                else cmd.Parameters["@Gender"].Value = instructor.Gender;
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (instructor.StudioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = instructor.StudioId;
+
+                cmd.Parameters.Add("@DateOfBirth", SqlDbType.DateTime);
+                if (instructor.DateOfBirthToString == null) cmd.Parameters["@DateOfBirth"].Value = DBNull.Value;
+                else cmd.Parameters["@DateOfBirth"].Value = DateTime.Parse(instructor.DateOfBirthToString); 
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void DeleteInstructor(Instructor instructor, int userId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteInstructor", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@InstructorId", instructor.Id);
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
         }
     }
 }

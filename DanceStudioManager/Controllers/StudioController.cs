@@ -113,7 +113,9 @@ namespace DanceStudioManager
             List<Student> studentList = new List<Student>();
             Student student = new Student();
 
-            if (firstname == null && lastname == null && email == null)
+            if ((string.IsNullOrEmpty(firstname) || firstname == "null") 
+                && (string.IsNullOrEmpty(lastname) || lastname == "null") 
+                && (string.IsNullOrEmpty(email) || email == "null"))
             {
                 studentList = _studentDataAccess.GetAllStudents();
             }
@@ -136,20 +138,31 @@ namespace DanceStudioManager
             return RedirectToAction("Students");
         }
 
-        //public IActionResult SearchStudent([FromBody]Student student)
-        //{
-        //    List<Student> studentList = new List<Student>();
-        //    if (student.Firstname == null || student.Lastname == null || student.Email == null)
-        //    {
-        //        studentList = _studentDataAccess.GetAllStudents();
-        //    }
-        //    else
-        //    {
-        //        studentList = _studentDataAccess.SearchStudents(student);
-        //    }
+        public void EditStudent(Student student)
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
 
-        //    return Json(studentList);
-        //}
+            _studentDataAccess.UpdateStudent(student, userId);
+        }
+
+        public void DeleteStudent(Student student)
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+
+            _studentDataAccess.DeleteStudent(student, userId);
+        }
 
         public IActionResult Instructor()
         {
@@ -162,7 +175,9 @@ namespace DanceStudioManager
             List<Instructor> instructorList = new List<Instructor>();
             Instructor instructor = new Instructor();
 
-            if (firstname == null && lastname == null && email == null)
+            if ((string.IsNullOrEmpty(firstname) || firstname == "null")
+                && (string.IsNullOrEmpty(lastname) || lastname == "null")
+                && (string.IsNullOrEmpty(email) || email == "null"))
             {
                 instructorList = _instructorDataAccess.GetAllInstructors();
             }
@@ -183,6 +198,32 @@ namespace DanceStudioManager
             int studioId = GetCurrentStudioId();
             _instructorDataAccess.AddNewInstructor(instructor, studioId);
             return RedirectToAction("Instructor");
+        }
+
+        public void EditInstructor(Instructor instructor)
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+
+            _instructorDataAccess.UpdateInstructor(instructor, userId);
+        }
+
+        public void DeleteInstructor(Instructor instructor)
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+
+            _instructorDataAccess.DeleteInstructor(instructor, userId);
         }
 
         public IActionResult Classes(string classError)

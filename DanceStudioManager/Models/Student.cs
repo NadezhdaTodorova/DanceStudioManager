@@ -18,5 +18,6 @@ namespace DanceStudioManager
         public int StudioId { get; set; }
         [DisplayName("Date of birth")]
         public DateTime DateOfBirth { get; set; }
+        public string DateOfBirthToString { get; set; }
     }
 }

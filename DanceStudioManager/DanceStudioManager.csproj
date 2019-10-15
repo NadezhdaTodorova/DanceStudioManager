@@ -15,6 +15,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\css\ui.jqgrid-bootstrap-ui.css" />
     <Content Remove="wwwroot\css\ui.jqgrid-bootstrap.css" />
+    <Content Remove="wwwroot\images\edit_black_96x96.png" />
     <Content Remove="wwwroot\Pictures\student.png" />
   </ItemGroup>
 

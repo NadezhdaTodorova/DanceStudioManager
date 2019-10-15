@@ -77,19 +77,56 @@ function createGrid(firstname, lastname, email) {
         datatype: "json",
         height: 450,
         type: "POST",
-        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender', 'Procent of profit' ],
+        colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender', 'Procent of profit', 'Date of Birth' ],
         colModel: [
-            { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc" },
-            { name: 'lastname', index: 'Lastname', width: 200 },
-            { name: 'email', index: 'Email', width: 200 },
-            { name: 'cellPhone', index: 'CellPhone', width: 250 },
-            { name: 'gender', index: 'Gender', width: 250 },
-            { name: 'procentOfProfit', index: 'ProcentOfProfit', width: 150 }
+            { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc", editable: true, classes: 'pointer' },
+            { name: 'lastname', index: 'Lastname', width: 200, editable: true, classes: 'pointer' },
+            { name: 'email', index: 'Email', width: 200, editable: true, classes: 'pointer' },
+            { name: 'cellPhone', index: 'CellPhone', width: 150, editable: true, classes: 'pointer' },
+            { name: 'gender', index: 'Gender', width: 150, editable: true, classes: 'pointer' },
+            { name: 'procentOfProfit', index: 'ProcentOfProfit', width: 150, editable: true, classes: 'pointer' },
+            { name: 'dateOfBirthToString', index: 'DateOfBirthToString', width: 150, editable: true, classes: 'pointer' }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: pager_selector,
-        altRows: true,
-        multiselect: true,
-    }).navGrid('#jqGridPager', { add: false, edit: true, del: true, search: false, refresh: true });
+        altRows: true
+    }).navGrid('#jqGridPager', { add: false, edit: true, edittitle: "Edit Instructor", del: true, deltitle: "Delete Instructor", search: false, refresh: true },
+        //Edit option
+        {
+            reloadAfterSubmit: true,
+            jqModal: false,
+            closeOnEscape: true,
+            closeAfterEdit: true,
+            url: "/Studio/EditInstructor/",
+            afterSubmit: function (response, postdata) {
+                if (response.statusText = "OK") {
+                    jQuery("#success").show();
+                    jQuery("#success").html("Instructor successfully updated");
+                    jQuery("#success").fadeOut(6000);
+                    return [true, response.responseText]
+                }
+                else {
+                    return [false, response.responseText]
+                }
+            }
+        },
+        {},//add option Don't delete it!
+        //Delete option 
+        {
+            url: '/Studio/DeleteInstructor',
+            closeAfterDelete: true,
+            afterSubmit: function (response) {
+                if (response.statusText = "OK") {
+                    jQuery("#success").show();
+                    jQuery("#success").html("Instructor successfully deleted");
+                    jQuery("#success").fadeOut(6000);
+                    return [true, response.responseText]
+                }
+                else {
+                    return [false, response.responseText]
+                }
+            }
+
+        });
 };
