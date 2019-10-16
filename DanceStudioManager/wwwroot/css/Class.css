@@ -65,3 +65,6 @@
 .btn-primary {
     background-color: rgb(219,112,147) !important;
 }
+.pointer {
+    cursor: pointer;
+}  

@@ -384,6 +384,16 @@ namespace DanceStudioManager
             return Json(id);
         }
 
+        public void UpdateClass(Class _class)
+        {
+
+        }
+
+        public void DeleteClass(Class _class)
+        {
+
+        }
+
         public IActionResult DashboardChart()
         {
             int[] data = new int[13];

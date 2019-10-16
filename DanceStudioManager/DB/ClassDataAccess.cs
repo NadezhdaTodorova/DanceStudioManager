@@ -333,15 +333,15 @@ namespace DanceStudioManager
                 else cmd.Parameters["@ClassId"].Value = classId;
 
                 cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
-                if (genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
+                if (genre == "null") cmd.Parameters["@Genre"].Value = DBNull.Value;
                 else cmd.Parameters["@Genre"].Value = genre;
 
                 cmd.Parameters.Add("@Level", SqlDbType.VarChar);
-                if (level == null) cmd.Parameters["@Level"].Value = DBNull.Value;
+                if (level == "null") cmd.Parameters["@Level"].Value = DBNull.Value;
                 else cmd.Parameters["@Level"].Value = level;
 
                 cmd.Parameters.Add("@Type", SqlDbType.VarChar);
-                if (type == null) cmd.Parameters["@Type"].Value = DBNull.Value;
+                if (type == "null") cmd.Parameters["@Type"].Value = DBNull.Value;
                 else cmd.Parameters["@Type"].Value = type;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -371,6 +371,43 @@ namespace DanceStudioManager
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void UpdateClass(Class _class, int userId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ClassId", _class.Id);
+
+                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                if (_class.Genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
+                else cmd.Parameters["@Genre"].Value = _class.Genre;
+
+                cmd.Parameters.Add("@Level", SqlDbType.VarChar);
+                if (_class.Level == null) cmd.Parameters["@Level"].Value = DBNull.Value;
+                else cmd.Parameters["@Level"].Value = _class.Level;
+
+                cmd.Parameters.Add("@PricePerHour", SqlDbType.Float);
+                if (_class.PricePerHour == 0) cmd.Parameters["@PricePerHour"].Value = DBNull.Value;
+                else cmd.Parameters["@PricePerHour"].Value = _class.PricePerHour;
+
+                cmd.Parameters.Add("@ClassType", SqlDbType.VarChar);
+                if (_class.ClassType == null) cmd.Parameters["@ClassType"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassType"].Value = _class.ClassType; 
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
 
                 con.Open();
                 cmd.ExecuteNonQuery();

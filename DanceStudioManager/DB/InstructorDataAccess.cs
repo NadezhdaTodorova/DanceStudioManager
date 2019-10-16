@@ -67,9 +67,17 @@ namespace DanceStudioManager
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
 
-                cmd.Parameters.AddWithValue("@Firstname", instructor.Firstname);
-                cmd.Parameters.AddWithValue("@Lastname", instructor.Lastname);
-                cmd.Parameters.AddWithValue("@Email", instructor.Email);
+                cmd.Parameters.Add("@Firstname", SqlDbType.VarChar);
+                if (instructor.Firstname == "null") cmd.Parameters["@Firstname"].Value = DBNull.Value;
+                else cmd.Parameters["@Firstname"].Value = instructor.Firstname;
+
+                cmd.Parameters.Add("@Lastname", SqlDbType.VarChar);
+                if (instructor.Lastname == "null") cmd.Parameters["@Lastname"].Value = DBNull.Value;
+                else cmd.Parameters["@Lastname"].Value = instructor.Lastname;
+
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+                if (instructor.Email == "null") cmd.Parameters["@Email"].Value = DBNull.Value;
+                else cmd.Parameters["@Email"].Value = instructor.Email;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -84,6 +92,7 @@ namespace DanceStudioManager
                     i.CellPhone = rdr["CellPhone"].ToString();
                     i.DateOfBirth = (DateTime)rdr["DateOfBirth"];
                     i.DateOfBirthToString = i.DateOfBirth.Date.ToString("yyyy-MM-dd");
+
                     if (!DBNull.Value.Equals(rdr["ProcenOfProfit"]))
                     {
                         i.procentOfProfit = (int)rdr["ProcenOfProfit"];

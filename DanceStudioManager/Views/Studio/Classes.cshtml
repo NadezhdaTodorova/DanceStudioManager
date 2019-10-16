@@ -32,11 +32,12 @@
                 </div>
             </div>
         </div>
-        <label id="classError">@ViewBag.classError</label>
-        <div class="form-row mb-3">
-            <button type="button" id="addNew" class="btn btn-secondary mt-4 mr-2" data-toggle="modal" data-target="#classesModal">Add New</button>
-            <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="SearchClasses" class="btn btn-secondary w-25 h-25 mt-4">Submit</button>
+        <div id="success" style="color:red"></div>
+        <div class="form-row">
+            <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="SearchClasses" class="btn btn-secondary w-25 h-25 mt-4">Search class</button>
+            <button type="button" id="addNew" class="btn btn-secondary w-25 h-25 mt-4 ml-3" data-toggle="modal" data-target="#classesModal">Add New</button>
         </div>
+        <label id="classError">@ViewBag.classError</label>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
@@ -98,7 +99,6 @@
         </div>
     </div>
 </form>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

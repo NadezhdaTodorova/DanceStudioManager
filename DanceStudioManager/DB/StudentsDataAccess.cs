@@ -57,9 +57,17 @@ namespace DanceStudioManager
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
 
-                cmd.Parameters.AddWithValue("@Firstname", student.Firstname);
-                cmd.Parameters.AddWithValue("@Lastname", student.Lastname);
-                cmd.Parameters.AddWithValue("@Email", student.Email);
+                cmd.Parameters.Add("@Firstname", SqlDbType.VarChar);
+                if (student.Firstname == "null") cmd.Parameters["@Firstname"].Value = DBNull.Value;
+                else cmd.Parameters["@Firstname"].Value = student.Firstname;
+
+                cmd.Parameters.Add("@Lastname", SqlDbType.VarChar);
+                if (student.Lastname == "null") cmd.Parameters["@Lastname"].Value = DBNull.Value;
+                else cmd.Parameters["@Lastname"].Value = student.Lastname;
+
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar);
+                if (student.Email == "null") cmd.Parameters["@Email"].Value = DBNull.Value;
+                else cmd.Parameters["@Email"].Value = student.Email;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -72,6 +80,8 @@ namespace DanceStudioManager
                     s.Email = rdr["Email"].ToString();
                     s.Gender = rdr["Gender"].ToString();
                     s.CellPhone = rdr["CellPhone"].ToString();
+                    s.DateOfBirth = (DateTime)rdr["DateOfBirth"];
+                    s.DateOfBirthToString = s.DateOfBirth.Date.ToString("yyyy-MM-dd");
 
                     students.Add(s);
                 }
