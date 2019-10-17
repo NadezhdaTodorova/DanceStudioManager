@@ -264,6 +264,7 @@ namespace DanceStudioManager
         public IActionResult GetClasses(string genre, string level, string type)
         {
             List<Class> classesList = new List<Class>();
+            var allStudents = _studentDataAccess.GetAllStudents();
 
             if (genre == null && level == null && type == null)
             {
@@ -282,7 +283,16 @@ namespace DanceStudioManager
                     {
                         c.Shedule.Add($" {s.Day} - {s.Hour} ");
                     }
+
+                    var studentsIds = _classDataAccess.GetStudentsConnectedToClass(c.Id);
+                    foreach (var sId in studentsIds)
+                    {
+                        var student = _studentDataAccess.GetStudentById(sId);
+                        c.Students.Add($" {student.Firstname} + {student.Lastname} ");
+                    }
+
                 }
+
             }else
             {
                List<Class> _classes = new List<Class> ();
@@ -303,11 +313,16 @@ namespace DanceStudioManager
                         _class.Shedule.Add($" {s.Day} - {s.Hour} ");
                     }
 
+                    var studentsIds = _classDataAccess.GetStudentsConnectedToClass(_class.Id);
+                    foreach (var sId in studentsIds)
+                    {
+                        var student = _studentDataAccess.GetStudentById(sId);
+                        _class.Students.Add($" {student.Firstname} + {student.Lastname} ");
+                    }
+
                     classesList.Add(_class);
                 }
             }
-
-            
 
             return Json(classesList);
         }
@@ -389,9 +404,9 @@ namespace DanceStudioManager
 
         }
 
-        public void DeleteClass(Class _class)
+        public void DeleteClass(int classId)
         {
-
+            _classDataAccess.RemoveClass(classId);
         }
 
         public IActionResult DashboardChart()

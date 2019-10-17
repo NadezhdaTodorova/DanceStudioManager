@@ -34,7 +34,7 @@
         </div>
         <div id="success" style="color:red"></div>
         <div class="form-row">
-            <button asp-controller="Studio" asp-action="GetStudents" type="submit" id="SearchClasses" class="btn btn-secondary w-25 h-25 mt-4">Search class</button>
+            <button type="submit" id="SearchClasses" class="btn btn-secondary w-25 h-25 mt-4">Search class</button>
             <button type="button" id="addNew" class="btn btn-secondary w-25 h-25 mt-4 ml-3" data-toggle="modal" data-target="#classesModal">Add New</button>
         </div>
         <label id="classError">@ViewBag.classError</label>
@@ -94,6 +94,61 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal Update class -->
+<form method="post" asp-controller="Studio" asp-action="UpdateClass">
+    <div class="modal fade " id="EditClassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title ml-5 mt-4" id="exampleModalLabel">Edit class </h5>
+                    <img src="~/Pictures/danceClass.jpg" alt="danceClass" class="ml-4" width="70" height="70" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <h5 class="modal-title mt-4" id="exampleModalLabel">Class info</h5>
+                <div class="modal-body">
+                    <h6>Students</h6>
+                    <div class="table-wrapper-scroll-y border-top border-bottom">
+                        <table class="table table-responsive-sm table-borderless" id="StudentsTable"></table>
+                    </div>
+                    <h6 class="m-3">Instructor/s</h6>
+                    <div class="table-wrapper-scroll-y border-top border-bottom">
+                        <table class="table table-responsive-sm table-borderless" id="InstructorTable"></table>
+                    </div>
+                    <div class="m-2 border-bottom">
+                        <h6>Price per hour - <a id="price"></a></h6>
+                        <h6>Level - <a id="level"></a></h6>
+                    </div>
+                    <div class="m-3">
+                        <a> Change price per hour</a>
+                        <input asp-for="PricePerHour" type="number" class="modal-input " id="PricePerHour" value="@Model.PricePerHour">
+
+                        <a> Change level</a>
+                        <select class="browser-default custom-select modal-input" name="Level">
+                            <option>Level</option>
+                            <option value="beginners">beginners</option>
+                            <option value="intermidiate">intermidiate</option>
+                            <option value="veterans">veterans</option>
+                            <option value="professionals">professionals</option>
+                        </select>
+
+                        <a>Add students </a>
+                        @*<select asp-for="AllStudents" asp-items="@Model.AllStudents" class="modal-input h-auto" multiple="multiple" name="AllStudentsIds[]"></select>
+
+                        <a>Add instructor/s</a>
+                        <select asp-for="AllInstructors" asp-items="@Model.AllInstructors" class="modal-input h-auto" multiple="multiple" name="AllInstructorsIds[]"></select>*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
