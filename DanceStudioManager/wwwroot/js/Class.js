@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     createGrid(genre, level, type);
 
-    $("#Students").mousedown(function (e) {
+    $(".Students").mousedown(function (e) {
         e.preventDefault();
 
         var select = this;
@@ -17,10 +17,10 @@ $(document).ready(function () {
 
         setTimeout(function () { select.scrollTop = scroll; }, 0);
 
-        $("#Students").focus();
+        $(".Students").focus();
     }).mousemove(function (e) { e.preventDefault() });
 
-    $("#Instructors").mousedown(function (e) {
+    $(".Instructors").mousedown(function (e) {
         e.preventDefault();
 
         var select = this;
@@ -30,10 +30,10 @@ $(document).ready(function () {
 
         setTimeout(function () { select.scrollTop = scroll; }, 0);
 
-        $("#Instructors").focus();
+        $(".Instructors").focus();
     }).mousemove(function (e) { e.preventDefault() });
 
-    $("#SheduleDays").mousedown(function (e) {
+    $(".SheduleDays").mousedown(function (e) {
         e.preventDefault();
 
         var select = this;
@@ -43,7 +43,7 @@ $(document).ready(function () {
 
         setTimeout(function () { select.scrollTop = scroll; }, 0);
 
-        $("#Students").focus();
+        $(".SheduleDays").focus();
     }).mousemove(function (e) { e.preventDefault() });
 
     $(function () {
@@ -94,11 +94,44 @@ function getMyAppsDataFromScreen() {
 
 
 var myCustomEdit = function () {
+    return "<button type='button' class='btn btn-light btn-sm' data-toggle='modal' data-target='#EditClassModal' onclick='EditF()'>Edit</button>";
+};
+
+ function EditF () {
+
     var grid = $("#jqGrid");
     var rowKey = grid.jqGrid('getGridParam', "selrow");
 
-    return "<button type='button' class='btn btn-light btn-sm' data-toggle='modal' data-target='#EditClassModal' + cellVal + >Edit</button>";
-};
+    $.ajax({
+        type: "POST",
+        url: '/Studio/Dashboard?classId=' + rowKey,
+        dataType: "json",
+        success: function (data) {
+            var content = "<tbody>"
+            $.each(data.students, function () {
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+            });
+            content += "</tbody>"
+            $('#StudentsTable').append(content);
+
+            var content = "<tbody>"
+            $.each(data.instructors, function () {
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+            });
+            content += "</tbody>"
+
+            $('#InstructorTable').append(content);
+            $('#price').append(data.pricePerHour);
+            $('#level').append(data.level);
+            $('#Shedule').append(data.shedule);
+        },
+        error: function (xhr, thrownError) {
+            if (xhr.status == 404) {
+                alert(thrownError);
+            }
+        }
+    });
+}; 
 
 var myCustomDelete = function () {
     return "<button type='button' class='btn btn-light btn-sm' id='deleteButton' onclick='deleteF()'>Delete</button>";

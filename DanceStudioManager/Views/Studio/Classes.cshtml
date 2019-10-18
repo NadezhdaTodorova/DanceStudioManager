@@ -72,7 +72,7 @@
                         <option value="group">group</option>
                     </select>
                     <h6 class="label label-default">Select shedule Days</h6>
-                    <select asp-for="SheduleDays" class="modal-input h-auto" multiple="multiple" name="SheduleDays[]">
+                    <select asp-for="SheduleDays" class="modal-input h-auto SheduleDays" multiple="multiple" name="SheduleDays[]">
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
@@ -85,10 +85,10 @@
                     <input asp-for="Hour" type="text" class="modal-input " id="Hour" placeholder="Hour" value="">
 
                     <h6 class="label label-default">Select students </h6>
-                    <select asp-for="Students" asp-items="@Model.Students" class="modal-input h-auto" multiple="multiple" name="StudentsIds[]"></select>
+                    <select asp-for="Students" asp-items="@Model.Students" class="modal-input h-auto Students" multiple="multiple" name="StudentsIds[]"></select>
 
                     <h6 class="label label-default">Select instructor/s</h6>
-                    <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto" multiple="multiple" name="InstructorsIds[]"></select>
+                    <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto Instructors" multiple="multiple" name="InstructorsIds[]"></select>
 
                 </div>
                 <div class="modal-footer">
@@ -125,6 +125,7 @@
                     <div class="m-2 border-bottom">
                         <h6>Price per hour - <a id="price"></a></h6>
                         <h6>Level - <a id="level"></a></h6>
+                        <h6>Shedule - <a id="Shedule"></a></h6>
                     </div>
                     <div class="m-3">
                         <a> Change price per hour</a>
@@ -139,11 +140,25 @@
                             <option value="professionals">professionals</option>
                         </select>
 
+                        <a> Change Shedule hour</a>
+                        <input asp-for="Hour" type="text" class="modal-input " id="hour">
+
+                        <h6 class="label label-default">Change Shedule Days</h6>
+                        <select asp-for="SheduleDays" class="modal-input h-auto SheduleDays" multiple="multiple" name="SheduleDays[]">
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+
                         <a>Add students </a>
-                        @*<select asp-for="AllStudents" asp-items="@Model.AllStudents" class="modal-input h-auto" multiple="multiple" name="AllStudentsIds[]"></select>
+                        <select asp-for="Students" asp-items="@Model.Students" class="modal-input h-auto Students" multiple="multiple" name="StudentsIds[]"></select>
 
                         <a>Add instructor/s</a>
-                        <select asp-for="AllInstructors" asp-items="@Model.AllInstructors" class="modal-input h-auto" multiple="multiple" name="AllInstructorsIds[]"></select>*@
+                        <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto Instructors" multiple="multiple" name="InstructorsIds[]"></select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
