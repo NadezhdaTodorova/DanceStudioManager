@@ -399,9 +399,48 @@ namespace DanceStudioManager
             return Json(id);
         }
 
-        public void UpdateClass(Class _class)
+        public void UpdateClass(ClassStudentVM _class)
         {
+            var _classToUpdate = new Class();
 
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+
+            if (_class.PricePerHour != 0) _classToUpdate.PricePerHour = _class.PricePerHour;
+
+            if (_class.Level != null) _classToUpdate.Level = _class.Level;
+
+            if (_class.ClassType != null) _classToUpdate.ClassType = _class.ClassType;
+
+            _classDataAccess.UpdateClass(_classToUpdate, userId);
+
+            if (_class.SheduleDays != null)
+            {
+                foreach (var day in _class.SheduleDays)
+                {
+                    _classDataAccess.AddDayToShedule(day, _class.Id, _class.Hour, GetCurrentStudioId());
+                }
+            }
+
+            if (_class.InstructorsIds != null) {
+                foreach (var id in _class.InstructorsIds)
+                {
+                    _classDataAccess.AddInstructorToClass(id, _class.Id);
+                }
+            }
+
+            if (_class.StudentsIds != null)
+            {
+                foreach (var id in _class.StudentsIds)
+                {
+                    _classDataAccess.AddInstructorToClass(id, _class.Id);
+                }
+            }
         }
 
         public void DeleteClass(int classId)

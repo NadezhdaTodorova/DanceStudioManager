@@ -49,9 +49,10 @@ $(document).ready(function () {
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+});
 
-    
-
+$("#EditClassModal").on("hidden.bs.modal", function (e) {
+    $(this).find('form')[0].reset();
 });
 
 var grid_selector = "#jqGrid";
