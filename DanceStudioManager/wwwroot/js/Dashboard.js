@@ -44,25 +44,25 @@
             url: '/Studio/Dashboard?classId=' + classId,
             dataType: "json",
             success: function (data) {
-                var content = "<tbody>"
+                var content = "<tbody>";
                 $.each(data.students, function () {
                     content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
                 });
-                content += "</tbody>"
+                content += "</tbody>";
                 $('#StudentsTable').append(content);
 
-                var content = "<tbody>"
+                var content2 = "<tbody>";
                 $.each(data.instructors, function () {
-                    content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                    content2 += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
                 });
-                content += "</tbody>"
+                content2 += "</tbody>";
 
                 $('#InstructorTable').append(content);
                 $('#price').append(data.pricePerHour);
                 $('#level').append(data.level);
             },
             error: function (xhr, thrownError) {
-                if (xhr.status == 404) {
+                if (xhr.status === 404) {
                     alert(thrownError);
                 }
             }

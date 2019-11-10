@@ -108,18 +108,18 @@ var myCustomEdit = function () {
         url: '/Studio/Dashboard?classId=' + rowKey,
         dataType: "json",
         success: function (data) {
-            var content = "<tbody>"
+            var content = "<tbody>";
             $.each(data.students, function () {
                 content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
-            content += "</tbody>"
+            content += "</tbody>";
             $('#StudentsTable').append(content);
 
-            var content = "<tbody>"
+             var content2 = "<tbody>";
             $.each(data.instructors, function () {
-                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                content2 += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
-            content += "</tbody>"
+            content2 += "</tbody>";
 
             $('#InstructorTable').append(content);
             $('#price').append(data.pricePerHour);
@@ -127,7 +127,7 @@ var myCustomEdit = function () {
             $('#Shedule').append(data.shedule);
         },
         error: function (xhr, thrownError) {
-            if (xhr.status == 404) {
+            if (xhr.status === 404) {
                 alert(thrownError);
             }
         }
@@ -148,7 +148,7 @@ function deleteF() {
             location.reload(); 
         },
         error: function (xhr, thrownError) {
-            if (xhr.status == 404) {
+            if (xhr.status === 404) {
                 alert(thrownError);
             }
         }
@@ -163,8 +163,8 @@ function createGrid(genre, level, type) {
         type: "POST",
         colNames: ['Genre', 'Level', 'PricePerHour', 'Shedule', 'ClassType', 'NumberOfStudents', 'Instructors', 'Edit', 'Delete'],
         colModel: [
-            { name: 'genre', index: 'Genre', width: 200, sortable: true, classes: 'pointer', editable: true },
-            { name: 'level', index: 'Level', width: 150, classes: 'pointer', editable: true },
+            { name: 'genre', index: 'Genre', width: 100, sortable: true, classes: 'pointer', editable: true },
+            { name: 'level', index: 'Level', width: 100, classes: 'pointer', editable: true },
             { name: 'pricePerHour', index: 'PricePerHour', width: 100, classes: 'pointer', editable: true },
             { name: 'shedule', index: 'Shedule', width: 350, classes: 'pointer', editable: true },
             { name: 'classType', index: 'ClassType', width: 100, classes: 'pointer', editable: true },
@@ -178,45 +178,5 @@ function createGrid(genre, level, type) {
         pager: pager_selector,
         altRows: true
     });
-    //}).navGrid('#jqGridPager',
-    //    { add: false, edit: true, edittitle: "Edit Class", del: true, deltitle: "Delete Class", search: false, refresh: true },
-    //    Edit option
-    //    {
-    //        reloadAfterSubmit: true,
-    //        jqModal: false,
-    //        closeOnEscape: true,
-    //        closeAfterEdit: true,
-    //        editCaption: "The Edit Dialog",
-    //        template: template,
-    //        url: "/Studio/EditClass/",
-    //        afterSubmit: function (response, postdata) {
-    //            if (response.statusText = "OK") {
-    //                jQuery("#success").show();
-    //                jQuery("#success").html("Class successfully updated");
-    //                jQuery("#success").fadeOut(6000);
-    //                return [true, response.responseText]
-    //            }
-    //            else {
-    //                return [false, response.responseText]
-    //            }
-    //        }
-    //    },
-    //    {},//add option Don't delete it!
-    //    Delete option 
-    //    {
-    //        url: '/Studio/DeleteClass',
-    //        closeAfterDelete: true,
-    //        afterSubmit: function (response) {
-    //            if (response.statusText = "OK") {
-    //                jQuery("#success").show();
-    //                jQuery("#success").html("Class successfully deleted");
-    //                jQuery("#success").fadeOut(6000);
-    //                return [true, response.responseText]
-    //            }
-    //            else {
-    //                return [false, response.responseText]
-    //            }
-    //        }
-    //    });
 };
 

@@ -32,6 +32,7 @@ namespace DanceStudioManager
         public string CellPhone{ get; set; }
         public string Gender{ get; set; }
         public int Id { get; set; }
+        public int ClassId { get; set; }
 
 
 

@@ -13,6 +13,7 @@ namespace DanceStudioManager
         private readonly UserDataAccess _userDataAccess;
         private readonly StudioDataAccess _studioDataAccess;
         private readonly SendEmail _email;
+        private byte[] salt;
 
         public AccountController(UserDataAccess userDataAccess, StudioDataAccess studioDataAccess, SendEmail email)
         {
@@ -36,8 +37,9 @@ namespace DanceStudioManager
                 Studio newStudio = new Studio();
 
                 string saltBytes = HashPassword.GenerateSalt();
+                salt = saltBytes;
                 user.Password = HashPassword.HashPasswordFunction(user.Password, saltBytes);
-                user.Salt = saltBytes;
+                user.Salt = salt;
 
                 newStudio.Name = user.StudioName;
 
@@ -187,11 +189,13 @@ namespace DanceStudioManager
                 }
                 else
                 {
+                    int saltLength = 10;
                     string saltBytes = HashPassword.GenerateSalt();
+                    salt = saltBytes;
                     var userId = _userDataAccess.GetUserId(user);
                     var userWithNewPass = _userDataAccess.GetUserById(userId);
                     userWithNewPass.Password = HashPassword.HashPasswordFunction(user.Password, saltBytes);
-                    userWithNewPass.Salt = saltBytes;
+                    userWithNewPass.Salt = salt;
                     userWithNewPass.ConfirmAccount = true;
                     _userDataAccess.UpdateUser(userWithNewPass);
 

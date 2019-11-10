@@ -80,9 +80,9 @@ namespace DanceStudioManager
         public IActionResult Dashboard(int classId)
         {
             DashboardNeeds dashboardNeeds = new DashboardNeeds();
-            var instructorList = _classDataAccess.GetInstructorsConnectedToClass(classId, GetCurrentStudioId());
-            var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(classId, GetCurrentStudioId());
-            var _class = _classDataAccess.SearchClass(classId, GetCurrentStudioId());
+            var instructorList = _classDataAccess.GetInstructorsConnectedToClass(classId);
+            var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(classId);
+            var _class = _classDataAccess.SearchClass(classId);
            
             foreach (var idsIns in instructorList)
             {
@@ -179,7 +179,7 @@ namespace DanceStudioManager
                 && (string.IsNullOrEmpty(lastname) || lastname == "null")
                 && (string.IsNullOrEmpty(email) || email == "null"))
             {
-                instructorList = _instructorDataAccess.GetAllInstructors(GetCurrentStudioId());
+                instructorList = _instructorDataAccess.GetAllInstructors();
             }
             else
             {
@@ -194,7 +194,7 @@ namespace DanceStudioManager
 
         public IActionResult AddNewInstructor(Instructor instructor)
         {
-            //CHECK DATE OF BITH PROBLEM
+
             int studioId = GetCurrentStudioId();
             _instructorDataAccess.AddNewInstructor(instructor, studioId);
             return RedirectToAction("Instructor");
@@ -231,7 +231,7 @@ namespace DanceStudioManager
             ViewBag.text = "Classes";
             var _class = new ClassStudentVM();
             var studentsList = _studentDataAccess.GetAllStudents(GetCurrentStudioId());
-            var instructorList = _instructorDataAccess.GetAllInstructors(GetCurrentStudioId());
+            var instructorList = _instructorDataAccess.GetAllInstructors();
 
             foreach (var s in studentsList)
             {
@@ -271,7 +271,7 @@ namespace DanceStudioManager
                 classesList = _classDataAccess.GetAllClasses(GetCurrentStudioId());
                 foreach (var c in classesList)
                 {
-                    var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id, GetCurrentStudioId());
+                    var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id);
                     foreach (var id in instructorsIds)
                     {
                         var instructor = _instructorDataAccess.GetInstructorById(id);
@@ -284,7 +284,7 @@ namespace DanceStudioManager
                         c.Shedule.Add($" {s.Day} - {s.Hour} ");
                     }
 
-                    var studentsIds = _classDataAccess.GetStudentsConnectedToClass(c.Id, GetCurrentStudioId());
+                    var studentsIds = _classDataAccess.GetStudentsConnectedToClass(c.Id);
                     foreach (var sId in studentsIds)
                     {
                         var student = _studentDataAccess.GetStudentById(sId);
@@ -297,10 +297,10 @@ namespace DanceStudioManager
             {
                List<Class> _classes = new List<Class> ();
 
-                _classes = _classDataAccess.SearchClass(genre, level, type, GetCurrentStudioId());
+                _classes = _classDataAccess.SearchClass(genre, level, type);
                 foreach (var _class in _classes)
                 {
-                    var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(_class.Id, GetCurrentStudioId());
+                    var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(_class.Id);
                     foreach (var id in instructorsIds)
                     {
                         var instructor = _instructorDataAccess.GetInstructorById(id);
@@ -313,7 +313,7 @@ namespace DanceStudioManager
                         _class.Shedule.Add($" {s.Day} - {s.Hour} ");
                     }
 
-                    var studentsIds = _classDataAccess.GetStudentsConnectedToClass(_class.Id, GetCurrentStudioId());
+                    var studentsIds = _classDataAccess.GetStudentsConnectedToClass(_class.Id);
                     foreach (var sId in studentsIds)
                     {
                         var student = _studentDataAccess.GetStudentById(sId);
@@ -377,8 +377,8 @@ namespace DanceStudioManager
         {
             var studioId = GetCurrentStudioId();
             var todayDate = DateTime.Now.Date;
-            var instructorList = _classDataAccess.GetInstructorsConnectedToClass(id, GetCurrentStudioId());
-            var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(id, GetCurrentStudioId());
+            var instructorList = _classDataAccess.GetInstructorsConnectedToClass(id);
+            var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(id);
 
             //ToDo
             //before adding attendance I have to check if this class is not added already!!!
@@ -410,8 +410,6 @@ namespace DanceStudioManager
             var newUser = new User();
             newUser.Email = userEmail;
             var userId = _userDataAccess.GetUserId(newUser);
-
-            _classToUpdate.Id = _class.ClassId;
 
             if (_class.PricePerHour != 0) _classToUpdate.PricePerHour = _class.PricePerHour;
 
@@ -455,7 +453,7 @@ namespace DanceStudioManager
             int[] data = new int[13];
             int[] months = new int[12] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
-            List<Attendance> attendances = _attendanceDataAccess.GetAllAttendances(GetCurrentStudioId());
+            List<Attendance> attendances = _attendanceDataAccess.GetAllAttendances();
             foreach (var month in months)
             {
                 int studentsCount = 0;
@@ -463,7 +461,7 @@ namespace DanceStudioManager
                 {
                     if (month == a.Date.Month)
                     {
-                        foreach (var s in _classDataAccess.GetStudentsConnectedToClass(a.ClassId, GetCurrentStudioId()))
+                        foreach (var s in _classDataAccess.GetStudentsConnectedToClass(a.ClassId))
                         {
                             studentsCount++;
                         }
@@ -484,7 +482,7 @@ namespace DanceStudioManager
             int[] days = new int[7] { 1, 2, 3, 4, 5, 6, 7 };
             DateTime currentDay = DateTime.Now.Date.AddDays(-1);
             DateTime before7Days = currentDay.AddDays(-6);
-            var allAtendances = _attendanceDataAccess.GetAllAttendances(GetCurrentStudioId());
+            var allAtendances = _attendanceDataAccess.GetAllAttendances();
 
 
             for (int d = 0; d < 7; d++)
@@ -502,14 +500,14 @@ namespace DanceStudioManager
                             double instructorPay = 0;
                             var procent = 0;
 
-                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId, GetCurrentStudioId()).Count;
-                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId, GetCurrentStudioId()))
+                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId).Count;
+                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
                             {
                                 var instructor = _instructorDataAccess.GetInstructorById(i);
                                 procent += instructor.procentOfProfit;
                             }
 
-                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId,GetCurrentStudioId()).PricePerHour);
+                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
                             instructorPay = (procent / 100) * profit;
                             profit = profit - instructorPay;
                         }

@@ -41,16 +41,16 @@ namespace DanceStudioManager
             }
         }
 
-        public List<CalendarData> GetAllClassesShedule(CalendarSearchVM calendarSearch)
+        public List<CalendarData> GetAllClassesShedule(CalendarSearchVM calendarSearch, int studioId)
         {
             var calData = new List<CalendarData>();
-           
-            List<Class> classes = classDataAccess.GetAllClasses();
+
+            List<Class> classes = classDataAccess.GetAllClasses(studioId);
 
             foreach (var _class in classes)
             {
                 List<Shedule> shedules = classDataAccess.GetClassShedule(_class.Id);
-                List<int> idInstructors = classDataAccess.GetInstructorsConnectedToClass(_class.Id);
+                List<int> idInstructors = classDataAccess.GetInstructorsConnectedToClass(_class.Id, studioId);
                 List<Instructor> instructors = new List<Instructor>();
 
                 foreach (var id in idInstructors)

@@ -3,30 +3,30 @@
     ViewData["Title"] = "Contact";
 }
 
-
-<form id="contactEmailForm" class="w-50 mt-4">
+@model Contacts
+<form id="contactEmailForm" method="post" asp-controller="Home"  asp-action="ContactForm" class="w-50 mt-4">
     <div id="info" class="m-1">
         <h2>Let's start a Conversation</h2>
         <p> We are happy to call you on the phone, speak on skype, or exchange email.</p>
         <p> Please fill out the information below and we’ll reply back with all the information you need<p>
     </div>
     <div class="form-group">
-        <label for="FirstName">First Name</label>
-        <input type="text" class="form-control" id="InputFirstName" aria-describedby="FirstName" placeholder="Enter first name">
+        <label asp-for="FirstName">First Name</label>
+        <input asp-for="FirstName" type="text" class="form-control" id="InputFirstName" aria-describedby="FirstName" placeholder="Enter first name">
     </div>
     <div class="form-group">
-        <label for="LastName">LastName</label>
-        <input type="text" class="form-control" id="InputLastName" aria-describedby="LastName" placeholder="Enter last name">
+        <label asp-for="LastName">LastName</label>
+        <input asp-for="LastName" type="text" class="form-control" id="InputLastName" aria-describedby="LastName" placeholder="Enter last name">
     </div>
     <div class="form-group">
         <label for="InputEmail1">Email address</label>
-        <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <input asp-for="Email" type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
     </div>
     <div class="form-group">
         <label for="Subject">Subject</label>
-        <input type="text" class="form-control" id="Subject" aria-describedby="Subject" placeholder="Subject">
+        <input asp-for="Subject" type="text" class="form-control" id="Subject" aria-describedby="Subject" placeholder="Subject">
         <label for="TextArea"></label>
-        <textarea class="form-control" id="TextArea" rows="3"></textarea>
+        <textarea asp-for="Text" class="form-control" id="TextArea" rows="3"></textarea>
     </div>
-    <button type="button" class="btn btn-secondary">Submit</button>
+    <button type="submit" class="btn btn-secondary">Submit</button>
 </form>

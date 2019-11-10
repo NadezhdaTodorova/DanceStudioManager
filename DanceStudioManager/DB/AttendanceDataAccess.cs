@@ -140,7 +140,7 @@ namespace DanceStudioManager
             }
             return attendances;
         }
-        public List<Attendance> GetAllAttendances()
+        public List<Attendance> GetAllAttendances(int studioId)
         {
             List<Attendance> attendances = new List<Attendance>();
 
@@ -149,6 +149,10 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("GetAllAttendances", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())

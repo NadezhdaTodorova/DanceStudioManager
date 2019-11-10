@@ -16,7 +16,7 @@ namespace DanceStudioManager
             applicationContext = _applicationContext;
         }
 
-        public List<Class> GetAllClasses()
+        public List<Class> GetAllClasses(int studioId)
         {
             List<Class> lstClasses = new List<Class>();
 
@@ -25,6 +25,10 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("GetAllClasses", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -67,6 +71,10 @@ namespace DanceStudioManager
                 cmd.Parameters.Add("@ClassType", SqlDbType.VarChar);
                 if (_class.ClassType == null) cmd.Parameters["@ClassType"].Value = DBNull.Value;
                 else cmd.Parameters["@ClassType"].Value = _class.ClassType;
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -169,7 +177,7 @@ namespace DanceStudioManager
             }
         }
 
-        public List<int> GetInstructorsConnectedToClass(int classId)
+        public List<int> GetInstructorsConnectedToClass(int classId, int StudioId)
         {
             List<int> instructorsIds = new List<int>();
 
@@ -180,6 +188,7 @@ namespace DanceStudioManager
                 con.Open();
 
                 cmd.Parameters.AddWithValue("@Classid", classId);
+                cmd.Parameters.AddWithValue("@StudioId", StudioId);
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -192,7 +201,7 @@ namespace DanceStudioManager
             return instructorsIds;
         }
 
-        public List<int> GetStudentsConnectedToClass(int classId)
+        public List<int> GetStudentsConnectedToClass(int classId, int studioId)
         {
             List<int> studentsIds = new List<int>();
 
@@ -203,6 +212,7 @@ namespace DanceStudioManager
                 con.Open();
 
                 cmd.Parameters.AddWithValue("@Classid", classId);
+                cmd.Parameters.AddWithValue("@StudioId", studioId);
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -274,7 +284,7 @@ namespace DanceStudioManager
             return shedules;
         }
 
-        public Class SearchClass(int classId)
+        public Class SearchClass(int classId, int studioId)
         {
             Class _class = new Class();
             string genre = null; 
@@ -303,6 +313,10 @@ namespace DanceStudioManager
                 if (type == null) cmd.Parameters["@Type"].Value = DBNull.Value;
                 else cmd.Parameters["@Type"].Value = type;
 
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
+
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
@@ -317,7 +331,7 @@ namespace DanceStudioManager
             return _class;
         }
 
-         public List<Class> SearchClass(string genre, string level, string type)
+         public List<Class> SearchClass(string genre, string level, string type, int studioId)
         {
             List<Class> _classes = new List<Class> ();
             int classId = 0;
@@ -343,6 +357,10 @@ namespace DanceStudioManager
                 cmd.Parameters.Add("@Type", SqlDbType.VarChar);
                 if (type == "null") cmd.Parameters["@Type"].Value = DBNull.Value;
                 else cmd.Parameters["@Type"].Value = type;
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())

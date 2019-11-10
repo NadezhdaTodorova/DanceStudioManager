@@ -29,6 +29,32 @@ namespace DanceStudioManager
             //Formatted mail body
             mail.IsBodyHtml = true;
             mail.Body = message;
+            mail.Subject = "Registration For DanceStudioManager!";
+            smtp.Send(mail);
+        }
+
+        public void SendContacts(string email, string firstName, string lastName, string Subject, string message)
+        {
+            MailMessage mail = new MailMessage();
+            string mailFrom = email;
+            mail.From = new MailAddress(mailFrom);
+
+            // The important part -- configuring the SMTP client
+            SmtpClient smtp = new SmtpClient();
+            smtp.Port = 587;   // [1] You can try with 465 also, I always used 587 and got success
+            smtp.EnableSsl = true;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network; // [2] Added this
+            smtp.UseDefaultCredentials = true; // [3] Changed this
+            smtp.Credentials = new NetworkCredential("nadezhdatodorova55@gmail.com", "Kosaranadi15");  // [4] Added this. Note, first parameter is NOT string.
+            smtp.Host = "smtp.gmail.com";
+
+            //recipient address
+            mail.To.Add(new MailAddress("nadezhdatodorova55@gmail.com"));
+
+            //Formatted mail body
+            mail.IsBodyHtml = true;
+            mail.Subject = Subject;
+            mail.Body = $"From {firstName} {lastName} {message}";
             smtp.Send(mail);
         }
     }

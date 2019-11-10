@@ -40,22 +40,14 @@ namespace DanceStudioManager
             options =>
             {
                 options.LoginPath = "/Home/AuthenticateLogin";
-                //options.LogoutPath = "/Account/Logout";
+                options.LogoutPath = "/Account/Logout";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // authentication 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            });
-
-
             services.AddTransient<UserDataAccess>();
             services.AddTransient<StudioDataAccess>();
             services.AddTransient<ApplicationContext>();
-            services.AddTransient<HashPassword>();
             services.AddTransient<SendEmail>();
             services.AddTransient<StudentsDataAccess>();
             services.AddTransient<InstructorDataAccess>();

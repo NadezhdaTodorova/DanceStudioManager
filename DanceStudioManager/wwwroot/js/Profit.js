@@ -67,8 +67,8 @@ function createGrid(dateFrom, dateTo, classGenre, level) {
         colModel: [
             { name: 'classGenre', index: 'ClassGenre', width: 200, firstsortorder: "desc" },
             { name: 'level', index: 'Level', width: 200 },
-            { name: 'type', index: 'Type', width: 200 },
-            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 250 },
+            { name: 'type', index: 'Type', width: 100 },
+            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 150 },
             { name: 'instructors', index: 'Instructors', width: 250 },
             { name: 'profitForPeriod', index: 'ProfitForPeriod', width: 150 }
         ],
@@ -77,5 +77,5 @@ function createGrid(dateFrom, dateTo, classGenre, level) {
         pager: pager_selector,
         altRows: true,
         multiselect: true,
-    }).navGrid('#jqGridPager', { add: false, edit: true, del: true, search: false, refresh: true });
+    });
 };

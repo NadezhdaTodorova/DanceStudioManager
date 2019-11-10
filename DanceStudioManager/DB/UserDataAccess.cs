@@ -117,7 +117,7 @@ namespace DanceStudioManager
                 if (user.Email == null) cmd.Parameters["@Email"].Value = DBNull.Value;
                 else cmd.Parameters["@Email"].Value = user.Email;
 
-                cmd.Parameters.Add("@Salt", SqlDbType.VarBinary);
+                cmd.Parameters.Add("@Salt", SqlDbType.VarChar);
                 if (user.Salt == null) cmd.Parameters["@Salt"].Value = DBNull.Value;
                 else cmd.Parameters["@Salt"].Value = user.Salt;
 
@@ -149,7 +149,7 @@ namespace DanceStudioManager
                 {
                     user.Id = (int)rdr["Id"];
                     user.Username = rdr["Username"].ToString();
-                    user.Salt = (byte[])rdr["Salt"];
+                    user.Salt = rdr["Salt"].ToString();
                     user.Password = rdr["Password"].ToString();
                     user.Email= rdr["Email"].ToString();
                     user.ConfirmAccount = (bool)rdr["ConfirmAccount"];

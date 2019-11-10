@@ -16,7 +16,7 @@ namespace DanceStudioManager
             applicationContext = _applicationContext;
         }
 
-        public List<Student> GetAllStudents()
+        public List<Student> GetAllStudents(int studioId)
         {
             List<Student> lstStudents = new List<Student>();
 
@@ -25,6 +25,10 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("GetAllStudents", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())

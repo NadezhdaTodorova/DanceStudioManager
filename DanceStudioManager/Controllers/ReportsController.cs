@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +15,17 @@ namespace DanceStudioManager
         private readonly StudentsDataAccess _studentDataAccess;
         private readonly AttendanceDataAccess _attendanceDataAccess;
         private readonly InstructorDataAccess _instructorDataAccess;
+        private readonly UserDataAccess _userDataAccess;
 
         public ReportsController (ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess, AttendanceDataAccess attendanceDataAccess,
-            InstructorDataAccess instructorDataAccess)
+            InstructorDataAccess instructorDataAccess, UserDataAccess userDataAccess)
         {
             _classDataAccess = classDataAccess;
             _studentDataAccess = studentDataAccess;
             _attendanceDataAccess = attendanceDataAccess;
             _instructorDataAccess = instructorDataAccess;
-    }
+            _userDataAccess = userDataAccess;
+        }
         public IActionResult ClassStudent()
         {
             ViewBag.text = "Class-Student report";
@@ -33,11 +36,11 @@ namespace DanceStudioManager
         {
             var students = new List<ClassStudentVM>();
 
-            var classes = _classDataAccess.SearchClass(genre, level, type);
+            var classes = _classDataAccess.SearchClass(genre, level, type, GetCurrentStudioId());
 
             foreach(var _class in classes)
             {
-                foreach(var id in _classDataAccess.GetStudentsConnectedToClass(_class.Id))
+                foreach(var id in _classDataAccess.GetStudentsConnectedToClass(_class.Id, GetCurrentStudioId()))
                 {
                     var s = _studentDataAccess.GetStudentById(id);
                     ClassStudentVM student = new ClassStudentVM();
@@ -67,7 +70,7 @@ namespace DanceStudioManager
             finalProfit.ProfitForPeriod = 0;
             finalProfit.NumberOfStudents = 0;
 
-            var _class = _classDataAccess.SearchClass(classGenre, level, group);
+            var _class = _classDataAccess.SearchClass(classGenre, level, group, GetCurrentStudioId());
             var attendances = _attendanceDataAccess.SearchAttendancesByClassId(_class.First().Id);
 
             finalProfit.Level = _class.First().Level;
@@ -89,15 +92,15 @@ namespace DanceStudioManager
                             double instructorPay = 0;
                             double procent = 0;
 
-                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId).Count;
-                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId))
+                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId, GetCurrentStudioId()).Count;
+                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId, GetCurrentStudioId()))
                             {
                                 var instructor = _instructorDataAccess.GetInstructorById(i);
                                 procent += instructor.procentOfProfit;
                                 finalProfit.instructors.Add(instructor.Firstname);
                             }
 
-                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId).PricePerHour);
+                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId, GetCurrentStudioId()).PricePerHour);
                             instructorPay = profit * (procent / 100);
                             profit = profit - instructorPay;
                         }
@@ -107,6 +110,20 @@ namespace DanceStudioManager
                 }
             }
             return Json(finalProfit);
+        }
+
+        private int GetCurrentStudioId()
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+            var studioId = _userDataAccess.GetUserById(userId).StudioId;
+
+            return studioId;
         }
     }
 }

@@ -176,7 +176,7 @@ a {
 }
 
 @media screen and (min-width: 994px) {
-    .login-reg-panel {
+    /*.login-reg-panel {
         width: 85%;
         height: 400px;
     }
@@ -187,7 +187,21 @@ a {
 
     .login-info-box {
         margin-left: 70%;
-    } 
+    }*/
+
+    .login-reg-panel {
+        width: 85%;
+        height: 400px;
+    }
+
+    .login-info-box {
+        margin-left: 60%;
+    }
+
+    .white-panel {
+        margin-top: -90px;
+        height: 140%;
+    }
 }
 
 @media screen and (max-width: 993px) and (min-width: 771px) {

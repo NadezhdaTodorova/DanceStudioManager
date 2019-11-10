@@ -73,7 +73,6 @@ namespace DanceStudioManager.Classes
                                        )
                                 )
                             )
-
                         ),
                         new XElement("div",
                             new XAttribute("class", "row border border-right-0 border-bottom-0"),

@@ -82,8 +82,8 @@ function createGrid(firstname, lastname, email) {
             { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc", editable: true, classes: 'pointer' },
             { name: 'lastname', index: 'Lastname', width: 200, editable: true, classes: 'pointer' },
             { name: 'email', index: 'Email', width: 200, editable: true, classes: 'pointer' },
-            { name: 'cellPhone', index: 'CellPhone', width: 250, editable: true, classes: 'pointer' },
-            { name: 'gender', index: 'Gender', width: 250, editable: true, classes: 'pointer' },
+            { name: 'cellPhone', index: 'CellPhone', width: 200, editable: true, classes: 'pointer' },
+            { name: 'gender', index: 'Gender', width: 150, editable: true, classes: 'pointer' },
             { name: 'dateOfBirthToString', index: 'DateOfBirthToString', width: 250, editable: true, classes: 'pointer' }
         ],
         rowNum: 10,

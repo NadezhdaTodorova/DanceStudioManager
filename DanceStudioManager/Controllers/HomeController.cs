@@ -5,15 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DanceStudioManager.Models;
+using System.Transactions;
+using System.Threading;
 
 namespace DanceStudioManager
 {
     public class HomeController : Controller
     {
         private readonly UserDataAccess _userDataAccess;
-        public HomeController(UserDataAccess userDataAccess)
+        private readonly SendEmail _email;
+
+        public HomeController(UserDataAccess userDataAccess, SendEmail email)
         {
             _userDataAccess = userDataAccess;
+            _email = email;
         }
         public IActionResult Index()
         {
@@ -28,6 +33,24 @@ namespace DanceStudioManager
         public IActionResult Contact()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult ContactForm(string firstName, string lastName, string Email, string Subject, string Text)
+        {
+            try
+            {
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    _email.SendContacts(Email, firstName, lastName, Subject, Text);
+
+                    scope.Complete();
+                }
+            }
+            catch (ThreadAbortException ex)
+            {
+                ModelState.AddModelError(ex.Message, "");
+            }
+            return View("Views/Home/SendEmailForContacts.cshtml");
         }
 
         public IActionResult Privacy()

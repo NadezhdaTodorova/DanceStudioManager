@@ -35,9 +35,9 @@ namespace DanceStudioManager
 
             user.StudioName = studio.Name;
             user.PhotoUrl = studio.Photo_url;
-            user.NumberOfStudents = _studentDataAccess.GetAllStudents().Count();
-            user.NumberOfClasses = _classDataAccess.GetAllClasses().Count();
-            user.NumberOfInstructors = _instructorDataAccess.GetAllInstructors().Count();
+            user.NumberOfStudents = _studentDataAccess.GetAllStudents(studio.Id).Count();
+            user.NumberOfClasses = _classDataAccess.GetAllClasses(studio.Id).Count();
+            user.NumberOfInstructors = _instructorDataAccess.GetAllInstructors(studio.Id).Count();
 
             return View("Views/Studio/User.cshtml",user);
         }
@@ -75,6 +75,5 @@ namespace DanceStudioManager
 
             return user;
         }
-            
     }
 }

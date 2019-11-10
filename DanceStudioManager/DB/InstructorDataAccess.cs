@@ -16,7 +16,7 @@ namespace DanceStudioManager
             applicationContext = _applicationContext;
         }
 
-        public List<Instructor> GetAllInstructors()
+        public List<Instructor> GetAllInstructors(int studioId)
         {
             List<Instructor> lstInstructors = new List<Instructor>();
 
@@ -25,6 +25,10 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("GetAllInstructors", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
+
+                cmd.Parameters.Add("@StudioId", SqlDbType.Int);
+                if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudioId"].Value = studioId;
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
@@ -119,7 +123,7 @@ namespace DanceStudioManager
                 cmd.Parameters.AddWithValue("@Firstname", instructor.Firstname);
                 cmd.Parameters.AddWithValue("@Lastname", instructor.Lastname);
                 cmd.Parameters.AddWithValue("@Email", instructor.Email);
-                cmd.Parameters.AddWithValue("@DateOfBirth", instructor.DateOfBirth);
+                cmd.Parameters.AddWithValue("@DateOfBirth", DateTime.Now.Date);
                 cmd.Parameters.AddWithValue("@CellPhone", instructor.CellPhone);
                 cmd.Parameters.AddWithValue("@SendEmail", instructor.SendEmail);
                 cmd.Parameters.AddWithValue("@Gender", instructor.Gender);

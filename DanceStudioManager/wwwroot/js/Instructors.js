@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     createGrid(firstname, lastname, email);
 
-    $("#DateOfBirth").datepicker({ autoclose: true, todayBtn: 'linked' })
+    $("#DateOfBirth").datepicker({ autoclose: true, todayBtn: 'linked' });
 
     function validateEmail(email) {
         var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
