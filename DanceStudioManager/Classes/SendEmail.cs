@@ -36,7 +36,7 @@ namespace DanceStudioManager
         public void SendContacts(string email, string firstName, string lastName, string Subject, string message)
         {
             MailMessage mail = new MailMessage();
-            string mailFrom = email;
+            string mailFrom = "dancestudiomanager2019@gmail.com";
             mail.From = new MailAddress(mailFrom);
 
             // The important part -- configuring the SMTP client
@@ -44,17 +44,17 @@ namespace DanceStudioManager
             smtp.Port = 587;   // [1] You can try with 465 also, I always used 587 and got success
             smtp.EnableSsl = true;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network; // [2] Added this
-            smtp.UseDefaultCredentials = true; // [3] Changed this
-            smtp.Credentials = new NetworkCredential("nadezhdatodorova55@gmail.com", "Kosaranadi15");  // [4] Added this. Note, first parameter is NOT string.
+            smtp.UseDefaultCredentials = false; // [3] Changed this
+            smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213");  // [4] Added this. Note, first parameter is NOT string.
             smtp.Host = "smtp.gmail.com";
 
             //recipient address
-            mail.To.Add(new MailAddress("nadezhdatodorova55@gmail.com"));
+            mail.To.Add(new MailAddress("dancestudiomanager2019@gmail.com"));
 
             //Formatted mail body
             mail.IsBodyHtml = true;
             mail.Subject = Subject;
-            mail.Body = $"From {firstName} {lastName} {message}";
+            mail.Body = $"From {firstName} {lastName} {email} {message}";
             smtp.Send(mail);
         }
     }
