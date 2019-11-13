@@ -162,6 +162,7 @@
                         <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto Instructors" multiple="multiple" name="InstructorsIds[]"></select>
                     </div>
                     <div class="modal-footer">
+                        <input type='text' asp-for="ClassId" id="classId" />
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>

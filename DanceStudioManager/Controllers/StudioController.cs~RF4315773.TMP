@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Security.Claims;
 
 namespace DanceStudioManager
@@ -35,7 +34,6 @@ namespace DanceStudioManager
         public IActionResult Dashboard()
         {
             ViewBag.text = "Dashboard";
-            ViewBag.StudioName = GetCurrentStudioId();
             DashboardNeeds dashboardNeeds = new DashboardNeeds();
             var allClasses = _classDataAccess.GetAllClasses(GetCurrentStudioId());
             var allStudents = _studentDataAccess.GetAllStudents(GetCurrentStudioId());
@@ -137,7 +135,7 @@ namespace DanceStudioManager
         {
             int studioId = GetCurrentStudioId();
 
-            student.DateOfBirth = DateTime.ParseExact(student.DateOfBirthToString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            student.DateOfBirth = DateTime.Parse(student.DateOfBirthToString, "dd/MM/yyyy");
 
             _studentDataAccess.AddNewStudent(student, studioId);
             return RedirectToAction("Students");
