@@ -37,7 +37,7 @@
 
 .modal-content {
     width: 400px;
-    height: 850px;
+    height: 750px;
     background-color: white;
     text-align: center;
 }
@@ -45,7 +45,7 @@
 
 .modal-input {
     width: 300px;
-    height: 8%;
+    height: 10%;
     display: block;
     margin: 15px auto;
     border: 1px solid;

@@ -41,6 +41,7 @@ namespace DanceStudioManager
                     _class.ClassType = rdr["ClassType"].ToString();
                     _class.NumberOfStudents = (int)rdr["NumberOfStudents"];
                     _class.Id = (int)rdr["Id"];
+                    _class.StartDay = (DateTime)rdr["StartDay"];
 
                     lstClasses.Add(_class);
                 }
@@ -75,6 +76,10 @@ namespace DanceStudioManager
                 cmd.Parameters.Add("@StudioId", SqlDbType.Int);
                 if (studioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
                 else cmd.Parameters["@StudioId"].Value = studioId;
+
+                cmd.Parameters.Add("@StartDay", SqlDbType.DateTime);
+                if (_class.StartDay == default(DateTime)) cmd.Parameters["@StartDay"].Value = default(DateTime); 
+                else cmd.Parameters["@StartDay"].Value = _class.StartDay;
 
                 con.Open();
                 cmd.ExecuteNonQuery();

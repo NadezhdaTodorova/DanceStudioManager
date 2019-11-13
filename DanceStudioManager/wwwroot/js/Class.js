@@ -7,6 +7,8 @@ $(document).ready(function () {
 
     createGrid(genre, level, type);
 
+    $("#StartDay").datepicker({ autoclose: true, todayBtn: 'linked' })
+
     $(".Students").mousedown(function (e) {
         e.preventDefault();
 
@@ -115,11 +117,11 @@ var myCustomEdit = function () {
             content += "</tbody>";
             $('#StudentsTable').append(content);
 
-             var content2 = "<tbody>";
+              content = "<tbody>";
             $.each(data.instructors, function () {
-                content2 += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
-            content2 += "</tbody>";
+            content += "</tbody>";
 
             $('#InstructorTable').append(content);
             $('#price').append(data.pricePerHour);

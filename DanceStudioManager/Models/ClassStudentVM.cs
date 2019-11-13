@@ -33,6 +33,7 @@ namespace DanceStudioManager
         public string Gender{ get; set; }
         public int Id { get; set; }
         public int ClassId { get; set; }
+        public DateTime StartDay { get; set; }
 
 
 

@@ -187,7 +187,7 @@
 
     var e = document.getElementById("ProfitChart").getContext("2d");
 
-    var gradientFill = ctx.createLinearGradient(0, 170, 0, 50);
+    var gradientFill = e.createLinearGradient(0, 170, 0, 50);
     gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     gradientFill.addColorStop(1, hexToRGB('#2CA8FF', 0.6));
 
@@ -236,6 +236,9 @@
                             gridLines: {
                                 zeroLineColor: "transparent",
                                 drawBorder: false
+                            },
+                            ticks: {
+                                beginAtZero: true,
                             }
                         }],
                         xAxes: [{
@@ -271,44 +274,4 @@
     });
 
     var viewsChart = new Chart(e);
-
-
-
-
-    (function ($) {
-        'use strict';
-        $(function () {
-            var todoListItem = $('.todo-list');
-            var todoListInput = $('.todo-list-input');
-            $('.todo-list-add-btn').on("click", function (event) {
-                event.preventDefault();
-
-                var item = $(this).prevAll('.todo-list-input').val();
-
-                if (item) {
-                    todoListItem.append("<li><div class='form-check'><label class='form-check-label'><input class='checkbox' type='checkbox'/>" + item + "<i class='input-helper'></i></label></div><i class='remove mdi mdi-close-circle-outline'></i></li>");
-                    todoListInput.val("");
-                }
-
-            });
-
-            todoListItem.on('change', '.checkbox', function () {
-                if ($(this).attr('checked')) {
-                    $(this).removeAttr('checked');
-                } else {
-                    $(this).attr('checked', 'checked');
-                }
-
-                $(this).closest("li").toggleClass('completed');
-
-            });
-
-            todoListItem.on('click', '.remove', function () {
-                $(this).parent().remove();
-            });
-
-        });
-    })(jQuery);
-
-
 });

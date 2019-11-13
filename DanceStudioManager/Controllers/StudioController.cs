@@ -335,31 +335,44 @@ namespace DanceStudioManager
             newclass.Level = _class.Level;
             newclass.PricePerHour = _class.PricePerHour;
             newclass.ClassType = _class.ClassType;
+            newclass.StartDay = _class.StartDay;
 
             int studioId = GetCurrentStudioId();
+            int classId = 0;
 
             var classes = _classDataAccess.GetAllClasses(GetCurrentStudioId());
 
             foreach (var c in classes)
             {
+                var shedule = _classDataAccess.GetClassShedule(c.Id);
+
                 if ((c.Genre == newclass.Genre) && (c.Level == newclass.Level))
                 {
                     string classError = "There is already a class with the same genre and level!";
                     return RedirectToAction("Classes", new { classError });
                 }
+
+                foreach (var day in _class.SheduleDays)
+                {
+                    foreach (var s in shedule)
+                    {
+                        if (day.Equals(s.Day) && _class.Hour == s.Hour)
+                        {
+                            string classError = "There is already a class on the same day and hour!";
+                            return RedirectToAction("Classes", new { classError });
+                        }
+                    }
+                    
+                }
             }
 
             _classDataAccess.AddNewClass(newclass, studioId);
-            int classId = _classDataAccess.GetClassId(newclass);
 
             foreach (var day in _class.SheduleDays)
             {
+                classId = _classDataAccess.GetClassId(newclass);
                 _classDataAccess.AddDayToShedule(day, classId, _class.Hour, studioId);
             }
-
-            //ToDo
-            //getSheduleId
-            //updateClass with sheduleId
 
             foreach (var studentId in _class.StudentsIds)
             {

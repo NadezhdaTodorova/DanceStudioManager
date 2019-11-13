@@ -63,12 +63,11 @@ namespace DanceStudioManager
                     List<DayVM> classesDays = new List<DayVM>();
                     foreach (var day in calendarSearch.Days)
                     {
-                        if (day.Day.DayOfWeek.ToString() == s.Day)
+                        if ((day.Day.DayOfWeek.ToString() == s.Day) && _class.StartDay.Date < day.Day.Date)
                         {
                             classesDays.Add(new DayVM { Day = day.Day.Date, WorkDay = day.WorkDay });
                         }
                     }
-
                     calData.Add(new CalendarData { Hour = s.Hour, Level = _class.Level, Name = _class.Genre, SheduleDays = classesDays, Instructors = instructors, NumberOfStudents = _class.NumberOfStudents });
                 }
             }

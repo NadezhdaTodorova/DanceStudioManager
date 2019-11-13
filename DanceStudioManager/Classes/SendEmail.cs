@@ -14,13 +14,13 @@ namespace DanceStudioManager
             string mailFrom = "dancestudiomanager2019@gmail.com";
             mail.From = new MailAddress(mailFrom);
 
-            // The important part -- configuring the SMTP client
+            // Configuring the SMTP client
             SmtpClient smtp = new SmtpClient();
-            smtp.Port = 587;   // [1] You can try with 465 also, I always used 587 and got success
+            smtp.Port = 587; 
             smtp.EnableSsl = true;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network; // [2] Added this
-            smtp.UseDefaultCredentials = false; // [3] Changed this
-            smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213");  // [4] Added this. Note, first parameter is NOT string.
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network; 
+            smtp.UseDefaultCredentials = false; 
+            smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213");
             smtp.Host = "smtp.gmail.com";
 
             //recipient address
@@ -39,13 +39,13 @@ namespace DanceStudioManager
             string mailFrom = "dancestudiomanager2019@gmail.com";
             mail.From = new MailAddress(mailFrom);
 
-            // The important part -- configuring the SMTP client
+            // Configuring the SMTP client
             SmtpClient smtp = new SmtpClient();
-            smtp.Port = 587;   // [1] You can try with 465 also, I always used 587 and got success
+            smtp.Port = 587;   
             smtp.EnableSsl = true;
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network; // [2] Added this
-            smtp.UseDefaultCredentials = false; // [3] Changed this
-            smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213");  // [4] Added this. Note, first parameter is NOT string.
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network; 
+            smtp.UseDefaultCredentials = false; 
+            smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213"); 
             smtp.Host = "smtp.gmail.com";
 
             //recipient address
