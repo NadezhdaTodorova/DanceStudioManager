@@ -81,7 +81,7 @@ namespace DanceStudioManager
         [HttpPost]
         public IActionResult Dashboard(int classId)
         {
-            DashboardNeeds dashboardNeeds = new DashboardNeeds();
+            ClassStudentVM dashboardNeeds = new ClassStudentVM();
             var instructorList = _classDataAccess.GetInstructorsConnectedToClass(classId, GetCurrentStudioId());
             var studentsIdList = _classDataAccess.GetStudentsConnectedToClass(classId, GetCurrentStudioId());
             var _class = _classDataAccess.SearchClass(classId, GetCurrentStudioId());
@@ -89,13 +89,13 @@ namespace DanceStudioManager
             foreach (var idsIns in instructorList)
             {
                 var instructor = _instructorDataAccess.GetInstructorById(idsIns);
-                dashboardNeeds.Instructors.Add(instructor);
+                dashboardNeeds.InstructorsList.Add(instructor);
             }
 
             foreach (var idsStu in studentsIdList)
             {
                 var student = _studentDataAccess.GetStudentById(idsStu);
-                dashboardNeeds.Students.Add(student);
+                dashboardNeeds.StudentsList.Add(student);
             }
 
             dashboardNeeds.PricePerHour = _class.PricePerHour;

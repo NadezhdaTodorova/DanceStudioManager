@@ -24,7 +24,9 @@ namespace DanceStudioManager
         public int[] InstructorsIds { get; set; }
         public string[] SheduleDays { get; set; }
         public List<SelectListItem> Students { get; set; } = new List<SelectListItem>();
+        public List<Student> StudentsList { get; set; } = new List<Student>();
         public List<SelectListItem> Instructors { get; set; } = new List<SelectListItem>();
+        public List<Instructor> InstructorsList { get; set; } = new List<Instructor>();
         public string Hour { get; set; }
         public string Firstname{ get; set; }
         public string Lastname{ get; set; }

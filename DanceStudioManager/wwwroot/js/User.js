@@ -21,3 +21,14 @@ function validate() {
     }
     return false;
 }
+
+$("#bDelete").click(function () {
+    var r = confirm("All of your data will be deleted. Are you sure you want to continue ?");
+    if (r == true) {
+        $.ajax({
+            type: "POST",
+            url: '/User/Delete',
+            dataType: "json",
+        });
+    } 
+});

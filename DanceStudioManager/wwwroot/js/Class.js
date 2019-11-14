@@ -101,17 +101,14 @@ var myCustomEdit = function (cellvalue, options, rowObject) {
 };
 
 function EditF(t) {
-    //var grid = $("#jqGrid");
-    //var rowKey = grid.jqGrid('getGridParam', "selrow");
     
-
     $.ajax({
         type: "POST",
         url: '/Studio/Dashboard?classId=' + t.dataset.id,
         dataType: "json",
         success: function (data) {
             var content = "<tbody>";
-            $.each(data.students, function () {
+            $.each(data.studentsList, function () {
                 content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
             content += "</tbody>";
@@ -119,7 +116,7 @@ function EditF(t) {
             $('#StudentsTable').append(content);
 
               content = "<tbody>";
-            $.each(data.instructors, function () {
+            $.each(data.instructorsList, function () {
                 content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
             content += "</tbody>";
@@ -132,6 +129,12 @@ function EditF(t) {
             $('#level').append(data.level);
             $('#Shedule').empty();
             $('#Shedule').append(data.shedule);
+            $('#classId').append(data.classId);
+
+            var input = $("<input>")
+                .attr("type", "hidden")
+                .attr("asp-for", "Id").val(data.classId);
+            $('#EditModalForm').append(input);
         },
         error: function (xhr, thrownError) {
             if (xhr.status === 404) {
@@ -141,13 +144,12 @@ function EditF(t) {
     });
 }; 
 
-var myCustomDelete = function () {
-    return "<button type='button' class='btn btn-light btn-sm' id='deleteButton' data-id='" + rowObject.id +" onclick='deleteF(this)'>Delete</button>";
+var myCustomDelete = function (cellvalue, options, rowObject) {
+    return "<button type='button' class='btn btn-light btn-sm' id='deleteButton' data-id='" + rowObject.id +"' onclick='deleteF(this)'>Delete</button>";
 };
 
 function deleteF(t) {
-    //var grid = $("#jqGrid");
-    //var rowKey = grid.jqGrid('getGridParam', "selrow");
+
     $.ajax({
         type: "GET",
         url: '/Studio/DeleteClass?classId=' + t.dataset.id,
@@ -186,6 +188,4 @@ function createGrid(genre, level, type) {
         altRows: true
     });
 };
-
-//clearModal()
 

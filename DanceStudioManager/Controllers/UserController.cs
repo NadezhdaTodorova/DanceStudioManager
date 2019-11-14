@@ -59,7 +59,9 @@ namespace DanceStudioManager
 
         public IActionResult Delete()
         {
-            return View();
+            int userId = GetCurrentUser().Id;
+            _userDataAccess.DeleteUser(userId);
+            return RedirectToAction("LogOut", "Account");
         }
 
         private User GetCurrentUser()

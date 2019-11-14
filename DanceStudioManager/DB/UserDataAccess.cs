@@ -159,6 +159,28 @@ namespace DanceStudioManager
                 return user;
             }
         }
+
+        public void DeleteUser(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                User user = new User();
+                SqlCommand cmd = new SqlCommand("DeleteUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
         public async void SignIn(HttpContext httpContext,int userId, bool isPersistent = false)
         {
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
@@ -186,9 +208,15 @@ namespace DanceStudioManager
             }
         }
 
-        public async void SignOut(HttpContext httpContext)
+        public async void SignOut(HttpContext httpContext, string redirectUri)
         {
-            await httpContext.SignOutAsync();
+            
+            var prop = new AuthenticationProperties()
+            {
+                RedirectUri = redirectUri
+            };
+            // after signout this will redirect to your provided target
+            await httpContext.SignOutAsync("oidc", prop);
         }
 
         private IEnumerable<Claim> GetUserClaims(User user)
