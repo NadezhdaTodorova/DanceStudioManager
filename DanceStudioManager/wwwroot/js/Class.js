@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     createGrid(genre, level, type);
 
-    $("#StartDay").datepicker({ autoclose: true, todayBtn: 'linked' })
+    $("#StartDayToString").datepicker({ autoclose: true, todayBtn: 'linked' })
 
     $(".Students").mousedown(function (e) {
         e.preventDefault();

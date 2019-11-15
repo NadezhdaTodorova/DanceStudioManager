@@ -90,7 +90,7 @@
                     <h6 class="label label-default">Select instructor/s</h6>
                     <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto Instructors" multiple="multiple" name="InstructorsIds[]"></select>
 
-                    <input asp-for="StartDay" type="datetime-local" class="datepicker modal-input" id="StartDay" placeholder="Start day" value="@DateTime.Now.Date">
+                    <input asp-for="StartDayToString" type="text" class="datepicker modal-input" id="StartDayToString" placeholder="Start Day">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

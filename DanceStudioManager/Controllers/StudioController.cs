@@ -232,7 +232,8 @@ namespace DanceStudioManager
 
         public IActionResult AddNewInstructor(Instructor instructor)
         {
-            //CHECK DATE OF BITH PROBLEM
+            instructor.DateOfBirth = DateTime.ParseExact(instructor.DateOfBirthToString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+
             int studioId = GetCurrentStudioId();
             _instructorDataAccess.AddNewInstructor(instructor, studioId);
             return RedirectToAction("Instructor");
@@ -399,6 +400,7 @@ namespace DanceStudioManager
             newclass.PricePerHour = _class.PricePerHour;
             newclass.ClassType = _class.ClassType;
             newclass.StartDay = _class.StartDay;
+            newclass.StartDay = DateTime.ParseExact(_class.StartDayToString, "MM/dd/yyyy", CultureInfo.InvariantCulture);
 
             int studioId = GetCurrentStudioId();
             int classId = 0;

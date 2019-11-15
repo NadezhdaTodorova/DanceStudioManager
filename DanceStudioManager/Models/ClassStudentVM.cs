@@ -38,6 +38,7 @@ namespace DanceStudioManager
         public int Id { get; set; }
         public int ClassId { get; set; }
         [Required]
+        public string StartDayToString { get; set; }
         public DateTime StartDay { get; set; }
 
 
