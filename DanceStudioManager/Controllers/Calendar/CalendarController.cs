@@ -12,16 +12,19 @@ namespace DanceStudioManager
         private readonly CalendarHelp calendarHelp;
         private readonly CalendarDataAccess calendarDataAccess;
         private readonly UserDataAccess _userDataAccess;
-        public CalendarController(CalendarHelp _calendarHelp, CalendarDataAccess _calendarDataAccess,
+        private readonly StudioDataAccess _studioDataAccess;
+        public CalendarController(CalendarHelp _calendarHelp, CalendarDataAccess _calendarDataAccess, StudioDataAccess studioDataAccess,
             UserDataAccess userDataAccess)
         {
             calendarDataAccess = _calendarDataAccess;
             calendarHelp = _calendarHelp;
             _userDataAccess = userDataAccess;
+            _studioDataAccess = studioDataAccess;
         }
         public IActionResult Index(int? year, int? month)
         {
             ViewBag.text = "Calendar";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             //calendarHelp.AddDaysToCalendar();
             List<DayVM> days = calendarDataAccess.GetDays();
 

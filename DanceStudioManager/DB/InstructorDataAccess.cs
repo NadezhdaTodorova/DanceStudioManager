@@ -204,6 +204,10 @@ namespace DanceStudioManager
                 if (instructor.StudioId == 0) cmd.Parameters["@StudioId"].Value = DBNull.Value;
                 else cmd.Parameters["@StudioId"].Value = instructor.StudioId;
 
+                cmd.Parameters.Add("@ProcentOfProfit", SqlDbType.Int);
+                if (instructor.procentOfProfit == 0) cmd.Parameters["@ProcentOfProfit"].Value = DBNull.Value;
+                else cmd.Parameters["@ProcentOfProfit"].Value = instructor.procentOfProfit;
+
                 cmd.Parameters.Add("@DateOfBirth", SqlDbType.DateTime);
                 if (instructor.DateOfBirthToString == null) cmd.Parameters["@DateOfBirth"].Value = DBNull.Value;
                 else cmd.Parameters["@DateOfBirth"].Value = DateTime.Parse(instructor.DateOfBirthToString); 

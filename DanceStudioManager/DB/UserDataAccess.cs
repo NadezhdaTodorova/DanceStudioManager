@@ -208,15 +208,9 @@ namespace DanceStudioManager
             }
         }
 
-        public async void SignOut(HttpContext httpContext, string redirectUri)
+        public async void SignOut(HttpContext httpContext)
         {
-            
-            var prop = new AuthenticationProperties()
-            {
-                RedirectUri = redirectUri
-            };
-            // after signout this will redirect to your provided target
-            await httpContext.SignOutAsync("oidc", prop);
+            await httpContext.SignOutAsync();
         }
 
         private IEnumerable<Claim> GetUserClaims(User user)

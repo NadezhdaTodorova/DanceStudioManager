@@ -16,19 +16,22 @@ namespace DanceStudioManager
         private readonly AttendanceDataAccess _attendanceDataAccess;
         private readonly InstructorDataAccess _instructorDataAccess;
         private readonly UserDataAccess _userDataAccess;
+        private readonly StudioDataAccess _studioDataAccess;
 
         public ReportsController (ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess, AttendanceDataAccess attendanceDataAccess,
-            InstructorDataAccess instructorDataAccess, UserDataAccess userDataAccess)
+            InstructorDataAccess instructorDataAccess, UserDataAccess userDataAccess, StudioDataAccess studioDataAccess)
         {
             _classDataAccess = classDataAccess;
             _studentDataAccess = studentDataAccess;
             _attendanceDataAccess = attendanceDataAccess;
             _instructorDataAccess = instructorDataAccess;
             _userDataAccess = userDataAccess;
+            _studioDataAccess = studioDataAccess;
         }
         public IActionResult ClassStudent()
         {
             ViewBag.text = "Class-Student report";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             return View("Views/Studio/ClassStudentReport.cshtml");
         }
 
@@ -59,6 +62,7 @@ namespace DanceStudioManager
         public IActionResult Profit()
         {
             ViewBag.text = "Profit report";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             return View("Views/Studio/ProfitReport.cshtml");
         }
 

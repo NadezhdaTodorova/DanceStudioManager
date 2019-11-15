@@ -31,6 +31,7 @@ namespace DanceStudioManager
         {
             ViewBag.text = "User profile";
             var user = GetCurrentUser();
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(user.StudioId).Name;
             var studio = _studioDataAccess.GetStudioInfo(user.StudioId);
 
             user.StudioName = studio.Name;
@@ -52,7 +53,10 @@ namespace DanceStudioManager
             studio.Name = user.StudioName;
 
             _userDataAccess.UpdateUser(user);
-            _studioDataAccess.UpdateStudio(studio, userId);
+
+            var studioId = _userDataAccess.GetUserById(userId).StudioId;
+
+            _studioDataAccess.UpdateStudio(studio, studioId);
 
             return RedirectToAction("Index");
         }

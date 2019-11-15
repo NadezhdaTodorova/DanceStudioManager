@@ -35,7 +35,7 @@ namespace DanceStudioManager
         public IActionResult Dashboard()
         {
             ViewBag.text = "Dashboard";
-            ViewBag.StudioName = GetCurrentStudioId();
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             DashboardNeeds dashboardNeeds = new DashboardNeeds();
             var allClasses = _classDataAccess.GetAllClasses(GetCurrentStudioId());
             var allStudents = _studentDataAccess.GetAllStudents(GetCurrentStudioId());
@@ -101,6 +101,12 @@ namespace DanceStudioManager
             dashboardNeeds.PricePerHour = _class.PricePerHour;
             dashboardNeeds.Level = _class.Level;
             dashboardNeeds.ClassId = classId;
+            var shedule  = _classDataAccess.GetClassShedule(classId);
+
+            foreach(var s in shedule)
+            {
+                dashboardNeeds.SheduleDays.Add($" {s.Day} - {s.Hour} ");
+            }
 
             return Json(dashboardNeeds);
         }
@@ -108,6 +114,7 @@ namespace DanceStudioManager
         public IActionResult Students()
         {
             ViewBag.text = "Students";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             return View();
         }
 
@@ -156,6 +163,10 @@ namespace DanceStudioManager
             _studentDataAccess.UpdateStudent(student, userId);
         }
 
+        /// <summary>
+        /// Students page.
+        /// </summary>
+        /// <param name="student"></param>
         public void DeleteStudent(Student student)
         {
             ClaimsPrincipal currentUser = User;
@@ -169,9 +180,31 @@ namespace DanceStudioManager
             _studentDataAccess.DeleteStudent(student, userId);
         }
 
+        /// <summary>
+        /// Edit class modal.
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpPost]
+        public void DeleteStudent(int id)
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+
+            var student = new Student();
+            student.Id = id;
+
+            _studentDataAccess.DeleteStudent(student, userId);
+        }
+
         public IActionResult Instructor()
         {
             ViewBag.text = "Instructors";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             return View();
         }
 
@@ -217,7 +250,11 @@ namespace DanceStudioManager
 
             _instructorDataAccess.UpdateInstructor(instructor, userId);
         }
-
+        
+        /// <summary>
+        /// Instructor page.
+        /// </summary>
+        /// <param name="instructor"></param>
         public void DeleteInstructor(Instructor instructor)
         {
             ClaimsPrincipal currentUser = User;
@@ -231,9 +268,30 @@ namespace DanceStudioManager
             _instructorDataAccess.DeleteInstructor(instructor, userId);
         }
 
+        /// <summary>
+        /// Edit class modal.
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpPost]
+        public void DeleteInstructor(int id)
+        {
+            ClaimsPrincipal currentUser = User;
+            var claims = currentUser.Claims;
+            var userEmail = "";
+            foreach (var c in claims) userEmail = c.Value;
+            var newUser = new User();
+            newUser.Email = userEmail;
+            var userId = _userDataAccess.GetUserId(newUser);
+            var instructor = new Instructor();
+            instructor.Id = id;
+
+            _instructorDataAccess.DeleteInstructor(instructor, userId);
+        }
+
         public IActionResult Classes(string classError)
         {
             ViewBag.text = "Classes";
+            ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
             var _class = new ClassStudentVM();
             var studentsList = _studentDataAccess.GetAllStudents(GetCurrentStudioId());
             var instructorList = _instructorDataAccess.GetAllInstructors(GetCurrentStudioId());
@@ -417,7 +475,7 @@ namespace DanceStudioManager
             return Json(id);
         }
 
-        public void UpdateClass(ClassStudentVM _class)
+        public IActionResult UpdateClass(ClassStudentVM _class)
         {
             var _classToUpdate = new Class();
 
@@ -433,6 +491,32 @@ namespace DanceStudioManager
 
             if (_class.PricePerHour != 0) _classToUpdate.PricePerHour = _class.PricePerHour;
 
+            var classes = _classDataAccess.GetAllClasses(GetCurrentStudioId());
+
+            foreach (var c in classes)
+            {
+                var shedule = _classDataAccess.GetClassShedule(c.Id);
+
+                if ((c.Genre == _class.Genre) && (c.Level == _class.Level))
+                {
+                    string classError = "There is already a class with the same genre and level!";
+                    return RedirectToAction("Classes", new { classError });
+                }
+
+                foreach (var day in _class.SheduleDays)
+                {
+                    foreach (var s in shedule)
+                    {
+                        if (day.Equals(s.Day) && _class.Hour == s.Hour)
+                        {
+                            string classError = "There is already a class on the same day and hour!";
+                            return RedirectToAction("Classes", new { classError });
+                        }
+                    }
+
+                }
+            }
+
             if (_class.Level != null) _classToUpdate.Level = _class.Level;
 
             if (_class.ClassType != null) _classToUpdate.ClassType = _class.ClassType;
@@ -441,16 +525,35 @@ namespace DanceStudioManager
 
             if (_class.SheduleDays != null)
             {
-                foreach (var day in _class.SheduleDays)
+                var classShedule = _classDataAccess.GetClassShedule(_class.ClassId);
+
+                if (classShedule.Count > 1)
                 {
-                    _classDataAccess.AddDayToShedule(day, _class.Id, _class.Hour, GetCurrentStudioId());
+                    for (int day = 0; day <= _class.SheduleDays.Count - 1; day++)
+                    {
+                        _classDataAccess.UpdateShedule(_class.SheduleDays[day], _class.Hour, _class.ClassId, userId, classShedule[day].Id);
+                    }
+                }
+                else
+                {
+                    for (int day = 0; day < _class.SheduleDays.Count - 1; day++)
+                    {
+                        _classDataAccess.UpdateShedule(_class.SheduleDays[day], _class.Hour, _class.ClassId, userId, classShedule[0].Id);
+                        if (_class.Hour != null)
+                        {
+                            _classDataAccess.AddDayToShedule(_class.SheduleDays[day + 1], _class.ClassId, _class.Hour, GetCurrentStudioId());
+                        }else
+                        {
+                            _classDataAccess.AddDayToShedule(_class.SheduleDays[day + 1], _class.ClassId,"18:30-19:30", GetCurrentStudioId());
+                        }
+                    }
                 }
             }
 
             if (_class.InstructorsIds != null) {
                 foreach (var id in _class.InstructorsIds)
                 {
-                    _classDataAccess.AddInstructorToClass(id, _class.Id);
+                    _classDataAccess.AddInstructorToClass(id, _class.ClassId);
                 }
             }
 
@@ -458,9 +561,11 @@ namespace DanceStudioManager
             {
                 foreach (var id in _class.StudentsIds)
                 {
-                    _classDataAccess.AddInstructorToClass(id, _class.Id);
+                    _classDataAccess.AddInstructorToClass(id, _class.ClassId);
                 }
             }
+
+            return RedirectToAction("Classes");
         }
 
         public void DeleteClass(int classId)

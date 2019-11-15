@@ -53,9 +53,6 @@ $(document).ready(function () {
     })
 });
 
-$("#EditClassModal").on("hidden.bs.modal", function (e) {
-    $(this).find('form')[0].reset();
-});
 
 var grid_selector = "#jqGrid";
 var pager_selector = "#jqGridPager";
@@ -109,7 +106,7 @@ function EditF(t) {
         success: function (data) {
             var content = "<tbody>";
             $.each(data.studentsList, function () {
-                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" data-id=' + this.id + ' onclick="DeleteStudent(this)" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
             content += "</tbody>";
             $('#StudentsTable').empty();
@@ -117,7 +114,7 @@ function EditF(t) {
 
               content = "<tbody>";
             $.each(data.instructorsList, function () {
-                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" data-id=' + this.id + ' onclick="DeleteInstructor(this)"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
             content += "</tbody>";
 
@@ -128,13 +125,9 @@ function EditF(t) {
             $('#level').empty();
             $('#level').append(data.level);
             $('#Shedule').empty();
-            $('#Shedule').append(data.shedule);
-            $('#classId').append(data.classId);
+            $('#Shedule').append(data.sheduleDays);
+            $('#ClassId').val(data.classId);
 
-            var input = $("<input>")
-                .attr("type", "hidden")
-                .attr("asp-for", "Id").val(data.classId);
-            $('#EditModalForm').append(input);
         },
         error: function (xhr, thrownError) {
             if (xhr.status === 404) {
@@ -143,6 +136,39 @@ function EditF(t) {
         }
     });
 }; 
+
+
+function DeleteStudent(t) {
+
+    $.ajax({
+        type: "POST",
+        url: '/Studio/DeleteStudent?id=' + t.dataset.id,
+        success: function () {
+            location.reload();
+        },
+        error: function (xhr, thrownError) {
+            if (xhr.status === 404) {
+                alert(thrownError);
+            }
+        }
+    });
+}
+
+function DeleteInstructor(t) {
+
+    $.ajax({
+        type: "POST",
+        url: '/Studio/DeleteInstructor?id=' + t.dataset.id,
+        success: function () {
+            location.reload();
+        },
+        error: function (xhr, thrownError) {
+            if (xhr.status === 404) {
+                alert(thrownError);
+            }
+        }
+    });
+}
 
 var myCustomDelete = function (cellvalue, options, rowObject) {
     return "<button type='button' class='btn btn-light btn-sm' id='deleteButton' data-id='" + rowObject.id +"' onclick='deleteF(this)'>Delete</button>";

@@ -58,16 +58,16 @@
                 </div>
                 <div class="modal-body">
                     <input asp-for="Genre" type="text" class="modal-input " id="Genre" placeholder="Genre">
-                    <select class="browser-default custom-select modal-input" name="Level">
-                        <option>Level</option>
+                    <select asp-for="Level" class="browser-default custom-select modal-input" name="Level">
+                        <option value="" selected>Level</option>
                         <option value="beginners">beginners</option>
                         <option value="intermidiate">intermidiate</option>
                         <option value="veterans">veterans</option>
                         <option value="professionals">professionals</option>
                     </select>
                     <input asp-for="PricePerHour" type="number" class="modal-input " id="PricePerHour" placeholder="PricePerHour" value="">
-                    <select class="browser-default custom-select modal-input" name="ClassType">
-                        <option>Class type</option>
+                    <select asp-for="ClassType" class="browser-default custom-select modal-input" name="ClassType">
+                        <option value="" selected>Class Type</option>
                         <option value="private">private</option>
                         <option value="group">group</option>
                     </select>
@@ -134,7 +134,7 @@
 
                         <a> Change level</a>
                         <select class="browser-default custom-select modal-input" name="Level">
-                            <option>Level</option>
+                            <option value="" selected>Level</option>
                             <option value="beginners">beginners</option>
                             <option value="intermidiate">intermidiate</option>
                             <option value="veterans">veterans</option>
@@ -160,6 +160,7 @@
 
                         <a>Add instructor/s</a>
                         <select asp-for="Instructors" asp-items="@Model.Instructors" class="modal-input h-auto Instructors" multiple="multiple" name="InstructorsIds[]"></select>
+                        <input type="hidden" asp-for="ClassId" class="modal-input " id="ClassId">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

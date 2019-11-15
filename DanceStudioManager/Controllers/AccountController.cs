@@ -203,11 +203,12 @@ namespace DanceStudioManager
             return View();
         }
 
-        public void LogOut()
+        public IActionResult LogOut()
         {
             ViewBag.register = true;
-            var url = "Views/Account/RegisterLogin.cshtml";
-            _userDataAccess.SignOut(HttpContext, url);
+            _userDataAccess.SignOut(HttpContext);
+
+            return View("Views/Account/RegisterLogin.cshtml");
         }
 
     }

@@ -437,5 +437,36 @@ namespace DanceStudioManager
                 con.Close();
             }
         }
+
+        public void UpdateShedule(string day, string hour, int classId, int userId, int sheduleId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("UpdateShedule", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                cmd.Parameters.AddWithValue("@SheduleId", sheduleId);
+
+                cmd.Parameters.Add("@Day", SqlDbType.VarChar);
+                if (day == null) cmd.Parameters["@Day"].Value = DBNull.Value;
+                else cmd.Parameters["@Day"].Value = day;
+
+                cmd.Parameters.Add("@Hour", SqlDbType.VarChar);
+                if (hour == null) cmd.Parameters["@Hour"].Value = DBNull.Value;
+                else cmd.Parameters["@Hour"].Value = hour;
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 }

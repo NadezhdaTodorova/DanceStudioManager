@@ -105,22 +105,18 @@ namespace DanceStudioManager
             return studio;
         }
 
-        public void UpdateStudio(Studio studio, int userId)
+        public void UpdateStudio(Studio studio, int Id)
         {
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand("UpdateStudio", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@Id", Id);
 
                 cmd.Parameters.Add("@Name", SqlDbType.VarChar);
                 if (studio.Name == null) cmd.Parameters["@Name"].Value = DBNull.Value;
                 else cmd.Parameters["@Name"].Value = studio.Name;
-
-                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
-                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
-                else cmd.Parameters["@ModifiedBy"].Value = userId;
 
                 cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
 

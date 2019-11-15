@@ -11,6 +11,7 @@ namespace DanceStudioManager
     {
         [Required]
         public string Genre { get; set; }
+        [Required]
         public string Level { get; set; }
         [Required]
         public double PricePerHour { get; set; }
@@ -18,11 +19,12 @@ namespace DanceStudioManager
         public int SheduleId { get; set; }
         [Required]
         public int ClassTypeId { get; set; }
+        [Required]
         public string ClassType { get; set; }
         public int NumberOfStudents { get; set; }
         public int[] StudentsIds { get; set; }
         public int[] InstructorsIds { get; set; }
-        public string[] SheduleDays { get; set; }
+        public List<string> SheduleDays { get; set; } = new List<string>();
         public List<SelectListItem> Students { get; set; } = new List<SelectListItem>();
         public List<Student> StudentsList { get; set; } = new List<Student>();
         public List<SelectListItem> Instructors { get; set; } = new List<SelectListItem>();
@@ -35,6 +37,7 @@ namespace DanceStudioManager
         public string Gender{ get; set; }
         public int Id { get; set; }
         public int ClassId { get; set; }
+        [Required]
         public DateTime StartDay { get; set; }
 
 
