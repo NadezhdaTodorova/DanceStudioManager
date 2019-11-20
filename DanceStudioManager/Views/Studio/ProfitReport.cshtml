@@ -14,34 +14,41 @@
     <form id="formProfitReport" method="post" class="mediumForm">
         <div class="card-body">
             <div class="form-row mt-4">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="DateFrom">DateFrom: </label>
                         <input asp-for="DateFrom" type="text" class="datepicker form-control " id="DateFrom" placeholder="DateFrom">
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="DateTo">DateTo: </label>
                         <input asp-for="DateTo" type="text" class="datepicker form-control" id="DateTo" placeholder="DateTo">
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="ClassGenre">Class Genre: </label>
                         <input asp-for="ClassGenre" type="text" class="form-control" id="ClassGenre" placeholder="ClassGenre">
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="Level">Level: </label>
                         <input asp-for="Level" type="text" class="form-control" id="Level" placeholder="Level">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="ClassType">ClassType: </label>
+                        <input asp-for="ClassType" type="text" class="form-control" id="ClassType" placeholder="ClassType">
                     </div>
                 </div>
             </div>
             <div class="form-row mb-3">
                 <button type="submit" id="SearchProfitForClass" class="btn btn-secondary w-25 h-25 mt-4">Search profit for class</button>
             </div>
+            <label id="classError">@ViewBag.classError</label>
             <table id="jqGrid"></table>
             <div id="jqGridPager"></div>
         </div>

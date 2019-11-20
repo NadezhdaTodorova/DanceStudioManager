@@ -32,7 +32,7 @@ function getMyAppsDataFromScreen() {
     else
         formDataSearch.genre = genre;
 
-    var level = $('#level').val();
+    var level = $('#Level').val();
     if (!level || level.length === 0)
         formDataSearch.level = null;
     else
@@ -65,7 +65,6 @@ function createGrid(genre, level, type) {
         rowList: [10, 20, 30],
         pager: pager_selector,
         altRows: true,
-        multiselect: true,
     });
 };
 

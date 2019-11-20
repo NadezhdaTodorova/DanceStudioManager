@@ -18,7 +18,7 @@ namespace DanceStudioManager
         private readonly UserDataAccess _userDataAccess;
         private readonly StudioDataAccess _studioDataAccess;
 
-        public ReportsController (ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess, AttendanceDataAccess attendanceDataAccess,
+        public ReportsController(ClassDataAccess classDataAccess, StudentsDataAccess studentDataAccess, AttendanceDataAccess attendanceDataAccess,
             InstructorDataAccess instructorDataAccess, UserDataAccess userDataAccess, StudioDataAccess studioDataAccess)
         {
             _classDataAccess = classDataAccess;
@@ -41,9 +41,9 @@ namespace DanceStudioManager
 
             var classes = _classDataAccess.SearchClass(genre, level, type, GetCurrentStudioId());
 
-            foreach(var _class in classes)
+            foreach (var _class in classes)
             {
-                foreach(var id in _classDataAccess.GetStudentsConnectedToClass(_class.Id, GetCurrentStudioId()))
+                foreach (var id in _classDataAccess.GetStudentsConnectedToClass(_class.Id, GetCurrentStudioId()))
                 {
                     var s = _studentDataAccess.GetStudentById(id);
                     ClassStudentVM student = new ClassStudentVM();
@@ -59,60 +59,75 @@ namespace DanceStudioManager
             return Json(students);
         }
 
-        public IActionResult Profit()
+        public IActionResult Profit(string classError)
         {
             ViewBag.text = "Profit report";
             ViewBag.StudioName = _studioDataAccess.GetStudioInfo(GetCurrentStudioId()).Name;
+            if (classError != null) ViewBag.classError = classError;
             return View("Views/Studio/ProfitReport.cshtml");
         }
 
-        public IActionResult SearchProfitForPeriod(DateTime dateFrom, DateTime dateTo, string classGenre, string level)
+        public IActionResult SearchProfitForPeriod(DateTime dateFrom, DateTime dateTo, string classGenre, string level, string type)
         {
-            Profit finalProfit = new Profit();
-            string group = "group";
+            List<Profit> finalProfit = new List<Profit>();
+            var _class = new List<Class>();
+            DateTime defaultDatetime = default(DateTime);
 
-            finalProfit.ProfitForPeriod = 0;
-            finalProfit.NumberOfStudents = 0;
-
-            var _class = _classDataAccess.SearchClass(classGenre, level, group, GetCurrentStudioId());
-            var attendances = _attendanceDataAccess.SearchAttendancesByClassId(_class.First().Id);
-
-            finalProfit.Level = _class.First().Level;
-            finalProfit.ClassGenre = _class.First().Genre;
-            finalProfit.Type = _class.First().ClassType;
-
-
-            if (dateFrom != default(DateTime) && dateTo != default(DateTime))
+            if (dateFrom != defaultDatetime && dateTo != defaultDatetime || classGenre != null || level != null)
             {
-                for (DateTime date = dateFrom; date >= dateTo; date = date.AddDays(-1))
+                _class = _classDataAccess.SearchClass(classGenre, level, type, GetCurrentStudioId());
+            }
+            if (_class.Count > 0)
+            {
+                foreach (var c in _class)
                 {
-                    foreach (var at in attendances)
+                    Profit profit = new Profit();
+                    var attendances = _attendanceDataAccess.SearchAttendancesByClassId(c.Id);
+
+                    profit.ProfitForPeriod = 0;
+                    profit.NumberOfStudents = 0;
+                    profit.Attendances = 0;
+                    profit.Level = c.Level;
+                    profit.ClassGenre = c.Genre;
+                    profit.Type = c.ClassType;
+
+                    for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
                     {
-                        double profit = 0;
-                        var numberOfStudents = 0;
-
-                        if (at.Date == date)
+                        foreach (var at in attendances)
                         {
-                            double instructorPay = 0;
-                            double procent = 0;
+                            double sum = 0;
+                            var numberOfStudents = 0;
 
-                            numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId, GetCurrentStudioId()).Count;
-                            foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId, GetCurrentStudioId()))
+                            if (at.Date == date)
                             {
-                                var instructor = _instructorDataAccess.GetInstructorById(i);
-                                procent += instructor.procentOfProfit;
-                                finalProfit.instructors.Add(instructor.Firstname);
-                            }
+                                double instructorPay = 0;
+                                double procent = 0;
 
-                            profit = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId, GetCurrentStudioId()).PricePerHour);
-                            instructorPay = profit * (procent / 100);
-                            profit = profit - instructorPay;
+                                numberOfStudents += _classDataAccess.GetStudentsConnectedToClass(at.ClassId, GetCurrentStudioId()).Count;
+                                foreach (var i in _classDataAccess.GetInstructorsConnectedToClass(at.ClassId, GetCurrentStudioId()))
+                                {
+                                    var instructor = _instructorDataAccess.GetInstructorById(i);
+                                    procent += instructor.procentOfProfit;
+                                }
+
+                                sum = numberOfStudents * (_classDataAccess.SearchClass(at.ClassId, GetCurrentStudioId()).PricePerHour);
+                                instructorPay = sum * (procent / 100);
+                                sum = sum - instructorPay;
+                                profit.Attendances++;
+                            }
+                            profit.ProfitForPeriod += Math.Round(sum);
                         }
-                        finalProfit.NumberOfStudents += numberOfStudents;
-                        finalProfit.ProfitForPeriod += Math.Round(profit);
                     }
+                    profit.NumberOfStudents = _classDataAccess.GetStudentsConnectedToClass(c.Id, GetCurrentStudioId()).Count;
+                    finalProfit.Add(profit);
                 }
             }
+            else
+            {
+                string classError = "A class with this genre, level or type does not exists!";
+                return RedirectToAction("Profit", new { classError });
+            }
+
             return Json(finalProfit);
         }
 

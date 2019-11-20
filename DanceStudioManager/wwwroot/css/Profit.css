@@ -2,7 +2,16 @@
 #Genre,
 #DateTo,
 #Level,
-#ClassGenre {
+#ClassGenre,
+#ClassType{
     background-color: white;
 }
 
+.datepicker {
+    z-index: 10000 !important;
+}
+
+#classError {
+    color: red;
+    height: 10px;
+}

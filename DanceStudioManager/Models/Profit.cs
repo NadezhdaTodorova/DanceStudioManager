@@ -16,7 +16,9 @@ namespace DanceStudioManager
         public string Level { get; set; }
         public double ProfitForPeriod { get; set; }
         public string Type { get; set; }
+        public string ClassType { get; set; }
         public int NumberOfStudents { get; set; }
+        public int Attendances { get; set; }
         public List<string> instructors { get; set; } = new List<string>();
 
     }
