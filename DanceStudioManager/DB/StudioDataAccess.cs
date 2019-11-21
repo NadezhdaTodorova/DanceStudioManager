@@ -118,6 +118,10 @@ namespace DanceStudioManager
                 if (studio.Name == null) cmd.Parameters["@Name"].Value = DBNull.Value;
                 else cmd.Parameters["@Name"].Value = studio.Name;
 
+                cmd.Parameters.Add("@PhotoUrl", SqlDbType.VarChar);
+                if (studio.Photo_url == null) cmd.Parameters["@PhotoUrl"].Value = DBNull.Value;
+                else cmd.Parameters["@PhotoUrl"].Value = studio.Photo_url;
+
                 cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
 
                 con.Open();

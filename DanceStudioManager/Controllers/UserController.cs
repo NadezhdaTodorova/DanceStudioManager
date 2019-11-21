@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DanceStudioManager
 {
@@ -16,15 +18,17 @@ namespace DanceStudioManager
         private readonly StudentsDataAccess _studentDataAccess;
         private readonly ClassDataAccess _classDataAccess;
         private readonly InstructorDataAccess _instructorDataAccess;
+        private readonly IHostingEnvironment _appEnvironment;
 
         public UserController(UserDataAccess userDataAccess, StudioDataAccess studioDataAccess, StudentsDataAccess studentDataAccess, ClassDataAccess classDataAccess,
-            InstructorDataAccess instructorDataAccess)
+            InstructorDataAccess instructorDataAccess, IHostingEnvironment appEnvironment)
         {
             _userDataAccess = userDataAccess;
             _studioDataAccess = studioDataAccess;
             _studentDataAccess = studentDataAccess;
             _classDataAccess = classDataAccess;
             _instructorDataAccess = instructorDataAccess;
+            _appEnvironment = appEnvironment;
         }
 
         public IActionResult Index()
@@ -45,7 +49,7 @@ namespace DanceStudioManager
 
         public IActionResult Edit(User user)
         {
-            var userId = _userDataAccess.GetUserId(user);
+            var userId = GetCurrentUser().Id;
             var studio = new Studio();
 
             user.Id = userId;
@@ -66,6 +70,45 @@ namespace DanceStudioManager
             int userId = GetCurrentUser().Id;
             _userDataAccess.DeleteUser(userId);
             return RedirectToAction("LogOut", "Account");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePhoto(User emp)
+        {
+            if (ModelState.IsValid)
+            {
+                var files = HttpContext.Request.Form.Files;
+                foreach (var Image in files)
+                {
+                    if (Image != null && Image.Length > 0)
+                    {
+                        var file = Image;
+                        //There is an error here
+                        var uploads = Path.Combine(_appEnvironment.WebRootPath, "uploads\\img");
+                        if (file.Length > 0)
+                        {
+                            var fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
+                            using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                                emp.PhotoUrl = fileName;
+                            }
+
+                        }
+                    }
+                }
+                
+                 _userDataAccess.UpdateUser(emp);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+            }
+            return View(emp);
+
+            return RedirectToAction("Index");
         }
 
         private User GetCurrentUser()

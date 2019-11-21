@@ -1,4 +1,5 @@
 ﻿
+
 @{
     ViewData["Title"] = "User";
     Layout = "_LayoutStudio";
@@ -8,18 +9,16 @@
 @model User
 
 <link href="~/css/User.css" rel="stylesheet" />
-
-
 <div class="container emp-profile">
-    <form method="post">
+    <form asp-controller="User" asp-action="ChangePhoto">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
                     <div class="file btn btn-lg">
-                        Change Photo
-                        <input type="file" name="file" />
+                        Change Photo <input asp-for="@Model.PhotoUrl" type="file" name="file" />
                     </div>
+                    Sybmit <input type="submit">
                 </div>
             </div>
             <div class="col-md-6">
@@ -29,7 +28,7 @@
                     </h5>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" >About</a>
+                            <a class="nav-link">About</a>
                         </li>
                     </ul>
                 </div>
@@ -40,6 +39,7 @@
                 <input type="button" id="bDelete" class="profile-edit-btn mt-3 w-75" value="Delete profile" />
             </div>
         </div>
+    </form>
         <div id="infoUser" class="row">
             <div class="col-md-8">
                 <div class="profile-tab">
@@ -96,7 +96,6 @@
                 </div>
             </div>
         </div>
-    </form>
 </div>
 
 <!-- Modal -->
@@ -114,9 +113,6 @@
                 <div class="modal-body">
                     <a> Change username</a>
                     <input asp-for="Username" type="text" class="modal-input " id="Username" value="@Model.Username">
-                    <a> Change email</a>
-                    <input asp-for="Email" type="text" class="modal-input " id="Email" value="@Model.Email">
-                    <p id='result'></p>
                     <a> Change studio name</a>
                     <input asp-for="StudioName" type="text" class="modal-input " id="StudioName" value="@Model.StudioName">
                 </div>
