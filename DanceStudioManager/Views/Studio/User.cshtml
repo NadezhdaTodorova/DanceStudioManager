@@ -10,15 +10,19 @@
 
 <link href="~/css/User.css" rel="stylesheet" />
 <div class="container emp-profile">
-    <form asp-controller="User" asp-action="ChangePhoto">
+    <form  method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
-                    <div class="file btn btn-lg">
-                        Change Photo <input asp-for="@Model.PhotoUrl" type="file" name="file" />
-                    </div>
-                    Sybmit <input type="submit">
+                    <img src="@Model.PhotoUrl" alt="" />
+                        <div >
+                        </div>
+                        <div>
+                            <input asp-for="PhotoUrl" type="file" name="PhotoUrl" class="profile-edit-btn mt-3" />
+                        </div>
+                        <div>
+                            <button asp-controller="User" asp-action="ChangePhoto" class="profile-edit-btn mt-3" type="submit">Change photo </button>
+                        </div>
                 </div>
             </div>
             <div class="col-md-6">

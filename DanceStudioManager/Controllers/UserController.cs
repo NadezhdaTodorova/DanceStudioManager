@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.Web;
 
 namespace DanceStudioManager
 {
@@ -73,42 +75,39 @@ namespace DanceStudioManager
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePhoto(User emp)
+        public IActionResult ChangePhoto(IFormFile PhotoUrl)
         {
-            if (ModelState.IsValid)
-            {
-                var files = HttpContext.Request.Form.Files;
-                foreach (var Image in files)
-                {
-                    if (Image != null && Image.Length > 0)
-                    {
-                        var file = Image;
-                        //There is an error here
-                        var uploads = Path.Combine(_appEnvironment.WebRootPath, "uploads\\img");
-                        if (file.Length > 0)
-                        {
-                            var fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-                            using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
-                            {
-                                await file.CopyToAsync(fileStream);
-                                emp.PhotoUrl = fileName;
-                            }
 
-                        }
-                    }
+            // File to be deleted    
+            string authorsFile = PhotoUrl.FileName;
+            string rootFolder = Path.Combine(_appEnvironment.WebRootPath, "images", Path.GetFileName(PhotoUrl.FileName));
+
+            try
+            {
+                // Check if file exists with its full path    
+                if (System.IO.File.Exists(rootFolder)) 
+                {
+                    // If file found, delete it    
+                    System.IO.File.Delete(rootFolder);
                 }
-                
-                 _userDataAccess.UpdateUser(emp);
+            }
+            catch (IOException ioExp)
+            {
+                ModelState.AddModelError(ioExp.Message, "");
                 return RedirectToAction("Index");
             }
-            else
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-            }
-            return View(emp);
 
+            var studio = new Studio();
+            if (PhotoUrl != null)
+            {
+                PhotoUrl.CopyTo(new FileStream(rootFolder, FileMode.Create));
+
+                var lastPart = rootFolder.Substring(rootFolder.IndexOf("images")-1);
+                studio.Photo_url = lastPart;
+                _studioDataAccess.UpdateStudio(studio, GetCurrentUser().StudioId);
+            }
             return RedirectToAction("Index");
+
         }
 
         private User GetCurrentUser()

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -29,5 +31,7 @@ namespace DanceStudioManager
         public int NumberOfStudents { get; set; }
         public int NumberOfClasses { get; set; }
         public int NumberOfInstructors { get; set; }
+        [BindProperty]
+        public IFormFile Upload { get; set; }
     }
 }
