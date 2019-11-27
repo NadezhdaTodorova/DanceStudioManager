@@ -218,6 +218,29 @@ namespace DanceStudioManager
                 con.Close();
             }
         }
+
+        public void DeleteStudentFromClass(int studentId, int userId, int classId)
+        {
+            using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
+            {
+                SqlCommand cmd = new SqlCommand("DeleteStudentFromClass", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@StudentId", studentId);
+
+                cmd.Parameters.AddWithValue("@ClassId", classId);
+
+                cmd.Parameters.Add("@ModifiedBy", SqlDbType.Int);
+                if (userId == 0) cmd.Parameters["@ModifiedBy"].Value = DBNull.Value;
+                else cmd.Parameters["@ModifiedBy"].Value = userId;
+
+                cmd.Parameters.AddWithValue("@ModifiedOn", DateTime.Now);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 
     

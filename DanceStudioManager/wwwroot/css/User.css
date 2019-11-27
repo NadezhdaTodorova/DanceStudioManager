@@ -45,6 +45,16 @@
     color: #0062cc;
 }
 
+.changePhoto {
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+
 .profile-edit-btn {
     border: none;
     border-radius: 1.5rem;

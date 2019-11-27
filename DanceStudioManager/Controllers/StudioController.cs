@@ -185,7 +185,7 @@ namespace DanceStudioManager
         /// </summary>
         /// <param name="id"></param>
         [HttpPost]
-        public void DeleteStudent(int id)
+        public void DeleteStudentFromClass(int id, int classid)
         {
             ClaimsPrincipal currentUser = User;
             var claims = currentUser.Claims;
@@ -195,10 +195,7 @@ namespace DanceStudioManager
             newUser.Email = userEmail;
             var userId = _userDataAccess.GetUserId(newUser);
 
-            var student = new Student();
-            student.Id = id;
-
-            _studentDataAccess.DeleteStudent(student, userId);
+            _studentDataAccess.DeleteStudentFromClass(id, classid, userId);
         }
 
         public IActionResult Instructor()
@@ -274,7 +271,7 @@ namespace DanceStudioManager
         /// </summary>
         /// <param name="id"></param>
         [HttpPost]
-        public void DeleteInstructor(int id)
+        public void DeleteInstructorFromClass(int id, int classId)
         {
             ClaimsPrincipal currentUser = User;
             var claims = currentUser.Claims;
@@ -283,10 +280,8 @@ namespace DanceStudioManager
             var newUser = new User();
             newUser.Email = userEmail;
             var userId = _userDataAccess.GetUserId(newUser);
-            var instructor = new Instructor();
-            instructor.Id = id;
 
-            _instructorDataAccess.DeleteInstructor(instructor, userId);
+            _instructorDataAccess.DeleteInstructorFromClass(id, userId, classId);
         }
 
         public IActionResult Classes(string classError)
@@ -563,7 +558,7 @@ namespace DanceStudioManager
             {
                 foreach (var id in _class.StudentsIds)
                 {
-                    _classDataAccess.AddInstructorToClass(id, _class.ClassId);
+                    _classDataAccess.AddStudentToClass(id, _class.ClassId);
                 }
             }
 

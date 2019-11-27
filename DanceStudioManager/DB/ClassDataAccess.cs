@@ -157,8 +157,13 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("AddStudentToClass", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@StudentId", studentId);
-                cmd.Parameters.AddWithValue("@ClassId", classId);
+                cmd.Parameters.Add("@StudentId", SqlDbType.Int);
+                if (studentId == 0) cmd.Parameters["@StudentId"].Value = DBNull.Value;
+                else cmd.Parameters["@StudentId"].Value = studentId;
+
+                cmd.Parameters.Add("@ClassId", SqlDbType.Int);
+                if (classId == 0) cmd.Parameters["@ClassId"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassId"].Value = classId;
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -173,8 +178,13 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("AddInstructorToClass", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@InstructorId", instructorId);
-                cmd.Parameters.AddWithValue("@ClassId", classId);
+                cmd.Parameters.Add("@InstructorId", SqlDbType.Int);
+                if (instructorId == 0) cmd.Parameters["@InstructorId"].Value = DBNull.Value;
+                else cmd.Parameters["@InstructorId"].Value = instructorId;
+
+                cmd.Parameters.Add("@ClassId", SqlDbType.Int);
+                if (classId == 0) cmd.Parameters["@ClassId"].Value = DBNull.Value;
+                else cmd.Parameters["@ClassId"].Value = classId;
 
                 con.Open();
                 cmd.ExecuteNonQuery();

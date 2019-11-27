@@ -106,7 +106,7 @@ function EditF(t) {
         success: function (data) {
             var content = "<tbody>";
             $.each(data.studentsList, function () {
-                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" data-id=' + this.id + ' onclick="DeleteStudent(this)" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" data-id=' + this.id + ' data-classId=' + data.classId +  ' onclick="DeleteStudent(this)" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
             });
             content += "</tbody>";
             $('#StudentsTable').empty();
@@ -114,7 +114,7 @@ function EditF(t) {
 
               content = "<tbody>";
             $.each(data.instructorsList, function () {
-                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" data-id=' + this.id + ' onclick="DeleteInstructor(this)"  aria-label="Close"><span aria-hidden="true">&times;</span> </button>' + '</td></tr>';
+                content += '<tr><td>' + this.firstname + " " + this.lastname + '</td><td>' + '<button type="button" class="close" data-id=' + this.id + ' data-classId=' + data.classId + ' onclick = "DeleteInstructor(this)"  aria - label="Close" > <span aria-hidden="true">&times;</span> </button > ' + '</td ></tr > ';
             });
             content += "</tbody>";
 
@@ -142,7 +142,7 @@ function DeleteStudent(t) {
 
     $.ajax({
         type: "POST",
-        url: '/Studio/DeleteStudent?id=' + t.dataset.id,
+        url: '/Studio/DeleteStudentFromClass?id=' + t.dataset.id + '&classId=' + t.dataset.classid,
         success: function () {
             location.reload();
         },
@@ -158,7 +158,7 @@ function DeleteInstructor(t) {
 
     $.ajax({
         type: "POST",
-        url: '/Studio/DeleteInstructor?id=' + t.dataset.id,
+        url: '/Studio/DeleteInstructorFromClass?id=' + t.dataset.id + '&classId=' + t.dataset.classid,
         success: function () {
             location.reload();
         },

@@ -18,10 +18,11 @@
                         <div >
                         </div>
                         <div>
-                            <input asp-for="PhotoUrl" type="file" name="PhotoUrl" class="profile-edit-btn mt-3" />
+                            <label asp-for="PhotoUrl" class="changePhoto">Choose picture</label>
+                            <input asp-for="PhotoUrl" type="file" name="PhotoUrl"  style="display:none;" />
                         </div>
                         <div>
-                            <button asp-controller="User" asp-action="ChangePhoto" class="profile-edit-btn mt-3" type="submit">Change photo </button>
+                            <button asp-controller="User" asp-action="ChangePhoto" class="profile-edit-btn mt-2" type="submit">Change picture </button>
                         </div>
                 </div>
             </div>
