@@ -219,7 +219,7 @@ namespace DanceStudioManager
             }
         }
 
-        public void DeleteStudentFromClass(int studentId, int userId, int classId)
+        public void DeleteStudentFromClass(int studentId, int classId, int userId)
         {
             using (SqlConnection con = new SqlConnection(applicationContext.GetConnectionString()))
             {
