@@ -21,7 +21,7 @@ namespace DanceStudioManager
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network; 
             smtp.UseDefaultCredentials = false; 
             smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213");
-            smtp.Host = "smtp.gmail.com";
+            smtp.Host = "smtp.office365.com";
 
             //recipient address
             mail.To.Add(new MailAddress(emailTo));
@@ -46,7 +46,7 @@ namespace DanceStudioManager
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network; 
             smtp.UseDefaultCredentials = false; 
             smtp.Credentials = new NetworkCredential(mailFrom, "Dance1213"); 
-            smtp.Host = "smtp.gmail.com";
+            smtp.Host = "smtp.office365.com";
 
             //recipient address
             mail.To.Add(new MailAddress("dancestudiomanager2019@gmail.com"));
