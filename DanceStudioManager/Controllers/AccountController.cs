@@ -76,7 +76,7 @@ namespace DanceStudioManager
                             var path = Url.Action("AuthenticateLogin", "Home", new { userId = user.Id }, protocol: HttpContext.Request.Scheme);
                             string message = "Please confirm your account by clicking <a href=\"" + path + "\">here</a>";
 
-                            _email.Send(user.Email, user, message);
+                            _email.SendGrid(user.Email, message);
 
                             scope.Complete();
 
@@ -159,7 +159,7 @@ namespace DanceStudioManager
 
                 userInfo.ConfirmAccount = false;
                 _userDataAccess.UpdateUser(userInfo);
-                _email.Send(user.Email, user, message);
+                _email.SendGrid(user.Email, message);
 
                 return View("Views/Account/ConfirmEmail.cshtml");
             }
