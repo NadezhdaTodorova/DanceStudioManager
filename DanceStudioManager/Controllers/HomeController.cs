@@ -41,7 +41,7 @@ namespace DanceStudioManager
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    _email.SendContacts(Email, firstName, lastName, Subject, Text);
+                    _email.SendContactsGrid(Email, firstName, lastName, Subject, Text);
 
                     scope.Complete();
                 }

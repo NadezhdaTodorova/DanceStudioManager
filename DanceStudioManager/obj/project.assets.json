@@ -3137,6 +3137,18 @@
           }
         }
       },
+      "Sendgrid/9.12.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/SendGrid.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -8451,6 +8463,26 @@
         "version.txt"
       ]
     },
+    "Sendgrid/9.12.0": {
+      "sha512": "HrH336vKylh6Yy4bqKFNPf0Rk1C7CDd4WX7D2f7D/g0Dy584Wx2Qh7vdM+NgAkHTWQ7bKwl7K9DZ9BiFKbimdA==",
+      "type": "package",
+      "path": "sendgrid/9.12.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net452/SendGrid.dll",
+        "lib/net452/SendGrid.pdb",
+        "lib/net452/SendGrid.xml",
+        "lib/netstandard1.3/SendGrid.dll",
+        "lib/netstandard1.3/SendGrid.pdb",
+        "lib/netstandard1.3/SendGrid.xml",
+        "lib/netstandard2.0/SendGrid.dll",
+        "lib/netstandard2.0/SendGrid.pdb",
+        "lib/netstandard2.0/SendGrid.xml",
+        "sendgrid.9.12.0.nupkg.sha512",
+        "sendgrid.nuspec"
+      ]
+    },
     "System.AppContext/4.3.0": {
       "sha512": "fglUDfhxu6v1MOMUUt7vK4K1TjPXPyRf674qBv1XBZSSXoXsKA9kaLnwKjuI9JIr96Pq2CMQJvUep7EScoocpw==",
       "type": "package",
@@ -13000,7 +13032,8 @@
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.3",
-      "Microsoft.jQuery.Unobtrusive.Validation >= 3.2.11"
+      "Microsoft.jQuery.Unobtrusive.Validation >= 3.2.11",
+      "Sendgrid >= 9.12.0"
     ]
   },
   "packageFolders": {
@@ -13068,6 +13101,10 @@
           "Microsoft.jQuery.Unobtrusive.Validation": {
             "target": "Package",
             "version": "[3.2.11, )"
+          },
+          "Sendgrid": {
+            "target": "Package",
+            "version": "[9.12.0, )"
           }
         },
         "imports": [
