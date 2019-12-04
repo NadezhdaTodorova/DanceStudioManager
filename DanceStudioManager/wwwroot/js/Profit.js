@@ -22,6 +22,7 @@ $("#SearchProfitForClass").click(function (e) {
     var $grid1 = $(grid_selector);
     $grid1.jqGrid('clearGridData').jqGrid('setGridParam',
         {
+            datatype: "json",
             url: '/Reports/SearchProfitForPeriod?dateFrom=' + formDataSearch.dateFrom + '&dateTo=' + formDataSearch.dateTo + '&classGenre=' + formDataSearch.classGenre + '&level=' + formDataSearch.level + '&type=' + formDataSearch.type,
             search: false
         }).trigger("reloadGrid");
@@ -71,17 +72,18 @@ function createGrid(dateFrom, dateTo, classGenre, level, type) {
         type: "POST",
         colNames: ['Class genre', 'Level', 'Type', 'Number of students','Attendances','Profit'],
         colModel: [
-            { name: 'classGenre', index: 'ClassGenre', width: 200, firstsortorder: "desc" },
-            { name: 'level', index: 'Level', width: 200 },
-            { name: 'type', index: 'Type', width: 200 },
-            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 200 },
-            { name: 'attendances', index: 'Attendances', width: 200 },
-            { name: 'profitForPeriod', index: 'ProfitForPeriod', width: 200 }
+            { name: 'classGenre', index: 'ClassGenre', width: 200, sortable: false, },
+            { name: 'level', index: 'Level', width: 200, sortable: false, },
+            { name: 'type', index: 'Type', width: 200, sortable: false, },
+            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 200, sortable: false, },
+            { name: 'attendances', index: 'Attendances', width: 200, sortable: false, },
+            { name: 'profitForPeriod', index: 'ProfitForPeriod', width: 200, sortable: false, }
             
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: pager_selector,
         altRows: true,
+        loadonce: true,
     });
 };

@@ -63,6 +63,7 @@ $("#SearchClasses").click(function (e) {
     var $grid1 = $(grid_selector);
     $grid1.jqGrid('clearGridData').jqGrid('setGridParam',
         {
+            datatype: "json",
             url: '/Studio/GetClasses?genre=' + formDataSearch.genre + '&level=' + formDataSearch.level + '&type=' + formDataSearch.type,
             search: false
         }).trigger("reloadGrid");
@@ -194,24 +195,26 @@ function createGrid(genre, level, type) {
     jQuery(grid_selector).jqGrid({
         url: '/Studio/GetClasses?genre=' + genre + '&level=' + level + '&type=' + type,
         datatype: "json",
-        height: 450,
+        height: "100%",
         type: "POST",
         colNames: ['Genre', 'Level', 'PricePerHour', 'Shedule', 'ClassType', 'NumberOfStudents', 'Instructors', 'Edit', 'Delete'],
         colModel: [
-            { name: 'genre', index: 'Genre', width: 100, sortable: true, classes: 'pointer', editable: true },
-            { name: 'level', index: 'Level', width: 100, classes: 'pointer', editable: true },
-            { name: 'pricePerHour', index: 'PricePerHour', width: 100, classes: 'pointer', editable: true },
-            { name: 'shedule', index: 'Shedule', width: 350, classes: 'pointer', editable: true },
-            { name: 'classType', index: 'ClassType', width: 100, classes: 'pointer', editable: true },
-            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 105, classes: 'pointer', editable: true },
-            { name: 'instructors', index: 'Instructors', width: 150, classes: 'pointer', editable: true },
+            { name: 'genre', index: 'Genre', width: 100, sortable: false, classes: 'pointer', editable: true },
+            { name: 'level', index: 'Level', width: 100, classes: 'pointer', editable: true, sortable: false, },
+            { name: 'pricePerHour', index: 'PricePerHour', width: 100, classes: 'pointer', editable: true, sortable: false, },
+            { name: 'shedule', index: 'Shedule', width: 350, classes: 'pointer', editable: true, sortable: false, },
+            { name: 'classType', index: 'ClassType', width: 100, classes: 'pointer', editable: true, sortable: false, },
+            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 105, classes: 'pointer', editable: true, sortable: false, },
+            { name: 'instructors', index: 'Instructors', width: 150, classes: 'pointer', editable: true, sortable: false, },
             { name: 'act', index: 'act', width: 75, align: 'center', sortable: false, formatter: myCustomEdit },
             { name: 'act', index: 'act', width: 75, align: 'center', sortable: false, formatter: myCustomDelete }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: pager_selector,
-        altRows: true
-    });
+        altRows: true,
+        loadonce: true,
+        
+    }).navGrid('#jqGridPager', { add: false, edit: false, del: false, search: false, refresh: false });
 };
 

@@ -42,6 +42,7 @@ $("#SearchInstructor").click(function (e) {
     var $grid1 = $(grid_selector);
     $grid1.jqGrid('clearGridData').jqGrid('setGridParam',
         {
+            datatype: 'json',
             url: '/Studio/GetInstructor?firstname=' + formDataSearch.firstname + '&lastname=' + formDataSearch.lastname + '&email=' + formDataSearch.email,
             search: false
         }).trigger("reloadGrid");
@@ -75,23 +76,24 @@ function createGrid(firstname, lastname, email) {
     jQuery(grid_selector).jqGrid({
         url: '/Studio/GetInstructor?firstname=' + firstname + '&lastname=' + lastname + '&email=' + email,
         datatype: "json",
-        height: 450,
+        height: "100%",
         type: "POST",
         colNames: ['Firstname', 'Lastname', 'Email', 'CellPhone', 'Gender', 'Procent of profit', 'Date of Birth' ],
         colModel: [
-            { name: 'firstname', index: 'Firstname', width: 200, firstsortorder: "desc", editable: true, classes: 'pointer' },
-            { name: 'lastname', index: 'Lastname', width: 200, editable: true, classes: 'pointer' },
-            { name: 'email', index: 'Email', width: 200, editable: true, classes: 'pointer' },
-            { name: 'cellPhone', index: 'CellPhone', width: 150, editable: true, classes: 'pointer' },
-            { name: 'gender', index: 'Gender', width: 150, editable: true, classes: 'pointer' },
-            { name: 'procentOfProfit', index: 'ProcentOfProfit', width: 150, editable: true, classes: 'pointer' },
-            { name: 'dateOfBirthToString', index: 'DateOfBirthToString', width: 150, editable: true, classes: 'pointer' }
+            { name: 'firstname', index: 'Firstname', width: 200, editable: true, classes: 'pointer', sortable: false, },
+            { name: 'lastname', index: 'Lastname', width: 200, editable: true, classes: 'pointer', sortable: false, },
+            { name: 'email', index: 'Email', width: 200, editable: true, classes: 'pointer', sortable: false, },
+            { name: 'cellPhone', index: 'CellPhone', width: 150, editable: true, classes: 'pointer', sortable: false, },
+            { name: 'gender', index: 'Gender', width: 150, editable: true, classes: 'pointer', sortable: false, },
+            { name: 'procentOfProfit', index: 'ProcentOfProfit', width: 150, editable: true, classes: 'pointer', sortable: false, },
+            { name: 'dateOfBirthToString', index: 'DateOfBirthToString', width: 150, editable: true, classes: 'pointer', sortable: false, }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: pager_selector,
-        altRows: true
-    }).navGrid('#jqGridPager', { add: false, edit: true, edittitle: "Edit Instructor", del: true, deltitle: "Delete Instructor", search: false, refresh: true },
+        altRows: true,
+        loadonce: true,
+    }).navGrid('#jqGridPager', { add: false, edit: true, edittitle: "Edit Instructor", del: true, deltitle: "Delete Instructor", search: false, refresh: false },
         //Edit option
         {
             reloadAfterSubmit: true,
@@ -101,6 +103,7 @@ function createGrid(firstname, lastname, email) {
             url: "/Studio/EditInstructor/",
             afterSubmit: function (response, postdata) {
                 if (response.statusText = "OK") {
+                    $(this).jqGrid("setGridParam", { datatype: 'json' });
                     jQuery("#success").show();
                     jQuery("#success").html("Instructor successfully updated");
                     jQuery("#success").fadeOut(6000);
@@ -118,6 +121,7 @@ function createGrid(firstname, lastname, email) {
             closeAfterDelete: true,
             afterSubmit: function (response) {
                 if (response.statusText = "OK") {
+                    $(this).jqGrid("setGridParam", { datatype: 'json' });
                     jQuery("#success").show();
                     jQuery("#success").html("Instructor successfully deleted");
                     jQuery("#success").fadeOut(6000);

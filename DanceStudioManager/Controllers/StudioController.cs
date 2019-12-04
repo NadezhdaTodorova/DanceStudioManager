@@ -46,7 +46,7 @@ namespace DanceStudioManager
                 var classShedule = _classDataAccess.GetClassShedule(_class.Id);
                 foreach (var s in classShedule)
                 {
-                    if (s.Day == DateTime.Now.DayOfWeek.ToString())
+                    if (s.Day == DateTime.Now.DayOfWeek.ToString() && _class.StartDay <= DateTime.Now)
                     {
                         _class.Hour = s.Hour;
                         dashboardNeeds.classesForToday.Add(_class);

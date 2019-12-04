@@ -77,34 +77,37 @@ namespace DanceStudioManager
         [HttpPost]
         public IActionResult ChangePhoto(IFormFile PhotoUrl)
         {
-
-            // File to be deleted    
-            string authorsFile = PhotoUrl.FileName;
-            string rootFolder = Path.Combine(_appEnvironment.WebRootPath, "images", Path.GetFileName(PhotoUrl.FileName));
-
-            try
-            {
-                // Check if file exists with its full path    
-                if (System.IO.File.Exists(rootFolder)) 
-                {
-                    // If file found, delete it    
-                    System.IO.File.Delete(rootFolder);
-                }
-            }
-            catch (IOException ioExp)
-            {
-                ModelState.AddModelError(ioExp.Message, "");
-                return RedirectToAction("Index");
-            }
-
-            var studio = new Studio();
             if (PhotoUrl != null)
             {
-                PhotoUrl.CopyTo(new FileStream(rootFolder, FileMode.Create));
 
-                var lastPart = rootFolder.Substring(rootFolder.IndexOf("images")-1);
-                studio.Photo_url = lastPart;
-                _studioDataAccess.UpdateStudio(studio, GetCurrentUser().StudioId);
+                // File to be deleted    
+                string authorsFile = PhotoUrl.FileName;
+                string rootFolder = Path.Combine(_appEnvironment.WebRootPath, "images", Path.GetFileName(PhotoUrl.FileName));
+
+                try
+                {
+                    // Check if file exists with its full path    
+                    if (System.IO.File.Exists(rootFolder))
+                    {
+                        // If file found, delete it    
+                        System.IO.File.Delete(rootFolder);
+                    }
+                }
+                catch (IOException ioExp)
+                {
+                    ModelState.AddModelError(ioExp.Message, "");
+                    return RedirectToAction("Index");
+                }
+
+                var studio = new Studio();
+                if (PhotoUrl != null)
+                {
+                    PhotoUrl.CopyTo(new FileStream(rootFolder, FileMode.Create));
+
+                    var lastPart = rootFolder.Substring(rootFolder.IndexOf("images") - 1);
+                    studio.Photo_url = lastPart;
+                    _studioDataAccess.UpdateStudio(studio, GetCurrentUser().StudioId);
+                }
             }
             return RedirectToAction("Index");
 

@@ -123,7 +123,7 @@ namespace DanceStudioManager
                 cmd.Parameters.AddWithValue("@Firstname", instructor.Firstname);
                 cmd.Parameters.AddWithValue("@Lastname", instructor.Lastname);
                 cmd.Parameters.AddWithValue("@Email", instructor.Email);
-                cmd.Parameters.AddWithValue("@DateOfBirth", DateTime.Now.Date);
+                cmd.Parameters.AddWithValue("@DateOfBirth", instructor.DateOfBirth);
                 cmd.Parameters.AddWithValue("@CellPhone", instructor.CellPhone);
                 cmd.Parameters.AddWithValue("@SendEmail", instructor.SendEmail);
                 cmd.Parameters.AddWithValue("@Gender", instructor.Gender);

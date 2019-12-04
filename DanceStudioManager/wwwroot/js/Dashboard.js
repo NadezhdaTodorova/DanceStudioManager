@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    //localStorage.clear();
+    localStorage.clear();
 
     $('[data-toggle="tooltip"]').tooltip();
 
