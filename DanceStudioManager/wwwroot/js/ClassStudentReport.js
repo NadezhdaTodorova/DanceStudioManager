@@ -50,7 +50,7 @@ function getMyAppsDataFromScreen() {
 
 function createGrid(genre, level, type) {
     jQuery(grid_selector).jqGrid({
-        //url: '/Reports/SearchStudent?genre=' + genre + '&level=' + level + '&type=' + type,
+        url: '/Reports/SearchStudent?genre=' + genre + '&level=' + level + '&type=' + type,
         datatype: "json",
         height: 450,
         type: "POST",

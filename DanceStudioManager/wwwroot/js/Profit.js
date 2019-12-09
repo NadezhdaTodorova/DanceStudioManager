@@ -70,14 +70,16 @@ function createGrid(dateFrom, dateTo, classGenre, level, type) {
         url: '/Reports/SearchProfitForPeriod?dateFrom=' + dateFrom + '&dateTo=' + dateTo + '&classGenre=' + classGenre + '&level=' + level + '&type=' + type,
         height: 450,
         type: "POST",
-        colNames: ['Class genre', 'Level', 'Type', 'Number of students','Attendances','Profit'],
+        colNames: ['Class genre', 'Level', 'Type', 'Number of students','Attendances','Profit', 'DateFrom', 'DateTo'],
         colModel: [
             { name: 'classGenre', index: 'ClassGenre', width: 200, sortable: false, },
             { name: 'level', index: 'Level', width: 200, sortable: false, },
             { name: 'type', index: 'Type', width: 200, sortable: false, },
-            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 200, sortable: false, },
-            { name: 'attendances', index: 'Attendances', width: 200, sortable: false, },
-            { name: 'profitForPeriod', index: 'ProfitForPeriod', width: 200, sortable: false, }
+            { name: 'numberOfStudents', index: 'NumberOfStudents', width: 150, sortable: false, },
+            { name: 'attendances', index: 'Attendances', width: 100, sortable: false, },
+            { name: 'profitForPeriod', index: 'ProfitForPeriod', width: 200, sortable: false, },
+            { name: 'dateFrom', index: 'DateFrom', width: 150, sortable: false, },
+            { name: 'dateTo', index: 'DateTo', width: 150, sortable: false, },
             
         ],
         rowNum: 10,

@@ -38,8 +38,16 @@ namespace DanceStudioManager
         public IActionResult SearchStudent(string genre, string level, string type)
         {
             var students = new List<ClassStudentVM>();
+            var classes = new List<Class>();
 
-            var classes = _classDataAccess.SearchClass(genre, level, type, GetCurrentStudioId());
+            if (genre != null && level != null && type != null)
+            {
+                classes = _classDataAccess.SearchClass(genre, level, type, GetCurrentStudioId());
+            }
+            else
+            {
+                classes = _classDataAccess.GetAllClasses(GetCurrentStudioId());
+            } 
 
             foreach (var _class in classes)
             {
@@ -72,10 +80,17 @@ namespace DanceStudioManager
             List<Profit> finalProfit = new List<Profit>();
             var _class = new List<Class>();
             DateTime defaultDatetime = default(DateTime);
+            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 
             if (dateFrom != defaultDatetime && dateTo != defaultDatetime || classGenre != null || level != null)
             {
                 _class = _classDataAccess.SearchClass(classGenre, level, type, GetCurrentStudioId());
+            }
+            else
+            {
+                _class = _classDataAccess.GetAllClasses(GetCurrentStudioId());
+                dateFrom = firstDayOfMonth;
+                dateTo = DateTime.Now.Date;
             }
             if (_class.Count > 0)
             {
@@ -90,6 +105,8 @@ namespace DanceStudioManager
                     profit.Level = c.Level;
                     profit.ClassGenre = c.Genre;
                     profit.Type = c.ClassType;
+                    profit.DateFrom = dateFrom.ToString("MM-dd-yyyy");
+                    profit.DateTo = dateTo.ToString("MM-dd-yyyy");
 
                     for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
                     {

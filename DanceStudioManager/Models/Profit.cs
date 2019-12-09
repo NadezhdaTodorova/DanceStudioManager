@@ -9,9 +9,9 @@ namespace DanceStudioManager
     public class Profit
     {
         [Required]
-        public DateTime DateFrom{ get; set; }
+        public string DateFrom{ get; set; }
         [Required]
-        public DateTime DateTo{ get; set; }
+        public string DateTo{ get; set; }
         public string ClassGenre { get; set; }
         public string Level { get; set; }
         public double ProfitForPeriod { get; set; }
