@@ -2670,12 +2670,13 @@ Created using IcoMoon - icomoon.io
       box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1); }
     .sidebar .nav p,
     .off-canvas-sidebar .nav p {
-      margin: 0;
-      line-height: 30px;
-      position: relative;
-      display: block;
-      height: auto;
-      white-space: nowrap; }
+        margin: 0;
+        line-height: 30px;
+        position: relative;
+        display: block;
+        height: auto;
+        white-space: nowrap;
+    }
     .sidebar .nav i,
     .off-canvas-sidebar .nav i {
       font-size: 20px;

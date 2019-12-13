@@ -33,6 +33,7 @@ namespace DanceStudioManager
         public DateTime  Retired { get; set; }
         [Required]
         public DateTime  StartDay { get; set; }
+        public string  StartDayToString { get; set; }
 
     }
 }

@@ -109,7 +109,7 @@ namespace DanceStudioManager
                 if (user.Password == null) cmd.Parameters["@Password"].Value = DBNull.Value;
                 else cmd.Parameters["@Password"].Value = user.Password;
 
-                cmd.Parameters.Add("@Username", SqlDbType.VarChar);
+                cmd.Parameters.Add("@Username", SqlDbType.NVarChar);
                 if (user.Username == null) cmd.Parameters["@Username"].Value = DBNull.Value;
                 else cmd.Parameters["@Username"].Value = user.Username;
 

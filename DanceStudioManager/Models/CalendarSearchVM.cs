@@ -25,8 +25,8 @@ namespace DanceStudioManager
             get
             {
                 List<SelectListItem> items = new List<SelectListItem>();
-                var start = DateTime.Now.AddYears(-3).Year;
-                for (int i = start; i < start + 6; i++)
+                var start = DateTime.Now.Year;
+                for (int i = start; i < start + 2; i++)
                 {
                     items.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }

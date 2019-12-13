@@ -57,7 +57,7 @@ namespace DanceStudioManager
                 SqlCommand cmd = new SqlCommand("AddClass", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                cmd.Parameters.Add("@Genre", SqlDbType.NVarChar);
                 if (_class.Genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
                 else cmd.Parameters["@Genre"].Value = _class.Genre;
 
@@ -134,7 +134,7 @@ namespace DanceStudioManager
                 if (_class.Level == null) cmd.Parameters["@Level"].Value = DBNull.Value;
                 else cmd.Parameters["@Level"].Value = _class.Level;
 
-                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                cmd.Parameters.Add("@Genre", SqlDbType.NVarChar);
                 if (_class.Genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
                 else cmd.Parameters["@Genre"].Value = _class.Genre;
 
@@ -420,7 +420,7 @@ namespace DanceStudioManager
 
                 cmd.Parameters.AddWithValue("@ClassId", _class.Id);
 
-                cmd.Parameters.Add("@Genre", SqlDbType.VarChar);
+                cmd.Parameters.Add("@Genre", SqlDbType.NVarChar);
                 if (_class.Genre == null) cmd.Parameters["@Genre"].Value = DBNull.Value;
                 else cmd.Parameters["@Genre"].Value = _class.Genre;
 

@@ -16,7 +16,7 @@ namespace DanceStudioManager
 
         public void AddDaysToCalendar()
         {
-            var year = 2019;
+            var year = 2020;
             var DateFrom = new DateTime(year, 1, 1);
             var DateTo = new DateTime(year, 12, 31);
 

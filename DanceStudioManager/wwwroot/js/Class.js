@@ -181,6 +181,7 @@ function deleteF(t) {
         type: "GET",
         url: '/Studio/DeleteClass?classId=' + t.dataset.id,
         success: function () {
+            $(this).jqGrid("setGridParam", { datatype: 'json' });
             location.reload(); 
         },
         error: function (xhr, thrownError) {
@@ -197,9 +198,10 @@ function createGrid(genre, level, type) {
         datatype: "json",
         height: "100%",
         type: "POST",
-        colNames: ['Genre', 'Level', 'PricePerHour', 'Shedule', 'ClassType', 'NumberOfStudents', 'Instructors', 'Edit', 'Delete'],
+        colNames: ['Genre', 'StartDay', 'Level', 'PricePerHour', 'Shedule', 'ClassType', 'NumberOfStudents', 'Instructors', 'Edit', 'Delete'],
         colModel: [
             { name: 'genre', index: 'Genre', width: 100, sortable: false, classes: 'pointer', editable: true },
+            { name: 'startDayToString', index: 'startDayToString', width: 100, sortable: false, classes: 'pointer' },
             { name: 'level', index: 'Level', width: 100, classes: 'pointer', editable: true, sortable: false, },
             { name: 'pricePerHour', index: 'PricePerHour', width: 100, classes: 'pointer', editable: true, sortable: false, },
             { name: 'shedule', index: 'Shedule', width: 350, classes: 'pointer', editable: true, sortable: false, },

@@ -27,7 +27,7 @@ namespace DanceStudioManager.Classes
 
             private string GetHtml()
             {
-                var monthStart = new DateTime(Year, Month, 1);
+            var monthStart = new DateTime(Year, Month, 1);
                 List<CalendarData> leaves = Events.CalendarData;
 
                 var html = new XDocument(
@@ -104,9 +104,11 @@ namespace DanceStudioManager.Classes
                         var mutedClasses = "d-none d-lg-inline-block bg-light text-muted";
                         var holidayClasses = "holidayClasses";
                         var currentDay = "currentDay";
+                        var cutDay = 0;
+                        cutDay = d.Year == 2019 ? cutDay = 1 : cutDay;
 
                     yield return new XElement("div",
-                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)} {(Events.Days[d.DayOfYear-1].WorkDay ? null : holidayClasses)} {(Events.Days[d.DayOfYear-1].Day == DateTime.Now.Date ? currentDay : null)}"),
+                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)} {(Events.Days[d.DayOfYear - cutDay].WorkDay ? null : holidayClasses)} {(Events.Days[d.DayOfYear-1].Day == DateTime.Now.Date ? currentDay : null)}"),
                             new XElement("h5",
                                 new XAttribute("class", "row align-items-center"),
                                 new XElement("span",

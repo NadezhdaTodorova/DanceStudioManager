@@ -20,9 +20,11 @@ namespace DanceStudioManager
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserDataAccess _userDataAccess;
         private readonly AttendanceDataAccess _attendanceDataAccess;
+        private readonly CalendarHelp _calendarHelp;
 
         public StudioController(StudentsDataAccess studentDataAccess, StudioDataAccess studioDataAccess, InstructorDataAccess instructorDataAccess,
-            ClassDataAccess classDataAccess, IHttpContextAccessor httpContextAccessor, UserDataAccess userDataAccess, AttendanceDataAccess attendanceDataAccess)
+            ClassDataAccess classDataAccess, IHttpContextAccessor httpContextAccessor, UserDataAccess userDataAccess, AttendanceDataAccess attendanceDataAccess,
+            CalendarHelp calendarHelp)
         {
             _studentDataAccess = studentDataAccess;
             _studioDataAccess = studioDataAccess;
@@ -31,6 +33,7 @@ namespace DanceStudioManager
             _httpContextAccessor = httpContextAccessor;
             _userDataAccess = userDataAccess;
             _attendanceDataAccess = attendanceDataAccess;
+            _calendarHelp = calendarHelp;
         }
         public IActionResult Dashboard()
         {
@@ -330,6 +333,7 @@ namespace DanceStudioManager
                 classesList = _classDataAccess.GetAllClasses(GetCurrentStudioId());
                 foreach (var c in classesList)
                 {
+                    c.StartDayToString = c.StartDay.ToString("MM-dd-yyyy");
                     var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(c.Id, GetCurrentStudioId());
                     foreach (var id in instructorsIds)
                     {
@@ -483,6 +487,7 @@ namespace DanceStudioManager
             var newUser = new User();
             newUser.Email = userEmail;
             var userId = _userDataAccess.GetUserId(newUser);
+            _class.Genre = _classDataAccess.SearchClass(_class.ClassId, GetCurrentStudioId()).Genre;
 
             _classToUpdate.Id = _class.ClassId;
 
