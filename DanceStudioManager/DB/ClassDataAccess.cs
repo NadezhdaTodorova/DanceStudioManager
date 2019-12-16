@@ -387,6 +387,7 @@ namespace DanceStudioManager
                     _class.PricePerHour = (double)rdr["PricePerHour"];
                     _class.ClassType = (string)rdr["ClassType"];
                     _class.NumberOfStudents = (int)rdr["NumberOfStudents"];
+                    _class.StartDay = (DateTime)rdr["StartDay"];
 
                     _classes.Add(_class);
                 }

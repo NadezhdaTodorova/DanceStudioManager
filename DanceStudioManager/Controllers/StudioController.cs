@@ -363,6 +363,7 @@ namespace DanceStudioManager
                 _classes = _classDataAccess.SearchClass(genre, level, type, GetCurrentStudioId());
                 foreach (var _class in _classes)
                 {
+                    _class.StartDayToString = _class.StartDay.ToString("MM-dd-yyyy");
                     var instructorsIds = _classDataAccess.GetInstructorsConnectedToClass(_class.Id, GetCurrentStudioId());
                     foreach (var id in instructorsIds)
                     {
